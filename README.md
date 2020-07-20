@@ -1,5 +1,7 @@
 This is a sample Laravel application for App Platform.
 
+**NOTE** This sample repository contains an `.env` file with a pre-generated application key. Committing `.env` files with secrets to the same repository that holds the application's source code is _not_ good practice, however, this is done to ensure that _this_ sample repository works out of the box.
+
 To deploy a Laravel application to App Platform, you will need to set your application key. Generate a key by running the following command on your local machine:
 
 ```
