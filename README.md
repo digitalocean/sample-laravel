@@ -65,7 +65,7 @@ location @php {
 
 ## Learn More ##
 
-You can learn more about the App Platform and how to manage and update your application at https://www.digitalocean.com/docs/apps/.
+You can learn more about the App Platform and how to manage and update your application at https://www.digitalocean.com/docs/app-platform.
 
 
 ## Deleting the App #
