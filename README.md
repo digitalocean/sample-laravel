@@ -45,13 +45,7 @@ Copy the `base64:...` output to your clipboard. This is your application key. Wh
 
 ### Nginx
 
-By default, Apache will be used as the webserver. If you would like to use Nginx instead, create a file named `Procfile` at the root of your repo with:
-
-```procfile
-web: heroku-php-nginx -C nginx.conf public/
-```
-
-and create a file named `nginx.conf` also at the root of the repo with:
+By default, Apache will be used as the webserver. If you would like to use Nginx instead, create a file named `nginx.conf` at the root of the repo with:
 
 ```nginx
 location / {
@@ -62,6 +56,8 @@ location @php {
     rewrite ^(.*)$ /index.php$1 last;
 }
 ```
+
+and set your app's run command to: `heroku-php-nginx -C nginx.conf public/`
 
 ## Learn More ##
 
