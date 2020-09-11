@@ -41,7 +41,7 @@ To deploy a Laravel application to App Platform, you will need to set your appli
 base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8=
 ```
 
-Copy the `base64:...` output to your clipboard. This is your application key. When deploying your application to App Platform, configure the `APP_ENV` environment variable to use the key you generated.
+Copy the `base64:...` output to your clipboard. This is your application key. When deploying your application to App Platform, configure the `APP_KEY` environment variable to use the key you generated.
 
 ### Nginx
 
