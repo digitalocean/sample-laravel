@@ -2,7 +2,7 @@ name: sample-laravel
 services:
 - environment_slug: php
   github:
-    branch: master
+    branch: main
     deploy_on_push: true
     repo: digitalocean/sample-laravel
   name: sample-laravel
