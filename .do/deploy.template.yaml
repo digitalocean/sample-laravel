@@ -1,0 +1,8 @@
+spec:
+  name: sample-laravel
+  services:
+  - environment_slug: php
+    git:
+      branch: main
+      repo_clone_url: https://github.com/digitalocean/sample-laravel.git
+    name: sample-laravel
