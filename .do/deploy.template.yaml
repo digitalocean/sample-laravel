@@ -5,4 +5,7 @@ spec:
     git:
       branch: main
       repo_clone_url: https://github.com/digitalocean/sample-laravel.git
+    envs:
+    - key: APP_KEY
+      value: "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8="
     name: sample-laravel
