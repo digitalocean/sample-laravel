@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Gasway
+                    Gasway v5
                 </div>
 
                 <div class="links">
