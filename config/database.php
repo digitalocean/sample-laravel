@@ -43,11 +43,13 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
+        /*
         'mongodb' => [
             'driver' => 'mongodb',
             'dsn' => env('DB_URI', 'mongodb+srv://doadmin:2541QYN0r39HtuT8@db-mongodb-nyc3-32662-a3c53298.mongo.ondigitalocean.com/admin?authSource=admin&replicaSet=db-mongodb-nyc3-32662&tls=true&tlsCAFile=%3Cca-certificate.crt%3E'),
             'database' => 'myappdb',
         ],
+        */
 
         'mysql' => [
             'driver' => 'mysql',
