@@ -20,3 +20,14 @@ Route::get('/', function () {
 use App\Http\Controllers\TesteController;
 
 Route::get('/abastecimentos', [TesteController::class, 'index']);
+
+/*
+// php artisan cache:clear
+// php artisan route:clear
+// php artisan config:clear
+// php artisan view:clear
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+*/
