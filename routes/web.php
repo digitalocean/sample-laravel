@@ -21,6 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/csrf', function () {
+    return view('csrf');
+});
+
 
 Route::get('/abastecimentos', [TesteController::class, 'index']);
 
@@ -39,9 +43,16 @@ Route::post('/api/abastecimento/{id}', function ($id) {
 });
 
 Route::get('/api/v1/abastecimento', [AbastecimentoController::class, 'index']);
+Route::get('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'show']);
+Route::post('/api/v1/abastecimento', [AbastecimentoController::class, 'store']);
+Route::put('/api/v1/abastecimento/{id}/edit', [AbastecimentoController::class, 'update']);
+Route::delete('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'destroy']);
 
-
-//Route::get('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'read']);
+/*
+Route::get('/api/v1/abastecimento/create', [AbastecimentoController::class, 'create']);
+Route::get('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'show']);
+Route::get('/api/v1/abastecimento/{id}/edit', [AbastecimentoController::class, 'edit']);
+*/
 
 
 /*
@@ -53,15 +64,6 @@ Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
     return "Cache is cleared";
 });
-*/
-/*
-Route::get('/api/v1/abastecimento', [AbastecimentoController::class, 'index']);
-Route::get('/api/v1/abastecimento/create', [AbastecimentoController::class, 'create']);
-Route::post('/api/v1/abastecimento', [AbastecimentoController::class, 'store']);
-Route::get('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'show']);
-Route::get('/api/v1/abastecimento/{id}/edit', [AbastecimentoController::class, 'edit']);
-Route::put('/api/v1/abastecimento/{id}/edit', [AbastecimentoController::class, 'update']);
-Route::delete('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'destroy']);
 */
 /*
 Route::resource('abastecimento', 'AbastecimentoController', ['only' => ['index', 'show']]);

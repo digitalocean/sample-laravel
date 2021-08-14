@@ -1,0 +1,33 @@
+
+databases:
+- cluster_name: db-mysql-nyc1-98391
+  db_name: defaultdb
+  db_user: doadmin
+  engine: MYSQL
+  name: db-mysql-nyc1-98391
+  production: true
+  version: "8"
+domains:
+- domain: gasway.com.br
+  type: PRIMARY
+  zone: gasway.com.br
+name: sample-laravel-1
+region: nyc
+services:
+- environment_slug: php
+  envs:
+  - key: DATABASE_URL
+    scope: RUN_TIME
+    value: ${db-mongodb-nyc3-32662.DATABASE_URL}
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: plixsite/sample-laravel-1
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: sample-laravel-1
+  routes:
+  - path: /
+  run_command: heroku-php-apache2 public/
+  source_dir: /
