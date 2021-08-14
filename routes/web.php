@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AbastecimentoController;
+use App\Http\Controllers\TesteController;
+use App\Http\Controllers\PainelController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,8 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-use App\Http\Controllers\TesteController;
-use App\Http\Controllers\PainelController;
 
 Route::get('/abastecimentos', [TesteController::class, 'index']);
 
@@ -31,6 +33,12 @@ Route::get('/api/docs', function () {
 Route::get('/api/abastecimento/{id}', function ($id) {
     return 'Abastecimento '.$id;
 });
+
+Route::post('/api/abastecimento/{id}', function ($id) {
+    return 'Abastecimento '.$id;
+});
+
+Route::get('/api/v1/abastecimento', [AbastecimentoController::class, 'index']);
 
 
 //Route::get('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'read']);
