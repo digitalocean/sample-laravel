@@ -30,9 +30,9 @@ Route::get('/abastecimentos', [TesteController::class, 'index']);
 
 //Route::get('/admin', [PainelController::class, 'all']);
 
-Route::get('/login', function () { 
-    return view('landingpage'); 
-});
+//Route::post('login', [userLogin::class, 'loginPost'])->name('login.post');
+
+Route::post('/login', function () { return view('landingpage'); })->name('login');
 
 Route::group(array('prefix' => 'admin'), function(){
     Route::get('/', function () { return view('admin/index'); });

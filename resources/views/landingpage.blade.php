@@ -39,7 +39,7 @@
 
                             <div class="card-body">
 
-                                <form method="POST" action="<?php/*{ { route('login') } }*/?>" autocomplete="off">
+                                <form method="POST" action="{{ route('login') }}" autocomplete="off">
                                     
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 
