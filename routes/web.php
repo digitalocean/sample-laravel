@@ -18,10 +18,22 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\TesteController;
+use App\Http\Controllers\PainelController;
 
 Route::get('/abastecimentos', [TesteController::class, 'index']);
 
-Route::get('/api', [TesteController::class, 'index']);
+Route::get('/admin', [PainelController::class, 'all']);
+
+Route::get('/api/docs', function () {
+    return view('docs');
+});
+
+Route::get('/api/abastecimento/{id}', function ($id) {
+    return 'Abastecimento '.$id;
+});
+
+
+//Route::get('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'read']);
 
 
 /*
@@ -34,7 +46,7 @@ Route::get('/clear-cache', function() {
     return "Cache is cleared";
 });
 */
-
+/*
 Route::get('/api/v1/abastecimento', [AbastecimentoController::class, 'index']);
 Route::get('/api/v1/abastecimento/create', [AbastecimentoController::class, 'create']);
 Route::post('/api/v1/abastecimento', [AbastecimentoController::class, 'store']);
@@ -42,7 +54,7 @@ Route::get('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'show'
 Route::get('/api/v1/abastecimento/{id}/edit', [AbastecimentoController::class, 'edit']);
 Route::put('/api/v1/abastecimento/{id}/edit', [AbastecimentoController::class, 'update']);
 Route::delete('/api/v1/abastecimento/{id}', [AbastecimentoController::class, 'destroy']);
-
+*/
 /*
 Route::resource('abastecimento', 'AbastecimentoController', ['only' => ['index', 'show']]);
 Route::resource('abastecimento', 'AbastecimentoController', ['except' => ['create', 'store', 'update', 'destroy']]);
