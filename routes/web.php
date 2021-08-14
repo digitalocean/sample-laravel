@@ -18,7 +18,7 @@ use App\Http\Controllers\PainelController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landingpage');
 });
 
 Route::get('/csrf', function () {
@@ -28,7 +28,19 @@ Route::get('/csrf', function () {
 
 Route::get('/abastecimentos', [TesteController::class, 'index']);
 
-Route::get('/admin', [PainelController::class, 'all']);
+//Route::get('/admin', [PainelController::class, 'all']);
+
+Route::get('/login', function () { 
+    return view('landingpage'); 
+});
+
+Route::group(array('prefix' => 'admin'), function(){
+    Route::get('/', function () { return view('admin/index'); });
+    Route::get('/docs', function () { return view('admin/docs'); });
+    Route::get('/monitor', function () { return view('admin/monitor'); });
+});
+
+
 
 Route::get('/api/docs', function () {
     return view('docs');
