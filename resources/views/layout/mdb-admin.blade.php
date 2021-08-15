@@ -195,7 +195,7 @@ $opcoes=[
             <div class="card mb-4 wow fadeIn">
                 <div class="card-body d-sm-flex justify-content-between">
                     <h4 class="mb-2 mb-sm-0 pt-1">
-                        <a href="https://mdbootstrap.com/docs/jquery/">Painel</a>
+                        <a href="https://mdbootstrap.com/docs/jquery/">Painel Administrativo</a>
                         <span>/</span>
                         <span>@yield('title')</span>
                     </h4>
@@ -265,7 +265,7 @@ $opcoes=[
 
         <div class="footer-copyright py-3">
             © 2021 Copyright:
-            <a href="{{ env('APP_URI') }}"> {{ env('APP_NAME') }} </a>
+            <a href="{{ env('APP_URI') }}"> {{ env('APP_NAME') }} v1.0.8.15</a>
         </div>
 
     </footer>
