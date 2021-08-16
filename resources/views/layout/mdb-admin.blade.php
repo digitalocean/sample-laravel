@@ -1,46 +1,57 @@
 <?php
-$nivelCor='coral';
-//$nivelCor='black';
-$opcoes=[
-    (object)[
-        'label' => 'Painel',
-        'url' => '#',
-        'icon' => 'fas fa-home',
-        'active' => '',
-    ],
-    (object)[
-        'label' => 'Perfil',
-        'url' => '#',
-        'icon' => 'fas fa-user',
-        'active' => '',
-    ],
-    (object)[
-        'label' => 'Monitoramento',
-        'url' => '/admin/monitor',
-        'icon' => 'fas fa-chart-line',
-        'active' => 'active',
-    ],
-    (object)[
-        'label' => 'Mapa de Bombas',
-        'url' => '#',
-        'icon' => 'fas fa-table',
-        'active' => '',
-    ],
-    /*
-    (object)[
-        'label' => 'Mapas',
-        'url' => '#',
-        'icon' => 'fas fa-map',
-        'active' => '',
-    ],
-    (object)[
-        'label' => 'Carteira digital',
-        'url' => '#',
-        'icon' => 'fas fa-money-bill-alt',
-        'active' => '',
-    ],
-    */
-]
+session_start();
+$_SESSION['role']='gerente';
+
+if(!isset($_SESSION['role'])){
+    echo "acesso negado";
+    exit;
+}
+switch($_SESSION['role']){
+    case 'proprietario' : 
+        $nivelCor='coral';
+        break;
+    case 'gerente' :
+    $nivelCor='coral';
+    $opcoes=[
+        (object)[
+            'label' => 'Monitoramento',
+            'url' => '/admin',
+            'icon' => 'fas fa-home',
+            'active' => $_SERVER['REQUEST_URI']=='/admin'?'active':'',
+        ],
+        (object)[
+            'label' => 'Empresas',
+            'url' => '/admin/empresas',
+            'icon' => 'fas fa-building',
+            'active' => $_SERVER['REQUEST_URI']=='/admin/empresas'?'active':'',
+        ],
+        (object)[
+            'label' => 'Mapa de Bombas',
+            'url' => '/admin/bombas',
+            'icon' => 'fas fa-map',
+            'active' => $_SERVER['REQUEST_URI']=='/admin/bombas'?'active':'',
+        ],
+        (object)[
+            'label' => 'Dispositivos',
+            'url' => '/admin/dispositivos',
+            'icon' => 'fas fa-mobile',
+            'active' => $_SERVER['REQUEST_URI']=='/admin/dispositivos'?'active':'',
+        ],
+
+        (object)[
+            'label' => 'Usuários',
+            'url' => '/admin/usuarios',
+            'icon' => 'fas fa-users',
+            'active' => $_SERVER['REQUEST_URI']=='/admin/usuarios'?'active':'',
+        ],
+    ];
+    break;
+    case 'operador' :
+    $nivelCor='coral';
+    break;
+
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -103,8 +114,8 @@ $opcoes=[
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"> <!--- active -->
-                            <a class="nav-link waves-effect" href="/admin">Painel
+                        <li class="nav-item {{$_SERVER['REQUEST_URI']=='/admin'?'active':''}}"> <!--- active -->
+                            <a class="nav-link waves-effect" href="/admin">Monitoramento
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
@@ -112,7 +123,7 @@ $opcoes=[
                             <a class="nav-link waves-effect" href="/sobre"
                                 >Sobre {{ env('APP_NAME') }}</a>
                         </li-->
-                        <li class="nav-item">
+                        <li class="nav-item {{$_SERVER['REQUEST_URI']=='/admin/docs'?'active':''}}">
                             <a class="nav-link waves-effect" href="/admin/docs">Documentação</a>
                         </li>
                     </ul>
@@ -172,8 +183,9 @@ $opcoes=[
         <div class="sidebar-fixed position-fixed" style="background-color:{{ $nivelCor }}">
 
             <a class="logo-wrapper waves-effect p-2" style="width:100%; text-align:center">
-                <img src="/img/icon.png" class="img-fluid" alt="">
+                <img src="/img/favicon.png" class="img-fluid" alt="">
             </a>
+
 
             <div class="list-group list-group-flush">
 
@@ -195,7 +207,7 @@ $opcoes=[
             <div class="card mb-4 wow fadeIn">
                 <div class="card-body d-sm-flex justify-content-between">
                     <h4 class="mb-2 mb-sm-0 pt-1">
-                        <a href="https://mdbootstrap.com/docs/jquery/">Painel Administrativo</a>
+                        <a href="/admin">Monitoramento</a>
                         <span>/</span>
                         <span>@yield('title')</span>
                     </h4>

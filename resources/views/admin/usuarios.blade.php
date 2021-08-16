@@ -1,6 +1,6 @@
 @extends('layout/mdb-admin')
 
-@section('title', 'Monitoramento')
+@section('title', 'Usuários')
 
 @section('content')
 
@@ -8,6 +8,9 @@
         <div class="col-md-12 mb-4">
 
             <div class="card" style="min-height:68.7vh">
+
+                
+
 
                     <table class="table table-striped table-hover table-sm text-center">
                         <thead>

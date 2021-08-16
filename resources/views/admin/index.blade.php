@@ -1,6 +1,6 @@
 @extends('layout/mdb-admin')
 
-@section('title', 'Início')
+@section('title', 'Monitores')
 
 @section('content')
 

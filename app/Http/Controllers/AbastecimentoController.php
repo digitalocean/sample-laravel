@@ -51,7 +51,7 @@ class AbastecimentoController extends Controller
         if($abastecimento){
             return response()->json(['data'=>$abastecimento, 'status'=>true]);
         }else{
-            return response()->json(['data'=>'Não existe esse abastecimento cadastrado', 'status'=>false]);
+            return response()->json(['data'=>'Não existe este abastecimento cadastrado', 'status'=>false]);
         }
     }
 
