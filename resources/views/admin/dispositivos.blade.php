@@ -25,7 +25,7 @@
                         @for ($i = 0; $i < 8; $i++)
                             <tr class="table-default">
                                 <td scope="row">000001</td>
-                                <td>Fulano de tal</td>
+                                <td>Dispositivo tal</td>
                                 <td>(31) 99255-0123</td>
                                 <td>djk484Fqf$c#</td>
                                 <td>30/09/2021</td>
