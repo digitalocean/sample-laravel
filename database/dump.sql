@@ -104,3 +104,28 @@ CREATE TABLE `usuario_tipos` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNQ_NOME` (`nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS dispositivos;
+CREATE TABLE `dispositivos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `rede_id` int NOT NULL,
+  `identifcacao` varchar(45) NOT NULL,
+  `chave` varchar(45) NOT NULL,
+  `codigoAtivacaoSms` varchar(45) NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS redes;
+CREATE TABLE `redes` (
+  `id` int NOT NULL  AUTO_INCREMENT,
+  `_id` varchar(24) NOT NULL,
+  `cnpj` varchar(18) NOT NULL,
+  `nome` varchar(20) NOT NULL,
+  `razao` varchar(45) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL,
+  PRIMARY KEY (id) 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

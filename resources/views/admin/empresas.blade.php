@@ -13,120 +13,30 @@
                         <thead>
                             <tr class="table-dark">
                                 <th scope="col">#</th>
-                                <th scope="col">Combustível</th>
-                                <th scope="col">Tempo restante</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Detalhes</th>
+                                <th scope="col">Figura</th>
+                                <th scope="col">Razão Social</th>
+                                <th scope="col">CNPJ</th>
+                                <th scope="col">Situação</th>
+                                <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="table-success">
-                                <td scope="row">Bomba 1</td>
-                                <td>Gasolina comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
+                            @for ($i = 0; $i < 8; $i++)
+                            <tr class="table-default">
+                                <td scope="row">000001</td>
+                                <td><img height="50px" style="border: 1px solid darkgray; border-radius: 6px"
+                                    src="https://gasstation.net.br/gasway/img/empresas/empresa-default.png"></td>
+                                <td>Empresa tal</td>
+                                <td>00.000.000/0001-01</td>
+                                <td><i class="fa fa-check" style="color:green" aria-hidden="true"></i></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i>
+                                        Editar</button>
+                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i>
+                                        Excluir</button>
+                                </td>
                             </tr>
-
-                            <tr class="table-success">
-                                <td scope="row">Bomba 1</td>
-                                <td>Etanol comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-warning">
-                                <td scope="row">Bomba 2</td>
-                                <td>Gasolina aditivada</td>
-                                <td>5 min 20 seg</td>
-                                <td>Abastecendo</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-success">
-                                <td scope="row">Bomba 2</td>
-                                <td>Etanol comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-danger">
-                                <td scope="row">Bomba 3</td>
-                                <td>Diesel comum</td>
-                                <td>2 min 30 seg</td>
-                                <td>Aguradando pagamento</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-success">
-                                <td scope="row">Bomba 3</td>
-                                <td>Gasolina comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-success">
-                                <td scope="row">Bomba 4</td>
-                                <td>Gasolina comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-success">
-                                <td scope="row">Bomba 4</td>
-                                <td>Etanol comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-success">
-                                <td scope="row">Bomba 5</td>
-                                <td>Gasolina comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-success">
-                                <td scope="row">Bomba 5</td>
-                                <td>Etanol comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-success">
-                                <td scope="row">Bomba 6</td>
-                                <td>Gasolina comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
-
-                            <tr class="table-success">
-                                <td scope="row">Bomba 6</td>
-                                <td>Etanol comum</td>
-                                <td></td>
-                                <td>Bomba liberada</td>
-                                <td><button class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>
-                                        Ver</button></td>
-                            </tr>
+                            @endfor
 
                         </tbody>
 

@@ -1,58 +1,64 @@
 <?php
 session_start();
-$_SESSION['role']='gerente';
+$_SESSION['role'] = 'gerente';
+$redeId = 1;
 
-if(!isset($_SESSION['role'])){
-    echo "acesso negado";
-    exit;
+if (!isset($_SESSION['role'])) {
+echo 'acesso negado';
+exit();
 }
-switch($_SESSION['role']){
-    case 'proprietario' : 
-        $nivelCor='coral';
-        break;
-    case 'gerente' :
-    $nivelCor='coral';
-    $opcoes=[
-        (object)[
-            'label' => 'Monitoramento',
-            'url' => '/admin',
-            'icon' => 'fas fa-home',
-            'active' => $_SERVER['REQUEST_URI']=='/admin'?'active':'',
-        ],
-        (object)[
-            'label' => 'Empresas',
-            'url' => '/admin/empresas',
-            'icon' => 'fas fa-building',
-            'active' => $_SERVER['REQUEST_URI']=='/admin/empresas'?'active':'',
-        ],
-        (object)[
-            'label' => 'Mapa de Bombas',
-            'url' => '/admin/bombas',
-            'icon' => 'fas fa-map',
-            'active' => $_SERVER['REQUEST_URI']=='/admin/bombas'?'active':'',
-        ],
-        (object)[
-            'label' => 'Dispositivos',
-            'url' => '/admin/dispositivos',
-            'icon' => 'fas fa-mobile',
-            'active' => $_SERVER['REQUEST_URI']=='/admin/dispositivos'?'active':'',
-        ],
+switch ($_SESSION['role']) {
+case 'proprietario':
+$nivelCor = 'coral';
+break;
+case 'gerente':
+$nivelCor = 'coral';
+$opcoes = [
+(object) [
+'label' => 'Abastecimentos',
+'url' => '/admin',
+'icon' => 'fas fa-gas-pump',
+'active' => $_SERVER['REQUEST_URI'] == '/admin' ? 'active' : '',
+],
+/*
+(object) [
+'label' => 'Dados cadastrais',
+'url' => "/admin/rede/$redeId",
+'icon' => 'fas fa-building',
+'active' => $_SERVER['REQUEST_URI'] == "/admin/rede/$redeId" ? 'active' : '',
+],
+*/
+(object) [
+'label' => 'Empresas',
+'url' => '/admin/empresas',
+'icon' => 'fas fa-building',
+'active' => $_SERVER['REQUEST_URI'] == '/admin/empresas' ? 'active' : '',
+],
+(object) [
+'label' => 'Mapa de Bombas',
+'url' => '/admin/bombas',
+'icon' => 'fas fa-map',
+'active' => $_SERVER['REQUEST_URI'] == '/admin/bombas' ? 'active' : '',
+],
+(object) [
+'label' => 'Dispositivos',
+'url' => '/admin/dispositivos',
+'icon' => 'fas fa-mobile',
+'active' => $_SERVER['REQUEST_URI'] == '/admin/dispositivos' ? 'active' : '',
+],
 
-        (object)[
-            'label' => 'Usuários',
-            'url' => '/admin/usuarios',
-            'icon' => 'fas fa-users',
-            'active' => $_SERVER['REQUEST_URI']=='/admin/usuarios'?'active':'',
-        ],
-    ];
-    break;
-    case 'operador' :
-    $nivelCor='coral';
-    break;
-
+(object) [
+'label' => 'Usuários',
+'url' => '/admin/usuarios',
+'icon' => 'fas fa-users',
+'active' => $_SERVER['REQUEST_URI'] == '/admin/usuarios' ? 'active' : '',
+],
+];
+break;
+case 'operador':
+$nivelCor = 'coral';
+break;
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -81,6 +87,7 @@ switch($_SESSION['role']){
             width: 100%;
             position: absolute;
         }
+
         /*
         table td {
             font-size: 1.2rem !important;
@@ -90,6 +97,24 @@ switch($_SESSION['role']){
         table td {
             font-size: 0.9rem !important;
             font-weight: 300 !important;
+        }
+
+        .btn-primary,
+        .list-group-item.active {
+            z-index: 2;
+            color: #fff !important;
+            background-color: #042444 !important;
+            border-color: #042444 !important;
+        }
+
+        .blue-text,
+        a {
+            color: #064585 !important;
+        }
+
+        .btn.btn-sm {
+            padding: .5rem .5rem;
+            font-size: .64rem;
         }
 
     </style>
@@ -114,8 +139,10 @@ switch($_SESSION['role']){
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item {{$_SERVER['REQUEST_URI']=='/admin'?'active':''}}"> <!--- active -->
-                            <a class="nav-link waves-effect" href="/admin">Monitoramento
+
+                        <li class="nav-item {{ $_SERVER['REQUEST_URI'] == '/admin' ? 'active' : '' }}">
+                            <!--- active -->
+                            <a class="nav-link waves-effect" href="/admin">Abastecimentos
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
@@ -123,7 +150,7 @@ switch($_SESSION['role']){
                             <a class="nav-link waves-effect" href="/sobre"
                                 >Sobre {{ env('APP_NAME') }}</a>
                         </li-->
-                        <li class="nav-item {{$_SERVER['REQUEST_URI']=='/admin/docs'?'active':''}}">
+                        <li class="nav-item {{ $_SERVER['REQUEST_URI'] == '/admin/docs' ? 'active' : '' }}">
                             <a class="nav-link waves-effect" href="/admin/docs">Documentação</a>
                         </li>
                     </ul>
@@ -141,9 +168,9 @@ switch($_SESSION['role']){
                             </a>
                         </li-->
 
-                        
+
                         @guest
-                    
+
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ 'login' }}">{{ __('Login') }}</a>
                             </li>
@@ -154,15 +181,16 @@ switch($_SESSION['role']){
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle border border-light rounded waves-effect" href="#" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown"
+                                    class="nav-link dropdown-toggle border border-light rounded waves-effect" href="#"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ 'logout' }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
-                                        <i class="fas fa-sign-out-alt mr-2"></i> {{ __('messages.logout') }}     
+                                                                     document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt mr-2"></i> {{ __('messages.logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -186,11 +214,10 @@ switch($_SESSION['role']){
                 <img src="/img/favicon.png" class="img-fluid" alt="">
             </a>
 
-
             <div class="list-group list-group-flush">
 
                 @foreach ($opcoes as $opcao)
-                    <a href="{{ $opcao->url }}" 
+                    <a href="{{ $opcao->url }}"
                         class="list-group-item {{ $opcao->active }} list-group-item-action waves-effect">
                         <i class="{{ $opcao->icon }} mr-3"></i>{{ $opcao->label }}
                     </a>

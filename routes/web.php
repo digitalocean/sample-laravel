@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AbastecimentoController;
+use App\Http\Controllers\DispositivoController;
 use App\Http\Controllers\LojaController;
 use App\Http\Controllers\MapeamentoBombaController;
 use App\Http\Controllers\PainelController;
@@ -35,6 +36,7 @@ Route::get('/api/docs', function () {
 
 Route::group(array('prefix' => 'admin'), function(){
     Route::get('/', function () { return view('admin/monitores'); });
+    Route::get('/rede/{id}', function () { return view('admin/rede'); });
     Route::get('/empresas', function () { return view('admin/empresas'); });
     Route::get('/bombas', function () { return view('admin/bombas'); });
     Route::get('/dispositivos', function () { return view('admin/dispositivos'); });
@@ -48,6 +50,14 @@ Route::group(array('prefix' => 'api/v1/abastecimento'), function(){
     Route::post('/', [AbastecimentoController::class, 'store']);
     Route::put('/{id}/edit', [AbastecimentoController::class, 'update']);
     Route::delete('/{id}', [AbastecimentoController::class, 'destroy']);
+});
+
+Route::group(array('prefix' => 'api/v1/dispositivo'), function(){
+    Route::get('/', [DispositivoController::class, 'index']);
+    Route::get('/{id}', [DispositivoController::class, 'show']);
+    Route::post('/', [DispositivoController::class, 'store']);
+    Route::put('/{id}/edit', [DispositivoController::class, 'update']);
+    Route::delete('/{id}', [DispositivoController::class, 'destroy']);
 });
 
 Route::group(array('prefix' => 'api/v1/loja'), function(){
