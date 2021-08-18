@@ -50,6 +50,43 @@ class Monitor extends Model
         
     }
 
+    public static function auth($token)
+    {
+        
+        $user = DB::select("SELECT 
+                u.id,
+                um.rede_id,
+                um.token,
+                u.name as nome,
+                u.email
+            FROM user_monitores um
+            INNER JOIN users u ON u.id=um.user_id
+            WHERE um.status='ativo' AND um.permitido_ate > NOW() AND um.token=?",
+            [$token]
+        );
+
+        if ( count($user)>0 ){
+                header("token:{$user[0]->token}");
+                return ['status'=>'success','errorCode'=>'0000', 'message'=>'Usuário localizado.'];
+        }
+
+        return ['status'=>'danger','errorCode'=>'4109', 'message'=>"ERRO: usuário não encontrado."];
+        
+        /*
+        $affected = DB::select("SELECT * FROM users where active = ?", [1])(
+            'UPDATE monitors SET baixado_at=NOW() WHERE id=?;',
+            [$id]
+        );
+
+        if ( $affected==1 ){
+            return ['status'=>'success','errorCode'=>'0000', 'message'=>"Monitor [$id] baixado"];
+        }else{
+            return ['status'=>'danger','errorCode'=>'4101', 'message'=>"ERRO: monitor [$id] não baixado"];
+        }
+        */
+        
+    }
+
 
 
     public static function baixar($id)

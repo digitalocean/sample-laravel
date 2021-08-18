@@ -11,6 +11,11 @@ class MonitorController extends Controller
         header('Access-Control-Allow-Origin: *');
     }
 
+    public function auth(Request $request)
+    {
+        return response()->json(Monitor::auth($_SERVER['HTTP_TOKEN']);
+    }
+
     public function login(Request $request)
     {
         $dados = $request->all();
