@@ -11,6 +11,18 @@ class MonitorController extends Controller
         header('Access-Control-Allow-Origin: *');
     }
 
+    /*
+    public function login(Request $request, $id)
+    {
+        return response()->json([
+            'status'=>'success',
+            'errorCode'=>'0000', 
+            'messge'=>'Monitors encontrados.', 
+            'token'=> ]);
+        
+    }
+    */
+
     public function baixar(Request $request, $id)
     {
         return response()->json(Monitor::baixar($id));

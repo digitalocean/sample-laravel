@@ -24,9 +24,9 @@ class Dispositivo extends Model
         );
 
         if ( $affected==1 ){
-            return ['status'=>'success','errorCode'=>'0000', 'message'=>"Dispositivo [$id] ativo"];
+            return ['result'=>'success','errorCode'=>'0000', 'message'=>"Dispositivo [$id] ativo"];
         }else{
-            return ['status'=>'danger','errorCode'=>'4103', 'message'=>"ERRO: dispositivo [$id] inativo"];
+            return ['result'=>'danger','errorCode'=>'4103', 'message'=>"ERRO: dispositivo [$id] inativo"];
         }
         
     }
@@ -34,7 +34,7 @@ class Dispositivo extends Model
     public static function ativacao($id, $dados)
     {
         if (!isset($dados['chave'])){
-            return ['status'=>'danger','errorCode'=>'4107', 'message'=>"ERRO: parâmetro [chave] não informado."];
+            return ['result'=>'danger','errorCode'=>'4107', 'message'=>"ERRO: parâmetro [chave] não informado."];
             exit;
         }
         
@@ -44,11 +44,11 @@ class Dispositivo extends Model
         );
 
         if ( $affected==1 ){
-            return ['status'=>'success','errorCode'=>'0000', 'message'=>"Dispositivo [$id] ativado", 
+            return ['result'=>'success','errorCode'=>'0000', 'message'=>"Dispositivo [$id] ativado", 
             'rede'=>'Rede', 
             'identificacao'=> 'Lucas' ];
         }else{
-            return ['status'=>'danger','errorCode'=>'4106', 'message'=>"ERRO: dispositivo [$id] não ativado"];
+            return ['result'=>'danger','errorCode'=>'4106', 'message'=>"ERRO: dispositivo [$id] não ativado"];
         }
         
     }    
