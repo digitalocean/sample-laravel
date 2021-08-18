@@ -1,9 +1,12 @@
+
+
 # MONGO
 
 composer require jenssegers/mongodb:dev-develop --ignore-platform-reqs
 # LOGIN
 
 app\Providers\RoutServiceProvider HOME
+php artisan make:middleware RedirectHttps
 # Getting Started
 
 These steps will get this sample Laravel application running for you using DigitalOcean App Platform.
