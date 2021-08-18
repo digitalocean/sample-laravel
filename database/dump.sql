@@ -109,14 +109,22 @@ CREATE TABLE `usuario_tipos` (
 DROP TABLE IF EXISTS dispositivos;
 CREATE TABLE `dispositivos` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `rede_id` int NOT NULL,
-  `identifcacao` varchar(45) NOT NULL,
+  `identificacao` varchar(45) NOT NULL,
+  `celular` varchar(45) NOT NULL,
   `chave` varchar(45) NOT NULL,
-  `codigoAtivacaoSms` varchar(45) NOT NULL,
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `codigo_ativacao_sms` int NOT NULL DEFAULT '657491034',
+  `status` enum('preautorizado','ativo','inativo') NOT NULL DEFAULT 'preautorizado',
+  `ativar_ate` date NOT NULL,
+  `permitido_ate` date NOT NULL,
+  `rede_id` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNQ_IDENTIFICACAO` (`identificacao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `defaultdb`.`dispositivos` (`identificacao`, `celular`, `chave`, `codigo_ativacao_sms`, `ativar_ate`, `permitido_ate`, `rede_id`) VALUES ('Lucas', '(31) 97533-5853', '234567', '123456', '2021-12-31', '2022-12-31', '1');
+
 
 DROP TABLE IF EXISTS redes;
 CREATE TABLE `redes` (
