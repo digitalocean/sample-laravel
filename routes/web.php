@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/api/v1/auth', function () {
-    return response()->json(['errorCode'=>'000','message'=>'Sucesso','csrfToken'=>csrf_token()]);
+    return response()->json(['status'=>'success','errorCode'=>'0000','message'=>'Sucesso','csrfToken'=>csrf_token()]);
 });
 
 Route::get('/abastecimentos', [TesteController::class, 'index']);
