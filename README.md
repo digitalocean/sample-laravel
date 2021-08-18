@@ -1,3 +1,6 @@
+# MONGO
+
+composer require jenssegers/mongodb:dev-develop --ignore-platform-reqs
 # LOGIN
 
 app\Providers\RoutServiceProvider HOME
