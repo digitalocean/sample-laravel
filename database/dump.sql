@@ -137,3 +137,44 @@ CREATE TABLE `redes` (
   `updated_at` DATETIME NULL,
   PRIMARY KEY (id) 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `user_monitores`;
+CREATE TABLE `user_monitores` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `rede_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `status` enum('preautorizado','ativo','inativo') NOT NULL DEFAULT 'preautorizado',
+  `codigo_ativacao_sms` int NOT NULL DEFAULT '657491034',
+  `token` varchar(45) NOT NULL,
+  `permitido_ate` date NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNQ_USUARIO` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `defaultdb`.`user_monitores` (`rede_id`, `user_id`, `status`, `codigo_ativacao_sms`, `token`, `permitido_ate`) VALUES ('1', '4', 'ativo', '123456', SHA1('123456'), '2022-12-31' );
+
+
+
+DROP TABLE IF EXISTS `user_tipos`;
+CREATE TABLE `user_tipos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `descricao` varchar(45) DEFAULT NULL,
+  `figura` varchar(45) DEFAULT 'tipo-default.png',
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `user_tipos` (`nome`, `descricao`) VALUES
+('dev', 'Suporte'),
+('admin', 'GasWay'),
+('rede', 'Parceiro'),
+('empresa', 'Posto'),
+('consumidor', 'Consumidor'),
+('parceiro', 'Parceiro'),
+('proprietario', 'Proprietario'),
+('gerente', 'Gerente'),
+('operador', 'Operador');

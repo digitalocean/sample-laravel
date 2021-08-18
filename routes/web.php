@@ -4,6 +4,7 @@ use App\Http\Controllers\AbastecimentoController;
 use App\Http\Controllers\DispositivoController;
 use App\Http\Controllers\LojaController;
 use App\Http\Controllers\MapeamentoBombaController;
+use App\Http\Controllers\MonitorController;
 use App\Http\Controllers\PainelController;
 use App\Http\Controllers\PosicaoBicoController;
 use App\Http\Controllers\TesteController;
@@ -35,6 +36,10 @@ Route::get('/abastecimentos', [TesteController::class, 'index']);
 Route::post('/login', function () { return view('landingpage'); })->name('login');
 Route::get('/api/docs', function () {
     return view('docs');
+});
+
+Route::group(array('prefix' => 'api/v1/monitor'), function(){
+    Route::post('/login', [MonitorController::class, 'login']);
 });
 
 Route::group(array('prefix' => 'api/v1/abastecimento'), function(){

@@ -1,5 +1,9 @@
 
 
+# OAUTH2
+composer require laravel/passport:dev-develop --ignore-platform-reqs
+php artisan migrate
+php artisan passport:install
 # MONGO
 
 composer require jenssegers/mongodb:dev-develop --ignore-platform-reqs
