@@ -28,8 +28,8 @@ class Monitor extends Model
 
         if ( count($user)>0 ){
             if (Hash::check($dados['senha'], $user[0]->senha)) {
-                return ['status'=>'success','errorCode'=>'0000', 'message'=>'Autenticação bem sucedida.',
-                'token'=>$user[0]->token];
+                header("token:{$user[0]->token}");
+                return ['status'=>'success','errorCode'=>'0000', 'message'=>'Autenticação bem sucedida.'];
             }
         }
 
