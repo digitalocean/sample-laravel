@@ -98,7 +98,7 @@
                         <!--div class="top-right links"-->
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/home') }}">Início</a>
+                                <a class="nav-link" href="{{ url('/admin') }}">Início</a>
                             </li>
                         @else
                             <li class="nav-item">

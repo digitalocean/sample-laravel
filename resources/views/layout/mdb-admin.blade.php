@@ -234,7 +234,7 @@ break;
             <div class="card mb-4 wow fadeIn">
                 <div class="card-body d-sm-flex justify-content-between">
                     <h4 class="mb-2 mb-sm-0 pt-1">
-                        <a href="/admin">Monitoramento</a>
+                        <a href="/admin">Painel Administrativo</a>
                         <span>/</span>
                         <span>@yield('title')</span>
                     </h4>

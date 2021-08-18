@@ -22,7 +22,7 @@
 </div-->
 
 
-@section('title', 'Monitores')
+@section('title', 'Início')
 
 @section('content')
 
