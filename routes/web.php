@@ -34,16 +34,6 @@ Route::get('/api/docs', function () {
     return view('docs');
 });
 
-Route::group(array('prefix' => 'admin'), function(){
-    Route::get('/', function () { return view('admin/monitores'); });
-    Route::get('/rede/{id}', function () { return view('admin/rede'); });
-    Route::get('/empresas', function () { return view('admin/empresas'); });
-    Route::get('/bombas', function () { return view('admin/bombas'); });
-    Route::get('/dispositivos', function () { return view('admin/dispositivos'); });
-    Route::get('/usuarios', function () { return view('admin/usuarios'); });
-    Route::get('/docs', function () { return view('admin/docs'); });
-});
-
 Route::group(array('prefix' => 'api/v1/abastecimento'), function(){
     Route::get('/', [AbastecimentoController::class, 'index']);
     Route::get('/{id}', [AbastecimentoController::class, 'show']);
@@ -92,3 +82,18 @@ Route::group(array('prefix' => 'api/v1/usuario'), function(){
     Route::delete('/{id}', [UsuarioController::class, 'destroy']);
 });
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(array('prefix' => 'admin'), function(){
+    Route::get('/', 'PainelController@all')->name('admin/painel');
+    Route::get('/monitores', function () { return view('admin/monitores'); });
+    Route::get('/rede/{id}', function () { return view('admin/rede'); });
+    Route::get('/empresas', function () { return view('admin/empresas'); });
+    Route::get('/bombas', function () { return view('admin/bombas'); });
+    Route::get('/dispositivos', function () { return view('admin/dispositivos'); });
+    Route::get('/usuarios', function () { return view('admin/usuarios'); });
+    Route::get('/docs', function () { return view('admin/docs'); });
+});

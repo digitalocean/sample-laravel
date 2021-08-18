@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/mdb.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <script type="text/javascript" src="/js/jquery.min.js"></script>
+
     <style type="text/css">
         html,
         body,
@@ -54,6 +55,7 @@
             color: #aaa;
         }
         */
+
 
     </style>
 </head>
@@ -136,7 +138,11 @@
     </nav>
     <!-- Navbar -->
 
-    @yield('content')
+    <div class="view full-page-intro" style="background-image: url('https://www.culturaprojetada.com.br/wp-content/uploads/2019/06/road-3186188_1920-980x400.jpg'); background-repeat: no-repeat; background-size: cover;">
+        <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+            @yield('content')
+        </div>
+    </div>
 
     <footer class="page-footer text-center font-small mt-0 wow fadeIn">
 

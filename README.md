@@ -1,3 +1,6 @@
+# LOGIN
+
+app\Providers\RoutServiceProvider HOME
 # Getting Started
 
 These steps will get this sample Laravel application running for you using DigitalOcean App Platform.

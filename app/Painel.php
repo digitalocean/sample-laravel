@@ -4,7 +4,7 @@ namespace App;
 
 //use Illuminate\Database\Eloquent\Model;
 
-class PainelModel //extends Model
+class Painel //extends Model
 {
     public function all(){
 
