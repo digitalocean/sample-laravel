@@ -11,6 +11,12 @@ class AbastecimentoController extends Controller
         header('Access-Control-Allow-Origin: *');
     }
 
+    public function baixar(Request $request, $id)
+    {
+        return response()->json(Abastecimento::baixar($id));
+        
+    }
+
     /**
      * Recupera uum conjunto de abastecimentos.
      *
@@ -19,7 +25,11 @@ class AbastecimentoController extends Controller
     public function index()
     {
         $abastecimento = Abastecimento::all();
-        return response()->json(['data'=>$abastecimento, 'status'=>true]);
+        if (  gettype($abastecimento) != 'string' ){
+            return response()->json(['status'=>'success','errorCode'=>'0000', 'messge'=>'Abastecimentos encontrados.', 'abastecimentos'=>$abastecimento]);
+        }else{
+            return response()->json(['status'=>'danger','errorCode'=>'4102', 'message'=>$abastecimento]);
+        }
     }
 
     /**
@@ -32,6 +42,7 @@ class AbastecimentoController extends Controller
     {
         $dados = $request->all();
         $abastecimento = Abastecimento::create($dados);
+        
         if($abastecimento){
             return response()->json(['data'=>$abastecimento, 'status'=>true]);
         }else{
@@ -48,10 +59,10 @@ class AbastecimentoController extends Controller
     public function show($id)
     {
         $abastecimento = Abastecimento::find($id);
-        if($abastecimento){
-            return response()->json(['data'=>$abastecimento, 'status'=>true]);
+        if (  $abastecimento ){
+            return response()->json(['status'=>'success','errorCode'=>'0000', 'messge'=>"Abastecimento [$id]  encontrado.", 'abastecimento'=>$abastecimento]);
         }else{
-            return response()->json(['data'=>'Não existe este abastecimento cadastrado', 'status'=>false]);
+            return response()->json(['status'=>'danger','errorCode'=>'4102', 'message'=>"ERRO: abastecimento [$id] não encotrado."]);
         }
     }
 

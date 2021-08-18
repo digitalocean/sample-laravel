@@ -15,12 +15,15 @@ use App\Http\Controllers\UsuarioController;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/monitores/create', function () { return view('admin/monitores_create'); });
+
+
 Route::get('/', function () {
     return view('landingpage');
 });
 
-Route::get('/csrf', function () {
-    return view('csrf');
+Route::get('/api/v1/auth', function () {
+    return response()->json(['errorCode'=>'000','message'=>'Sucesso','csrfToken'=>csrf_token()]);
 });
 
 Route::get('/abastecimentos', [TesteController::class, 'index']);
@@ -35,6 +38,9 @@ Route::get('/api/docs', function () {
 });
 
 Route::group(array('prefix' => 'api/v1/abastecimento'), function(){
+
+    Route::put('/{id}/baixar', [AbastecimentoController::class, 'baixar']);
+
     Route::get('/', [AbastecimentoController::class, 'index']);
     Route::get('/{id}', [AbastecimentoController::class, 'show']);
     Route::post('/', [AbastecimentoController::class, 'store']);

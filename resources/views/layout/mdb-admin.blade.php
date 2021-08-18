@@ -15,10 +15,16 @@ case 'gerente':
 $nivelCor = 'coral';
 $opcoes = [
 (object) [
-'label' => 'Abastecimentos',
+'label' => 'Início',
 'url' => '/admin',
-'icon' => 'fas fa-gas-pump',
+'icon' => 'fas fa-home',
 'active' => $_SERVER['REQUEST_URI'] == '/admin' ? 'active' : '',
+],
+(object) [
+'label' => 'Abastecimentos',
+'url' => '/admin/monitores',
+'icon' => 'fas fa-gas-pump',
+'active' => $_SERVER['REQUEST_URI'] == '/admin/monitores' ? 'active' : '',
 ],
 /*
 (object) [
