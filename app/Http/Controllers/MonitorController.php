@@ -13,7 +13,7 @@ class MonitorController extends Controller
 
     public function auth(Request $request)
     {
-        return response()->json(Monitor::auth($_SERVER['HTTP_TOKEN']);
+        return response()->json(Monitor::auth($_SERVER['HTTP_TOKEN']));
     }
 
     public function login(Request $request)

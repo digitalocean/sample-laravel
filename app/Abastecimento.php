@@ -18,11 +18,12 @@ class Abastecimento extends Model
         );
 
         if ( $affected==1 ){
-            return ['status'=>'success','errorCode'=>'0000', 'message'=>"Abastecimento [$id] baixado"];
+            return ['result'=>'success','errorCode'=>'0000', 'message'=>"Abastecimento [$id] baixado"];
         }else{
-            return ['status'=>'danger','errorCode'=>'4101', 'message'=>"ERRO: abastecimento [$id] não baixado"];
+            return ['result'=>'danger','errorCode'=>'4101', 'message'=>"ERRO: abastecimento [$id] não baixado"];
         }
         
     }
  
 }
+

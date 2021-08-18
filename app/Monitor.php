@@ -29,11 +29,11 @@ class Monitor extends Model
         if ( count($user)>0 ){
             if (Hash::check($dados['senha'], $user[0]->senha)) {
                 header("token:{$user[0]->token}");
-                return ['status'=>'success','errorCode'=>'0000', 'message'=>'Autenticação bem sucedida.'];
+                return ['result'=>'success','errorCode'=>'0000', 'message'=>'Autenticação bem sucedida.'];
             }
         }
 
-        return ['status'=>'danger','errorCode'=>'4108', 'message'=>"ERRO: falha na autenticacao."];
+        return ['result'=>'danger','errorCode'=>'4108', 'message'=>"ERRO: falha na autenticacao."];
         
         /*
         $affected = DB::select("SELECT * FROM users where active = ?", [1])(
@@ -42,9 +42,9 @@ class Monitor extends Model
         );
 
         if ( $affected==1 ){
-            return ['status'=>'success','errorCode'=>'0000', 'message'=>"Monitor [$id] baixado"];
+            return ['result'=>'success','errorCode'=>'0000', 'message'=>"Monitor [$id] baixado"];
         }else{
-            return ['status'=>'danger','errorCode'=>'4101', 'message'=>"ERRO: monitor [$id] não baixado"];
+            return ['result'=>'danger','errorCode'=>'4101', 'message'=>"ERRO: monitor [$id] não baixado"];
         }
         */
         
@@ -67,10 +67,10 @@ class Monitor extends Model
 
         if ( count($user)>0 ){
                 header("token:{$user[0]->token}");
-                return ['status'=>'success','errorCode'=>'0000', 'message'=>'Usuário localizado.'];
+                return ['result'=>'success','errorCode'=>'0000', 'message'=>'Usuário localizado.'];
         }
 
-        return ['status'=>'danger','errorCode'=>'4109', 'message'=>"ERRO: usuário não encontrado."];
+        return ['result'=>'danger','errorCode'=>'4109', 'message'=>"ERRO: usuário não encontrado."];
         
         /*
         $affected = DB::select("SELECT * FROM users where active = ?", [1])(
@@ -79,9 +79,9 @@ class Monitor extends Model
         );
 
         if ( $affected==1 ){
-            return ['status'=>'success','errorCode'=>'0000', 'message'=>"Monitor [$id] baixado"];
+            return ['result'=>'success','errorCode'=>'0000', 'message'=>"Monitor [$id] baixado"];
         }else{
-            return ['status'=>'danger','errorCode'=>'4101', 'message'=>"ERRO: monitor [$id] não baixado"];
+            return ['result'=>'danger','errorCode'=>'4101', 'message'=>"ERRO: monitor [$id] não baixado"];
         }
         */
         
@@ -98,9 +98,9 @@ class Monitor extends Model
         );
 
         if ( $affected==1 ){
-            return ['status'=>'success','errorCode'=>'0000', 'message'=>"Monitor [$id] baixado"];
+            return ['result'=>'success','errorCode'=>'0000', 'message'=>"Monitor [$id] baixado"];
         }else{
-            return ['status'=>'danger','errorCode'=>'4101', 'message'=>"ERRO: monitor [$id] não baixado"];
+            return ['result'=>'danger','errorCode'=>'4101', 'message'=>"ERRO: monitor [$id] não baixado"];
         }
         
     }
