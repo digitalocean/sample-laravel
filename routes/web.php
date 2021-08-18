@@ -49,6 +49,10 @@ Route::group(array('prefix' => 'api/v1/abastecimento'), function(){
 });
 
 Route::group(array('prefix' => 'api/v1/dispositivo'), function(){
+
+    Route::get('/{id}/ativo', [DispositivoController::class, 'ativo']);
+    Route::put('/{id}/ativacao', [DispositivoController::class, 'ativacao']);
+
     Route::get('/', [DispositivoController::class, 'index']);
     Route::get('/{id}', [DispositivoController::class, 'show']);
     Route::post('/', [DispositivoController::class, 'store']);

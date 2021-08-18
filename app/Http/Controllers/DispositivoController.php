@@ -11,10 +11,17 @@ class DispositivoController extends Controller
         header('Access-Control-Allow-Origin: *');
     }
 
-    public function baixar(Request $request, $id)
+    public function ativo(Request $request, $id)
     {
-        return response()->json(Dispositivo::baixar($id));
+        return response()->json(Dispositivo::ativo($id));
+        
     }
+
+    public function ativacao(Request $request, $id)
+    {
+        $dados = $request->all();
+        return response()->json( Dispositivo::ativacao($id, $dados) );
+    }    
 
     /**
      * Recupera uum conjunto de dispositivos.

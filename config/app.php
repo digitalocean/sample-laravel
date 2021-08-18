@@ -26,8 +26,8 @@ return [
     |
     */
     
-    //'env' => env('APP_ENV', 'local'),
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'local'),
+    //'env' => env('APP_ENV', 'production'),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,8 +40,8 @@ return [
     |
     */
 
-    //'debug' => (bool) env('APP_DEBUG', true),
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', true),
+    //'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,8 +54,8 @@ return [
     |
     */
 
-    //'url' => env('APP_URL', 'http://localhost'),
-    'url' => env('APP_URL', 'https://gasway.com.br'),
+    'url' => env('APP_URL', 'http://localhost'),
+    //'url' => env('APP_URL', 'https://gasway.com.br'),
 
     'asset_url' => env('ASSET_URL', null),
 
