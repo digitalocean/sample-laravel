@@ -11,3 +11,4 @@ yarn-error.log
 .env
 /config/app.php
 
+.vscode/
