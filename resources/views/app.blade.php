@@ -25,9 +25,7 @@
     <div class="loader"></div>
 </div>
 
-@yield('header')
 @yield('content')
-@yield('footer')
 
 <!--====== Javascripts & Jquery ======-->
 <script src="../js/jquery-3.2.1.min.js"></script>

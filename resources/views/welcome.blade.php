@@ -1,26 +1,6 @@
 @extends('app')
 
-@section('header')
-    <!-- Header section -->
-    <header class="header-section clearfix">
-        <div class="container-fluid">
-            <a href="" class="site-logo">
-                <img src="img/logo.png" alt="">
-            </a>
-            <div class="responsive-bar"><i class="fa fa-bars"></i></div>
-            <a href="" class="site-btn">Launch App</a>
-            <nav class="main-menu">
-                <ul class="menu-list">
-                    <li><a href="">About</a></li>
-                    <li><a href="">Tokenomics</a></li>
-                    <li><a href="">Roadmap</a></li>
-                    <li><a href="">Socials</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <!-- Header section end -->
-@endsection
+@include('header')
 
 @section('content')
     <!-- Hero section -->
@@ -41,7 +21,7 @@
 
 
     <!-- About section -->
-    <section class="about-section spad">
+    <section class="about-section spad" id="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 offset-lg-6 about-text">
@@ -58,7 +38,7 @@
 
 
     <!-- Features section -->
-    <section class="features-section spad gradient-bg">
+    <section class="features-section spad gradient-bg" id="tokenomics">
         <div class="container text-white">
             <div class="section-title text-center">
                 <h2>Our Features</h2>
@@ -126,7 +106,7 @@
 
 
     <!-- Process section -->
-    <section class="process-section spad">
+    <section class="process-section spad" id="roadmap">
         <div class="container">
             <div class="section-title text-center">
                 <h2>Get Started With Bitcoin</h2>
@@ -205,57 +185,6 @@
 
 @endsection
 
-@section('footer')
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row spad">
-                <div class="col-md-6 col-lg-3 footer-widget">
-                    <img src="img/logo.png" class="mb-4" alt="">
-                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia dese mollit anim id est laborum.</p>
-                </div>
-                <div class="col-md-6 col-lg-2 offset-lg-1 footer-widget">
-                    <h5 class="widget-title">Resources</h5>
-                    <ul>
-                        <li><a href="#">How to Buy Coin</a></li>
-                        <li><a href="#">Coin Overview</a></li>
-                        <li><a href="#">Blog News</a></li>
-                        <li><a href="#">How to Sell Coin</a></li>
-                        <li><a href="#">Purchase Theme</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-6 col-lg-2 offset-lg-1 footer-widget">
-                    <h5 class="widget-title">Quick Links</h5>
-                    <ul>
-                        <li><a href="#">Network Stats</a></li>
-                        <li><a href="#">Block Explorers</a></li>
-                        <li><a href="#">Governance</a></li>
-                        <li><a href="#">Exchange Markets</a></li>
-                        <li><a href="#">Get Theme</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-6 col-lg-3 footer-widget pl-lg-5 pl-3">
-                    <h5 class="widget-title">Follow Us</h5>
-                    <div class="social">
-                        <a href="" class="facebook"><i class="fa fa-facebook"></i></a>
-                        <a href="" class="google"><i class="fa fa-google-plus"></i></a>
-                        <a href="" class="instagram"><i class="fa fa-instagram"></i></a>
-                        <a href="" class="twitter"><i class="fa fa-twitter"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="row">
-                    <div class="col-lg-8 text-center text-lg-right">
-                        <ul class="footer-nav">
-                            <li><a href="">DPA</a></li>
-                            <li><a href="">Terms of Use</a></li>
-                            <li><a href="">Privacy Policy </a></li>
-                            <li><a href="">support@company.com</a></li>
-                            <li><a href="">(123) 456-7890</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-@endsection
+@include('footer')
+
+
