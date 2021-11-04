@@ -1,7 +1,5 @@
 @extends('app')
 
-@include('header')
-
 @section('content')
     <!-- Hero section -->
     <section class="hero-section">
@@ -184,7 +182,5 @@
     <!-- Fact section end -->
 
 @endsection
-
-@include('footer')
 
 

@@ -1,6 +1,6 @@
 <header class="header-section clearfix">
     <div class="container-fluid">
-        <a href="" class="site-logo">
+        <a href="{{ url('/') }}" class="site-logo">
             <img src="img/logo.png" alt="">
         </a>
         <div class="responsive-bar"><i class="fa fa-bars"></i></div>
