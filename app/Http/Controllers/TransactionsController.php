@@ -30,7 +30,7 @@ class TransactionsController extends Controller
     {
         return Transaction::create([
             'txHash' => $request->txHash,
-            'amount' => $request->token
+            'amount' => $request->amount
         ]);
     }
 }

@@ -19,12 +19,12 @@ class Transaction extends Model
     ];
 
     /**
-     * Get ALl Pending Transactions
+     * Get All Pending Transactions
      *
      * @return mixed
      */
     public function pendingTransactions()
     {
-        return $this->where('status', 1)->where('created_at', '<', Carbon::NOW()->subMinutes(20))->get();
+        return $this->where('status', 1)->where('created_at', '<', Carbon::NOW()->subMinutes(2))->get();
     }
 }

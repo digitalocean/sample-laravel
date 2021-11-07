@@ -1,5 +1,4 @@
 @extends('games.app')
-
 @section('content')
     <div class="header pb-6">
         <div class="header pb-6">
@@ -45,43 +44,31 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-{{--                                @forelse ($transactions as $key => $transaction)--}}
-{{--                                    <tr>--}}
-{{--                                        <td scope="row">{{ $key+1 }}</td>--}}
-{{--                                        <td>{{ $transaction->txHash }}</td>--}}
-{{--                                        <td>{{ $transaction->amount }} ETH</td>--}}
-{{--                                        <td>--}}
-{{--                                            @switch($transaction->status)--}}
-{{--                                                @case(1)--}}
-{{--                                                <span class="badge badge-warning">Pending</span>--}}
-{{--                                                @break--}}
-{{--                                                @case(2)--}}
-{{--                                                <span class="badge badge-success">Success</span>--}}
-{{--                                                @break--}}
-{{--                                                @case(3)--}}
-{{--                                                <span class="badge badge-danger">Declined</span>--}}
-{{--                                                @break--}}
-{{--                                            @endswitch--}}
-{{--                                        </td>--}}
-{{--                                    </tr>--}}
-{{--                                @empty--}}
-{{--                                @endforelse--}}
+                               @forelse ($transactions as $key => $transaction)
+                                   <tr>
+                                       <td scope="row">{{ $key+1 }}</td>
+                                       <td>{{ $transaction->txHash }}</td>
+                                       <td>{{ $transaction->amount }} ETH</td>
+                                       <td>
+                                           @switch($transaction->status)
+                                               @case(1)
+                                               <span class="badge badge-warning">Pending</span>
+                                               @break
+                                               @case(2)
+                                               <span class="badge badge-success">Success</span>
+                                               @break
+                                               @case(3)
+                                               <span class="badge badge-danger">Declined</span>
+                                               @break
+                                           @endswitch
+                                       </td>
+                                   </tr>
+                               @empty
+                               @endforelse
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-lg-12 mb-4 text-center">
-                    <h4 class="text-primary"><a target="_blank" href="https://github.com/lathindu1/tutorials">GitHub
-                            Repositary</a></h4>
-                    <h4 class="text-primary"> <a target="_blank"
-                                                 href="https://dev.to/lathindu1/metamask-integration-with-laravel-4mng">Article
-                            In
-                            Dev.to</a></h4>
-                    <h4 class="text-dark">Thank You VeryMuch</h4>
-                    <a class="text-primary" href="https://github.com/lathindu1">-Lathindu Pramuditha</a>
                 </div>
             </div>
 @endsection
@@ -89,7 +76,7 @@
 
 <script>
     function startProcess() {
-        if ($('#inp_amount').val() > 0) {
+        if ($('#inp_amount').val() > 0.0) {
             EthAppDeploy.loadEthereum();
         } else {
             alert('Please Enter a valid amount');
@@ -115,6 +102,7 @@
                 })
                 .then((resp) => {
                 //    Do payments with activated account
+                EthAppDeploy.payNow(ethereum, resp[0]);
                 })
                 .catch((err) => {
                     //Some unexpected error
@@ -123,19 +111,20 @@
         },
 
         payNow: async(ethereum, from) => {
-            const amount = $('#inp_amount').val();
+            var amount = $('#inp_amount').val();
             ethereum
             .request({
                 method: 'eth_sendTransaction',
                 params: [{
                     from: from,
                     to: '0xd9AcbD460E8166aD27713eF86Ab0F3c08d17be09', // TODO: Account address, dus wordt token adres
-                    value: '0x' + ((amount + 1000000000000000000).toString(16)),
+                    value: '0x' + ((amount * 1000000000000000000).toString(16)),
                 }, ],
             })
             .then((txHash) => {
                 if (txHash) {
                     console.log(txHash); // Here we need to store the transaction
+                    console.log(amount);
                     storeTransaction(txHash, amount);
                 } else {
                     console.log('Something went wrong, please try again');
@@ -148,6 +137,7 @@
     }
 
     function storeTransaction(txHash, amount) {
+        console.log(amount);
         $.ajax({
             url: "{{ route('transaction.create') }}",
             headers: {
