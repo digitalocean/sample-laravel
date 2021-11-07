@@ -10,15 +10,19 @@
 </head>
 
 <body>
-<!-- Page Preloader -->
+<!-- Page preloader -->
 <div id="preloader">
     <div class="loader"></div>
 </div>
-@include('header')
-
+<header class="header-section clearfix">
+    <div class="container-fluid">
+        <a href="{{ url('/') }}" class="site-logo">
+            <img src="img/logo.png" alt="">
+        </a>
+        <div class="responsive-bar"><i class="fa fa-bars"></i></div>
+    </div>
+</header>
 @yield('content')
-
-@include('footer')
 
 @include('scripts')
 </body>

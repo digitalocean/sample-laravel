@@ -219,9 +219,9 @@ ol {
     transform: scale(1);
 }
 
-/* Preloder */
+/* Preloader */
 
-#preloder {
+#preloader {
     position: fixed;
     width: 100%;
     height: 100%;
