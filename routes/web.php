@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TransactionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('token.token');
+});
+
+//Metamask
+Route::prefix('games')->group(function () {
+    Route::get('/', [TransactionsController::class, 'index'])->name('metamask');
+    Route::post('/transaction/create', [TransactionsController::class, 'create'])->name('transaction.create');
 });
