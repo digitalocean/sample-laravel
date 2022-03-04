@@ -1,0 +1,73 @@
+@charset "utf-8";
+/*
+Template Name: Modern Business
+Author: <a href="http://www.os-templates.com/">OS Templates</a>
+Author URI: http://www.os-templates.com/
+Licence: Free to use under our free template licence terms
+Licence URI: http://www.os-templates.com/template-terms
+File: Featured Slider CSS
+*/
+
+#featured_slide{display:block; position:relative; margin:0 auto; width:920px; height:350px; padding:20px 20px 30px 20px; overflow:hidden; font-size:12px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#666666; background-color:#FFFFFF;}
+#featured_slide a{text-decoration:none; border:none; outline:none;}
+
+/*
+* jQuery Nivo Slider v3.2
+* http://nivo.dev7studios.com
+*
+* Copyright 2012, Dev7studios
+* Free to use and abuse under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+*/
+
+/* The Nivo Slider styles */
+
+.nivoSlider{position:relative; width:100%; height:auto; overflow:hidden;}
+.nivoSlider img{position:absolute; top:0; left:0; max-width:none;}
+.nivo-main-image{display:block !important; position:relative !important; width:100% !important;}
+
+/* If an image is wrapped in a link */
+
+.nivoSlider a.nivo-imageLink{position:absolute; top:0; left:0; width:100%; height:100%; border:0; padding:0; margin:0; z-index:6; display:none; background:white; opacity:0;}
+
+/* The slices and boxes in the Slider */
+
+.nivo-slice{display:block; position:absolute; z-index:5; height:100%; top:0;}
+.nivo-box{display:block; position:absolute; z-index:5; overflow:hidden;}
+.nivo-box img{display:block;}
+
+/* Caption styles */
+
+.nivo-caption{position:absolute; left:0; bottom:0; background:#000; color:#fff; width:100%; z-index:8; padding:5px 10px; opacity:0.8; overflow:hidden; display:none; box-sizing:border-box;}
+.nivo-caption p{padding:5px; margin:0;}
+.nivo-caption a{display:inline !important;}
+.nivo-html-caption{display:none;}
+
+/* Direction nav styles (e.g. Next & Prev) */
+
+.nivo-directionNav a{position:absolute; top:45%; z-index:9; cursor:pointer;}
+.nivo-prevNav{left:0;}
+.nivo-nextNav{right:0;}
+
+/* Control nav styles (e.g. 1,2,3...) */
+
+.nivo-controlNav{text-align:center; padding:15px 0;}
+.nivo-controlNav a{cursor:pointer;}
+.nivo-controlNav a.active{font-weight:bold;}
+
+/* ----------------OST Custom Settings + Overrides------------------- */
+
+#slider{position:relative; background:url("images/loading.gif") no-repeat 50% 50% #666666;}
+#slider img{display:none; position:absolute; top:0; left:0;}
+
+/* Number Nav Under Image - Uses Background Images And Hides The Text Numbers */
+
+.nivo-controlNav{display:block; position:absolute; bottom:-5px; width:100%; text-align:center;}
+.nivo-controlNav a{display:inline-block; width:10px; height:10px; margin-right:5px; color:#999999; background:url("images/bullets.gif") no-repeat #FFFFFF; text-indent:-9999px; cursor:pointer; z-index:99;}
+.nivo-controlNav a.active{background-position:-10px 0;}
+
+/* Previous Next Navigation */
+
+.nivo-directionNav a{position:absolute; top:45%; display:block; width:30px; height:30px; background:url("images/arrows.png") no-repeat; text-indent:-9999px; cursor:pointer; z-index:99;}
+a.nivo-prevNav{left:15px;}
+a.nivo-nextNav{background-position:-30px 0; right:15px;}
