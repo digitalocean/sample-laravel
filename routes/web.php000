@@ -44,21 +44,21 @@ use Illuminate\Support\Facades\Storage;
 /* Route::get('/', function () {
     return view('welcome');*/
     //https://www.opera.com/download
-    // Route::any('errorborowsername',function(){
-    //     return view('errorborowsername')->middleware('auth:admin');
-    // }); 
-    // Route::any('borowsername3',function(){
-    //     return view('borowsername3')->middleware('auth:admin');
-    // }); 
-    // Route::any('borowsername',function(){
-    //     return view('borowsername')->middleware('auth:admin');
-    // }); 
-    // Route::any('borowsername2',function(){
-    //     return view('borowsername2')->middleware('auth:admin');
-    // });
-    // Route::any('announcement',function(){
-    //     return view('pages.announcement')->middleware('auth:admin');
-    // });
+    Route::any('errorborowsername',function(){
+        return view('errorborowsername')->middleware('auth:admin');
+    }); 
+    Route::any('borowsername3',function(){
+        return view('borowsername3')->middleware('auth:admin');
+    }); 
+    Route::any('borowsername',function(){
+        return view('borowsername')->middleware('auth:admin');
+    }); 
+    Route::any('borowsername2',function(){
+        return view('borowsername2')->middleware('auth:admin');
+    });
+    Route::any('announcement',function(){
+        return view('pages.announcement')->middleware('auth:admin');
+    });
     Route::get('selectexamx2',function(){
         $disable =0;
         $examcode = 0;
@@ -308,9 +308,10 @@ $max_id_ref_result =  DB::table('ref_result')->where('student_id',$student_id)->
                
            );
     if($lastresult->mailing == 0){  $email = $member1->email;
-           //Mail::to($email)->send(new ExamResult($lastresult));
-       //     Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-       //    Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+           Mail::to($email)->send(new ExamResult($lastresult));
+           //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
            DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
     
        }
@@ -986,9 +987,10 @@ $sum = $Minutes + $Seconds;
 
         );
         if($lastresult->mailing == 0){  $email = $member1->email;
-        //Mail::to($email)->send(new ExamResult($lastresult));
-      //   Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-      //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+        Mail::to($email)->send(new ExamResult($lastresult));
+        //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+        Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+        Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
         DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
 
         }
@@ -1175,9 +1177,10 @@ foreach($resultq as $res_q){
        );
 
 if($lastresult->mailing == 0){  $email = $member1->email;
-        //Mail::to($email)->send(new ExamResult($lastresult));
-    //     Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-   //     Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+        Mail::to($email)->send(new ExamResult($lastresult));
+        //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+        Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+        Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
         DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
 
    }
@@ -1323,9 +1326,10 @@ $s = $st->pass;
 
        );
 if($lastresult->mailing == 0){  $email = $member1->email;
-       //Mail::to($email)->send(new ExamResult($lastresult));
-    //  Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-    //   Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+       Mail::to($email)->send(new ExamResult($lastresult));
+       //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+     Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
 
    }
@@ -1466,9 +1470,10 @@ Route::any('subquestion',function(Request $request){
 
        );
 if($lastresult->mailing == 0){  $email = $member1->email;
-       //Mail::to($email)->send(new ExamResult($lastresult));
-     //  Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-     //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+       Mail::to($email)->send(new ExamResult($lastresult));
+       //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
 
    }
@@ -1583,9 +1588,10 @@ if($s_id1 != $s_id2){
 
                     );
                 if($lastresult->mailing == 0){  $email = $member1->email;
-                    //Mail::to($email)->send(new ExamResult($lastresult));
-              //       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-              //      Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+                    Mail::to($email)->send(new ExamResult($lastresult));
+                    //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+                    Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+                    Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
                     DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
                 
                 }
@@ -1731,9 +1737,10 @@ if($countx < 1){
      
        $member = array( 'name' => $member1->name,'phone' => $member1->phone,'email' => $member1->email,'totQ' => $totQ,'examname' => $exam->examtitle,'tot_mark' => $tot_mark,'tot_correct' => $tot_correct,'attempno' => $attempno, );
     if($lastresult->mailing == 0){  $email = $member1->email;
-       //Mail::to($email)->send(new ExamResult($lastresult));
-    //    Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-    //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+       Mail::to($email)->send(new ExamResult($lastresult));
+       //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
     
     }
@@ -1921,9 +1928,10 @@ Route::post('firstquestion',function(Request $request){
 
        );
 if($lastresult->mailing == 0){  $email = $member1->email;
-       //Mail::to($email)->send(new ExamResult($lastresult));
-     //   Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-     //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+       Mail::to($email)->send(new ExamResult($lastresult));
+       //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
 
    }
@@ -2062,9 +2070,10 @@ if($s_id1 != $s_id2){
                
            );
     if($lastresult->mailing == 0){  $email = $member1->email;
-           //Mail::to($email)->send(new ExamResult($lastresult));
-         //   Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-         //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+           Mail::to($email)->send(new ExamResult($lastresult));
+           //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
            DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
     
        }

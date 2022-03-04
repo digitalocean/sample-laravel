@@ -43,355 +43,9 @@ use Illuminate\Support\Facades\Storage;
 
 /* Route::get('/', function () {
     return view('welcome');*/
-    //https://www.opera.com/download
-    // Route::any('errorborowsername',function(){
-    //     return view('errorborowsername')->middleware('auth:admin');
-    // }); 
-    // Route::any('borowsername3',function(){
-    //     return view('borowsername3')->middleware('auth:admin');
-    // }); 
-    // Route::any('borowsername',function(){
-    //     return view('borowsername')->middleware('auth:admin');
-    // }); 
-    // Route::any('borowsername2',function(){
-    //     return view('borowsername2')->middleware('auth:admin');
-    // });
-    // Route::any('announcement',function(){
-    //     return view('pages.announcement')->middleware('auth:admin');
-    // });
-    Route::get('selectexamx2',function(){
-        $disable =0;
-        $examcode = 0;
-        $attempno =0;
-        $student_id = Auth::user()->student_id;
-        $ref_results = DB::table('ref_result')->where('student_id',$student_id)->get();
-        $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
-        return view('exam.selectexam2',compact('student_id','ref_results','exams','disable','examcode','attempno'));
-    });
-    
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-Route::any('selectexam3',function(Request $request){
-    $student_id = Auth::user()->student_id;
-    $memberid = Auth::user()->student_id;
-    $examcode = $request->examcode;
-    if($examcode == 66){
-        $date = date('Y-m-d');
-            $id = $request->input('student_id');
-        $user = DB::table('users')->where('student_id', $student_id)->first();
-        $proctordate = new Proctordate;
-        $proctordate->user_id = $student_id;
-        $proctordate->subject_id = 66;
-        $proctordate->procrordate = $date;
-        $proctordate->open = 0;
-        $proctordate->save();
-            $proctor_id = DB::table('proctordate')->max('id');
-        $ref_result = new Ref_result;
-        $ref_result->pass = 'Open' ;
-        $ref_result->student_id =$student_id;
-        $ref_result->examcode = 66;
-        $ref_result->mailing = 0;
-       // $proctor_id = DB::table('proctordate')->max('id');
-        $ref_result->proctor_id = $proctor_id;
-        $ref_result->save();
-        
-    $ref_max = DB::table('ref_result')->where( 'student_id', $student_id)->where('examcode', $examcode)->max('id');
-
-    $attempno = $ref_max;
-
-        $questions = DB::table('exam_question')->inRandomOrder()->where('examcode', 66)->limit(10)->get();
-        $timing = '30:00';
-
-        $i =1;
-                foreach($questions as $q){
-                    $student_id = Auth::user()->student_id;
-
-                    $result = new Result;
-                    $result->student_id = $student_id;
-                    $result->ques_id = $q->id;
-                    $result->selected_option = Null;
-                    $result->attempno = $attempno;
-                    $result->givenmarks = null;
-                    $result->timing = "30.0";
-                    $result->serial = $i;
-                    $result->save();
-            
-                $i = $i +1;
-                }    
-        $ref_results =  DB::table('ref_result')->where('student_id',$student_id)->get();
-        $attempno = DB::table('ref_result')->where('student_id',$student_id)->where('examcode',66)->max('id');
-        $exams = Exam::all();
-        $examcode = 66;
-        return view('exam.selectexam3',compact('student_id','ref_results','exams','examcode','attempno'));
-    }
-    //******End If For Mook Exam */
-
-
-    
-    $status = 'Open';
-$account = DB::table('ref_result')->where('student_id',$student_id)->where('examcode',$examcode)
-    ->where('pass',$status)->count();
-if($account < 1){
-    return redirect('selectexamx2');
-
-}
-
-
-$max_id_ref_result =  DB::table('ref_result')->where('student_id',$student_id)->where('examcode',$examcode)
-    ->where('pass',$status)->max('id');
-
-    $date = date('Y-m-d');
-   
-    $count_proctordate = DB::table('proctordate')->where('procrordate',$date)
-                         ->where('used',0)->where('open',1)->count();
-    if(($count_proctordate < 1)||($max_id_ref_result < 1)){
-        return redirect('selectexamx2');
-        }else{
-          $exam22 = DB::table('ref_result')->where('student_id',$student_id)->where('examcode',$examcode)
-            ->where('pass',$status)->max('id');
-        $ref_results =  DB::table('ref_result')->where('student_id',$student_id)->get();
-        $exams = Exam::all();
-        $disable = -1;
-
-        
-    $status = 'Open';
-    $account = DB::table('ref_result')->where('student_id',$student_id)->where('examcode',$examcode)->where('examcode','<>',66)
-        ->where('pass',$status)->count();
-
-    $MAX_REF_RESULT = DB::table('ref_result')->where('student_id',$student_id)->where('examcode',$examcode)
-                    ->where('examcode','<>',66)
-                    ->where('pass',$status)
-                    ->max('id');
-
-        $attempno = $MAX_REF_RESULT;
-      //  dd($MAX_REF_RESULT);
-      $REF22 =         DB::table('ref_result')->where('id',$MAX_REF_RESULT)->first();
-      $RESULT22 =         DB::table('result')->where('attempno',$MAX_REF_RESULT)->get();
-       // dd($RESULT22);
-
-        $today = date('Y-m-d');
-        $NewDate=Date('Y-m-d', strtotime('-13 days'));
-        $pro =  DB::table('proctordate')->get();
-           DB::table('proctordate')->where('subject_id',$examcode)
-            ->where('procrordate',$today)->where('user_id',$memberid)->update(['procrordate'=> $NewDate]);
-            $attemp = DB::table('ref_result')->where('id',$attempno)->first();
-
-        DB::table('proctordate')->where('subject_id',$examcode)->where('procrordate',$today)->where('user_id',$memberid)->update(['open'=> 2]);
-        DB::table('ref_result')->where('id',$attempno)->update(['pass'=> 'In progress']);
-        DB::table('proctordate')->where('id',$attemp->proctor_id)->update(['open'=> 0]);
-    
-
-
-            return view('exam.selectexam3',compact('student_id','ref_results','exams','disable','examcode','attempno'));
-
-
-    }
-
-//------------------------------------------------------------------------------------------------------------------------------------///
-
-
-
-
-
-
-    $student_id = Auth::user()->student_id;
-
-    $ref_results = DB::table('ref_result')->where('student_id',$student_id)->get();
-
-
-    $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
-    $exam = DB::table('exam')->where('examcode',$examcode)->first();
-    $count =  DB::table('ref_result')->where('examcode',$examcode)
-                                    ->where('student_id',$student_id)->where('mailing',0)->where('proctor_id','>',0)->count(); 
-
-    $ref_results_1_max_id = DB::table('ref_result')->where('examcode',$examcode)->where('student_id',$student_id)
-                                                    ->where('mailing',0)->max('id');
-   
-   $date = date('Y-m-d');
-   
-   $count_proctordate = DB::table('proctordate')->where('procrordate',$date)
-                        ->where('used',0)->where('open',1)->count();
-   if(($count_proctordate < 1)||($count < 1)){
-        $disable = -1;
-        $attempno = -1;
-        return view('exam.selectexam3',compact('student_id','ref_results','exams','disable','examcode','attempno'));
-
-       
-    }    
-
-
-    $attempno = $ref_results1;
-//dd($attempno);
-    $ref_result = DB::table('ref_result')->where('id',$attempno)->first(); 
-    $result = DB::table('result')->where('attempno',$attempno)->where('givenmarks',Null)->first(); 
-    $count = DB::table('result')->where('attempno',$attempno)->where('givenmarks',Null)->count(); 
-    if($count < 1){
-        
-    $ref_results1 = DB::table('ref_result')->where('examcode',$examcode)->where('student_id',$student_id)
-        ->where('mailing',0)->max('id'); 
-        //dd($ref_results1->id);
-
-    $attempno = $ref_results1;
-
-    $ref_result = DB::table('ref_result')->where('id',$attempno)->first();
-    $attemp = DB::table('ref_result')->where('id',$attempno)->first();
-    $id = $ref_result->id;        
-    $examcode = $ref_result->examcode;
-    $memberid= Auth::user()->student_id;
-    $today = date('Y-m-d');
-    $NewDate=Date('Y-m-d', strtotime('-13 days'));
-    $pro =  DB::table('proctordate')->get();
-       DB::table('proctordate')->where('subject_id',$examcode)
-        ->where('procrordate',$today)->where('user_id',$memberid)->update(['procrordate'=> $NewDate]);
-
-    DB::table('proctordate')->where('subject_id',$examcode)->where('procrordate',$today)->where('user_id',$memberid)->update(['open'=> 2]);
-    DB::table('ref_result')->where('id',$attempno)->update(['pass'=> 'In progress']);
-    DB::table('proctordate')->where('id',$attemp->proctor_id)->update(['open'=> 0]);
-
-
-    $id =  $ref_results1;
-    $timeing = $request->timeing;
-    $selected_option = $request->selected_option;
-    $attempno =  $ref_results1;
-    $lastresult=  $ref_results1;
-    $count = DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)->count();
-    if($count < 1){
-        DB::table('ref_result')->where('id',$attempno)->update(['pass'=> 'In progress']);
-
-       // $attempno = $request->attempno;
-        $id4 =  $ref_results1;
-        $result = DB::table('result')->where('attempno',$id4)->first();
-        $ref_result = DB::table('ref_result')->where('id',$attempno)->first();
-
-        $attempno =  $ref_results1;
-            $id = $ref_result->id;        
-            $id4 = $ref_result->examcode;
-
-        $lastresult = DB::table('ref_result')->where('id',$id)->first();
-        $memberid=$lastresult->student_id;
-        $member1 = DB::table('users')->where('student_id',$memberid)->first();
-        $examcode = $ref_result->examcode;
-        $exam = DB::table('exam')->where('examcode',$examcode)->first();
-        $resultq = DB::table('result')->where('attempno',$id)->get();
-        $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
-        $tot_mark = 0;
-        $tot_correct=0;
-    
-        //DB::table('ref_result')->where('pass','In progress' )->where('examcode',$id4)->where('student_id',$memberid)->delete();
-        $today = date('Y-m-d');
-          $pro =  DB::table('proctordate')->get();
-             DB::table('proctordate')->where('subject_id',$id4)
-          ->where('procrordate',$today)->where('user_id',$memberid)->update(['used'=>1]);
-      
-           if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
-           $result = Ref_result::find($id);
-           foreach($resultq as $res_q){
-               $tot_mark =  $res_q->givenmarks+$tot_mark;
-    
-               } 
-               if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
-                $tot_correct = $tot_mark/$totQ;
-           //$lastresult =  DB::table('ref_result')->where('id',$id)->first();
-           //$lastresult['tot_mark'] = $tot_mark;
-    
-    
-           $member = array(
-               'name' => $member1->name,
-               'phone' => $member1->phone,
-               'email' => $member1->email,
-               'totQ' => $totQ,
-               'examname' => $exam->examtitle,
-               'tot_mark' => $tot_mark,
-               'tot_correct' => $tot_correct,
-               'attempno' => $attempno,
-               
-           );
-    if($lastresult->mailing == 0){  $email = $member1->email;
-           //Mail::to($email)->send(new ExamResult($lastresult));
-       //     Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-       //    Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
-           DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
-    
-       }
-    //--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-    $student_id=$lastresult->student_id;
-    $GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
-    $pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
-    //FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
-    foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
-    if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
-    //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-    if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
-    //FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-       if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
-    //********************************************************EXAm NO 9*********************************************************** */
-    $ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
-    //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-    if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
-    //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
-    if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
-    //******************************************************************************************************************* */
-    /**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
-    if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
-    }else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
-           if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
-           }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
-                   if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
-           }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
-                   if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
-    }else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
-           if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
-    else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
-           if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
-    /////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
-    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
-    }else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
-       if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
-    //--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-  
-          
-    $ref_result = DB::table('ref_result')->where('id',$attempno)->first();
-    $s_id1= Auth::user()->student_id;
-    $s_id2 = $ref_result->student_id;
-    if($s_id1 != $s_id2){
-        return redirect('/');
-    }
-    return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult'));
-    
-
-    }
-        return redirect()->back();
-    }
-    
-    echo   $result= $result->timing;
-    $disable = $ref_results1;
-
-    return view('exam.selectexam3',compact('student_id','ref_results','exams','disable','examcode','attempno'));
-});
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 Route::get('insertvideoparts', function(){
     $videos = Parts_Videos::all();
-    return view('ross.insertvideoparts',compact('videos'))->middleware('auth');
+    return view('ross.insertvideoparts',compact('videos'));
 });
     Route::any('uploadvideo',function(Request $request){
         //  dd($request->file('filename'));
@@ -452,7 +106,7 @@ Route::get('insertvideoparts', function(){
 
     });
 
-    Route::get('/check', 'UserController@userOnlineStatus')->middleware('auth:admin');
+    Route::get('/check', 'UserController@userOnlineStatus');
     
     Route::any('deleteattemp/{id}',function(Request $request,$id){
         $ref =  Ref_result::find($id);
@@ -466,8 +120,8 @@ Route::get('insertvideoparts', function(){
         DB::table('ref_result')->where('id',$id)->delete();
        // dd($res);
 
-       return redirect('allbookmarks')->middleware('auth:admin');
-        return view('map.home')->middleware('auth:admin');
+       return redirect('allbookmarks');
+        return view('map.home');
     
     });   
     Route::any('updateattemp/{id}',function(Request $request,$id){
@@ -482,16 +136,16 @@ Route::get('insertvideoparts', function(){
   //      DB::table('ref_result')->where('id',$id)->delete();
        // dd($res);
 
-       return redirect('allbookmarks')->middleware('auth:admin');
-        return view('map.home')->middleware('auth:admin');
+       return redirect('allbookmarks');
+        return view('map.home');
     
     });    
     Route::any('allusers',function(Request $request){
-        return view('ross.allusers')->middleware('auth:admin');
+        return view('ross.allusers');
     
     });    
     Route::any('timersubmit',function(Request $request){
-        return view('exam.timersubmit')->middleware('auth:admin');
+        return view('exam.timersubmit');
     
     });
     Route::any('createfee',function(Request $request){
@@ -501,7 +155,7 @@ Route::get('insertvideoparts', function(){
 
     Route::any('comments',function(Request $request){
         $comments = DB::table('comments')->get();
-            return view('ross.comments',compact('comments'))->middleware('auth:admin');
+            return view('ross.comments',compact('comments'));
     
     });
     Route::any('commentsonline/{id}',function(Request $request,$id){
@@ -530,7 +184,7 @@ Route::get('insertvideoparts', function(){
          DB::table('comments',compact('comments'))->where('id',$id)->delete();
          return redirect('/comments');
 
-        return view('ross.comments',compact('comments'))->middleware('auth:admin');
+        return view('ross.comments',compact('comments'));
 
     });
     
@@ -545,7 +199,7 @@ Route::get('insertvideoparts', function(){
         DB::table('comments')->where('id',$id)->update(['answer' => $answer]);
          return redirect('/comments');
 
-        return view('ross.comments',compact('comments'))->middleware('auth:admin');
+        return view('ross.comments',compact('comments'));
 
     });
 
@@ -560,7 +214,7 @@ Route::any('createfeeq',function(Request $request){
     }*/
     $explain_fee = DB::table('explains')->where('student_id',$student_id)->orderBy('subject_id')->get();
 
-    return view('exam.feesq',compact('explain_fee','student_id'))->middleware('auth:admin');
+    return view('exam.feesq',compact('explain_fee','student_id'));
 
 });
 Route::any('insertexplainfee',function(Request $request){
@@ -574,7 +228,7 @@ Route::any('insertexplainfee',function(Request $request){
     $fee->save();
 
     $explain_fee = DB::table('explains')->where('student_id',$student_id)->orderBy('subject_id')->get();
-    return view('exam.feesq',compact('explain_fee','student_id'))->with('Success','Successfully..!')->middleware('auth:admin');
+    return view('exam.feesq',compact('explain_fee','student_id'))->with('Success','Successfully..!');
 
 });
 Route::any('downloadxx',function(Request $request){
@@ -909,12 +563,12 @@ $id = $request->attempno;
     ///-------TIME--------------------------------  
 $all = DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)->orderBy('order','asc')->get();
 foreach($all as $att){
-    DB::table('result')->where([['attempno',$attempno],['givenmarks', Null]])->update(['timing' => $timeing ]);
+    DB::table('result')->update(['timing' => $timeing ]);
 }
-$resultUpdate = DB::table('result')->where([['serial',$serial0],['attempno',$attempno]])->first();
+$resultUpdate = DB::table('result')->where('serial',$serial0)->where('attempno',$attempno)->first();
 
 $newserial = $serial0 + 40 + $resultUpdate->order ;
-DB::table('result')->where([['serial',$serial0],['attempno',$attempno]])->update( ['order' => $newserial] );
+DB::table('result')->where('serial',$serial0)->update( ['order' => $newserial] );
 //**********************************Fke data .............. */
 $x=33*$serial0 + 7/85555555858;
 //**********************************Fke data .............. */
@@ -928,127 +582,148 @@ return view('exam.firstquestion',compact('attempno','attempdata','resultdata','t
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::any('selectthisquestion',function(Request $request){
+/*$timeing = $request->timeing;
+$timestamp = strtotime($timeing);
+//dd($timestamp);
+//$hours =  date('h', $timestamp);
+$Minutes =  date('i', $timestamp);
+$Seconds =  date('s', $timestamp);
+$sum = $Minutes + $Seconds;
+dd($Seconds);*/
 
 $attempno = $request->attempno;
 $timeing = $request->timeing;
-$att11 = DB::table('result')->where('attempno',$attempno)->get(); 
  
-//dd($att11);
+
 $timestamp = strtotime($timeing);
 $hours =  date('h', $timestamp);
 $Minutes =  date('i', $timestamp);
 $Seconds =  date('s', $timestamp);
-$sum = $Minutes + $Seconds; 
-        if($sum < 0)   // if($timeing < 0.02)
-
-        {
-
-        $attempno = $request->attempno;
-        $id4 = $request->attempno;
-        $result = DB::table('result')->where('attempno',$id4)->first();
-        $ref_result = DB::table('ref_result')->where('id',$id4)->first();
-        $attempno = $result->attempno;
-        $id = $ref_result->id;
-        $lastresult = DB::table('ref_result')->where('id',$id)->first();
-        $memberid=$lastresult->student_id;
-        $member1 = DB::table('users')->where('student_id',$memberid)->first();
-        $examcode = $ref_result->examcode;
-        $exam = DB::table('exam')->where('examcode',$examcode)->first();
-        $resultq = DB::table('result')->where('attempno',$id)->get();
-        $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
-        $tot_mark = 0;
-        $tot_correct=0;
-
-        // DB::table('ref_result')->where('pass','In progress' )->where('examcode',$id4)->where('student_id',$memberid)->delete();
-        $today = date('Y-m-d');
-        $pro =  DB::table('proctordate')->get();
-        
-        DB::table('proctordate')->where('subject_id',$id4)->where('procrordate',$today)->where('user_id',$memberid)->update(['used'=>1]);
-
-        if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
-        $result = Ref_result::find($id);
-        foreach($resultq as $res_q){
-            $tot_mark =  $res_q->givenmarks+$tot_mark;
-
-            } 
-            if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
-                $tot_correct = $tot_mark/$totQ;
-   
-        $member = array(
-            'name' => $member1->name,
-            'phone' => $member1->phone,
-            'email' => $member1->email,
-            'totQ' => $totQ,
-            'examname' => $exam->examtitle,
-            'tot_mark' => $tot_mark,
-            'tot_correct' => $tot_correct,
-            'attempno' => $attempno,
-
-        );
-        if($lastresult->mailing == 0){  $email = $member1->email;
-        //Mail::to($email)->send(new ExamResult($lastresult));
-      //   Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-      //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
-        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
-
-        }
-        //--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-        $student_id=$lastresult->student_id;
-        $GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
-        $pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
-        //FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
-        foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
-        if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
-        //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-        foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-        if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
-        //FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-        foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-        if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
-        //********************************************************EXAm NO 9*********************************************************** */
-        $ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
-        //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-        foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-        if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
-        //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-        foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
-        if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
-        //******************************************************************************************************************* */
-        /**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
-        if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
-        }else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
-        if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
-        }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
-                if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
-        }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
-                if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
-        }else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
-        if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
-        else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
-        if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
-        /////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
-        if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
-        }else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
-        if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
-        //--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-
-        return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult'));
+$sum = $Minutes + $Seconds;
+//dd($sum);
+//You can then feed it into the date function:
+//return $Minutes.':'.$Seconds."Sum = ".$sum; 
+if($sum < 0)   // if($timeing < 0.02)
 
 
-        }
+{
+
+$attempno = $request->attempno;
+$id4 = $request->attempno;
+   $result = DB::table('result')->where('attempno',$id4)->first();
+   $ref_result = DB::table('ref_result')->where('id',$id4)->first();
+   $attempno = $result->attempno;
+   $id = $ref_result->id;
+   $lastresult = DB::table('ref_result')->where('id',$id)->first();
+   $memberid=$lastresult->student_id;
+   $member1 = DB::table('users')->where('student_id',$memberid)->first();
+   $examcode = $ref_result->examcode;
+   $exam = DB::table('exam')->where('examcode',$examcode)->first();
+   $resultq = DB::table('result')->where('attempno',$id)->get();
+   $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
+   $tot_mark = 0;
+   $tot_correct=0;
+
+  // DB::table('ref_result')->where('pass','In progress' )->where('examcode',$id4)->where('student_id',$memberid)->delete();
+   $today = date('Y-m-d');
+  $pro =  DB::table('proctordate')->get();
+  
+  DB::table('proctordate')->where('subject_id',$id4)->where('procrordate',$today)->where('user_id',$memberid)->update(['used'=>1]);
+
+   if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
+   $result = Ref_result::find($id);
+   foreach($resultq as $res_q){
+       $tot_mark =  $res_q->givenmarks+$tot_mark;
+
+       } 
+       if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
+        $tot_correct = $tot_mark/$totQ;
+   //$lastresult =  DB::table('ref_result')->where('id',$id)->first();
+   //$lastresult['tot_mark'] = $tot_mark;
+
+
+   $member = array(
+       'name' => $member1->name,
+       'phone' => $member1->phone,
+       'email' => $member1->email,
+       'totQ' => $totQ,
+       'examname' => $exam->examtitle,
+       'tot_mark' => $tot_mark,
+       'tot_correct' => $tot_correct,
+       'attempno' => $attempno,
+
+   );
+if($lastresult->mailing == 0){  $email = $member1->email;
+   Mail::to($email)->send(new ExamResult($lastresult));
+   //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+   Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+   Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+   DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
+
+}
+//--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+$student_id=$lastresult->student_id;
+$GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
+$pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
+//FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
+foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
+if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
+//FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
+//FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
+//********************************************************EXAm NO 9*********************************************************** */
+$ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
+//FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
+//FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
+if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
+//******************************************************************************************************************* */
+/**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
+if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
+}else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
+   if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
+   }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
+           if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
+   }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
+           if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
+}else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
+   if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
+else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
+   if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
+/////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
+if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
+}else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
+if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
+//--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+/*$s_id1= Auth::user()->student_id;
+// $s_id2 = $ref_result->student_id;
+if($s_id1 != $s_id2){
+return redirect('/');
+}*/
+   return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult'));
+
+
+}
     $id0 =  $request->id0;
+  //  return $id0;
     $attempno = $request->attempno;
     $timeing = $request->timeing;
+   // dd($timeing);
     $id = $request->attempno;
         ///-------TIME--------------------------------
             $timeing = $request->timeing;
@@ -1058,7 +733,7 @@ $sum = $Minutes + $Seconds;
         ///-------TIME--------------------------------
     $all = DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)->orderBy('order','asc')->get();
     foreach($all as $att){
-        DB::table('result')->where([['attempno',$attempno],['givenmarks', Null]])->update(['timing' => $timeing ]);
+        DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)->update(['timing' => $timeing ]);
     }
    //  $x=33*$id0 + 7/85555555858;
     
@@ -1119,19 +794,8 @@ $sum = $Minutes + $Seconds;
        $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
        $tot_mark = 0;
        $tot_correct=0;
+ ///dd($resultq);
 
-       
-       $result = Ref_result::find($id);
-foreach($resultq as $res_q){
-    $tot_mark =  $res_q->givenmarks+$tot_mark;
-
-    } 
-    if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
-    DB::table('ref_result')->where('id',$id)->update(['pass' => $status]);
-    $st =DB::table('ref_result')->where('id',$id)->first();
-    $s = $st->pass;
-
-    
 if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
 $result = Ref_result::find($id);
 foreach($resultq as $res_q){
@@ -1175,10 +839,11 @@ foreach($resultq as $res_q){
        );
 
 if($lastresult->mailing == 0){  $email = $member1->email;
-        //Mail::to($email)->send(new ExamResult($lastresult));
-    //     Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-   //     Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
-        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
+       Mail::to($email)->send(new ExamResult($lastresult));
+       //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+       DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
 
    }
 //--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
@@ -1235,32 +900,15 @@ if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['level
 if($s_id1 != $s_id2){
     return redirect('/');
 }*/
-
-$tot_mark = 0;
-$tot_correct=0;
-
-
-$result = Ref_result::find($id);
-foreach($resultq as $res_q){
-$tot_mark =  $res_q->givenmarks+$tot_mark;
-
-} 
-if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
-DB::table('ref_result')->where('id',$id)->update(['pass' => $status]);
-$st =DB::table('ref_result')->where('id',$id)->first();
-$s = $st->pass;
-
-
-
        return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult'));
     });
 
-     
+    ///////////////////////////////
     
-//--------------///////////////////////////////FINISH Exam //////////////////////////////////////////
+    
+    /////////////////////////////FINISH Exam //////////////////////////////////////////
     Route::any('finishx',function(Request $request){
         $attempno = $request->attempno;
-        $less_time =1200000000;
         //$timeing = $request->timeing;
         $id4 =  $attempno;
         $attempno = $attempno;
@@ -1274,21 +922,6 @@ $s = $st->pass;
        $examcode = $ref_result->examcode;
        $exam = DB::table('exam')->where('examcode',$examcode)->first();
        $resultq = DB::table('result')->where('attempno',$id)->get();
-       foreach($resultq as $lr){
-        if($lr->timing < $less_time){
-                   $less_time = $lr->timing;
-        }
-    
-        }
-       // dd($less_time);
-        foreach($resultq as $lr){
-            if($lr->timing = $less_time){
-                DB::table('result')->where('id',$lr->id)->update(['timing'=>0]);
-            }
-       //$less_time = $lr->timing;
-
-        }
-
        $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
        $tot_mark = 0;
        $tot_correct=0;
@@ -1323,9 +956,10 @@ $s = $st->pass;
 
        );
 if($lastresult->mailing == 0){  $email = $member1->email;
-       //Mail::to($email)->send(new ExamResult($lastresult));
-    //  Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-    //   Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+       Mail::to($email)->send(new ExamResult($lastresult));
+       //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
 
    }
@@ -1397,21 +1031,13 @@ Route::any('subquestion',function(Request $request){
     $in_progress = 'In progress';
 
     DB::table('ref_result')->where('id',$attempno)->update(['pass'=> $in_progress]);
-    $ref_result12 = DB::table('ref_result')->where('id',$attempno)->get();
-//dd($ref_result12);
+
 
     $timestamp = strtotime($timeing);
     $hours =  date('h', $timestamp);
     $Minutes =  date('i', $timestamp);
     $Seconds =  date('s', $timestamp);
     $sum = $Minutes + $Seconds;
-
-
-    $attempno = $request->attempno;
-
-
-    //dd($attempno);
-
     //dd($sum);
     //You can then feed it into the date function:
     //return $Minutes.':'.$Seconds."Sum = ".$sum; 
@@ -1442,13 +1068,13 @@ Route::any('subquestion',function(Request $request){
       
       DB::table('proctordate')->where('subject_id',$id4)->where('procrordate',$today)->where('user_id',$memberid)->update(['used'=>1]);
   
-                    if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
-                    $result = Ref_result::find($id);
-                    foreach($resultq as $res_q){
-                        $tot_mark =  $res_q->givenmarks+$tot_mark;
+       if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
+       $result = Ref_result::find($id);
+       foreach($resultq as $res_q){
+           $tot_mark =  $res_q->givenmarks+$tot_mark;
 
-                        } 
-                        if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
+           } 
+           if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
             $tot_correct = $tot_mark/$totQ;
        //$lastresult =  DB::table('ref_result')->where('id',$id)->first();
        //$lastresult['tot_mark'] = $tot_mark;
@@ -1466,9 +1092,10 @@ Route::any('subquestion',function(Request $request){
 
        );
 if($lastresult->mailing == 0){  $email = $member1->email;
-       //Mail::to($email)->send(new ExamResult($lastresult));
-     //  Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-     //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+       Mail::to($email)->send(new ExamResult($lastresult));
+       //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
 
    }
@@ -1529,137 +1156,130 @@ if($s_id1 != $s_id2){
        return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult'));
 
 
-}else{
-   
+}
+
 //return $attempno;
     $count = DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)->count();
-  //  dd($count);
-                if(($count < 1)||($timeing < 1)){
-                    $attempno = $request->attempno;
-                   // dd($attempno);
+    if(($count < 1)||($timeing < 1)){
+        $attempno = $request->attempno;
+        $id4 = $request->attempno;
+           $result = DB::table('result')->where('attempno',$id4)->first();
+           $ref_result = DB::table('ref_result')->where('id',$id4)->first();
+           $attempno = $result->attempno;
+           $id = $ref_result->id;
+           $lastresult = DB::table('ref_result')->where('id',$id)->first();
+           $memberid=$lastresult->student_id;
+           $member1 = DB::table('users')->where('student_id',$memberid)->first();
+           $examcode = $ref_result->examcode;
+           $exam = DB::table('exam')->where('examcode',$examcode)->first();
+           $resultq = DB::table('result')->where('attempno',$id)->get();
+           $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
+           $tot_mark = 0;
+           $tot_correct=0;
+    
+          // DB::table('ref_result')->where('pass','In progress' )->where('examcode',$id4)->where('student_id',$memberid)->delete();
+           $today = date('Y-m-d');
+          $pro =  DB::table('proctordate')->get();
+          
+          DB::table('proctordate')->where('subject_id',$id4)->where('procrordate',$today)->where('user_id',$memberid)->update(['used'=>1]);
+      
+           if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
+           $result = Ref_result::find($id);
+           foreach($resultq as $res_q){
+               $tot_mark =  $res_q->givenmarks+$tot_mark;
+    
+               } 
+               if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
+                $tot_correct = $tot_mark/$totQ;
+           //$lastresult =  DB::table('ref_result')->where('id',$id)->first();
+           //$lastresult['tot_mark'] = $tot_mark;
+    
+    
+           $member = array(
+               'name' => $member1->name,
+               'phone' => $member1->phone,
+               'email' => $member1->email,
+               'totQ' => $totQ,
+               'examname' => $exam->examtitle,
+               'tot_mark' => $tot_mark,
+               'tot_correct' => $tot_correct,
+               'attempno' => $attempno,
 
-                    $id4 = $request->attempno;
-                    $result = DB::table('result')->where('attempno',$id4)->first();
-                    $ref_result = DB::table('ref_result')->where('id',$id4)->first();
-                    $attempno = $result->attempno;
-                    $id = $ref_result->id;
-                    $lastresult = DB::table('ref_result')->where('id',$id)->first();
-                    $memberid=$lastresult->student_id;
-                    $member1 = DB::table('users')->where('student_id',$memberid)->first();
-                    $examcode = $ref_result->examcode;
-                    $exam = DB::table('exam')->where('examcode',$examcode)->first();
-                    $resultq = DB::table('result')->where('attempno',$id)->get();
-                    $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
-                    $tot_mark = 0;
-                    $tot_correct=0;
-                
-                    // DB::table('ref_result')->where('pass','In progress' )->where('examcode',$id4)->where('student_id',$memberid)->delete();
-                    $today = date('Y-m-d');
-                    $pro =  DB::table('proctordate')->get();
-                    
-                    DB::table('proctordate')->where('subject_id',$id4)->where('procrordate',$today)->where('user_id',$memberid)->update(['used'=>1]);
-                
-                    if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
-                    $result = Ref_result::find($id);
-                    foreach($resultq as $res_q){
-                        $tot_mark =  $res_q->givenmarks+$tot_mark;
-                
-                        } 
-                        if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
-                            $tot_correct = $tot_mark/$totQ;
-                    //$lastresult =  DB::table('ref_result')->where('id',$id)->first();
-                    //$lastresult['tot_mark'] = $tot_mark;
-                
-                
-                    $member = array(
-                        'name' => $member1->name,
-                        'phone' => $member1->phone,
-                        'email' => $member1->email,
-                        'totQ' => $totQ,
-                        'examname' => $exam->examtitle,
-                        'tot_mark' => $tot_mark,
-                        'tot_correct' => $tot_correct,
-                        'attempno' => $attempno,
+           );
+    if($lastresult->mailing == 0){  $email = $member1->email;
+           Mail::to($email)->send(new ExamResult($lastresult));
+           //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+           DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
+    
+       }
+    //--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+    $student_id=$lastresult->student_id;
+    $GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
+    $pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
+    //FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
+    foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
+    if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
+    //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
+    //FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+       if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
+    //********************************************************EXAm NO 9*********************************************************** */
+    $ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
+    //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
+    //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
+    //******************************************************************************************************************* */
+    /**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
+    if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
+    }else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
+           if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
+           }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
+                   if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
+           }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
+                   if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
+    }else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
+           if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
+    else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
+           if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
+    /////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
+    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
+    }else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
+       if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
+    //--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+     /*$s_id1= Auth::user()->student_id;
+   // $s_id2 = $ref_result->student_id;
+    if($s_id1 != $s_id2){
+        return redirect('/');
+    }*/
+           return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult'));
+    
 
-                    );
-                if($lastresult->mailing == 0){  $email = $member1->email;
-                    //Mail::to($email)->send(new ExamResult($lastresult));
-              //       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-              //      Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
-                    DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
-                
-                }
-                //--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-                $student_id=$lastresult->student_id;
-                $GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
-                $pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
-                //FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
-                foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
-                if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
-                //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-                foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-                if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
-                //FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-                foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-                if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
-                //********************************************************EXAm NO 9*********************************************************** */
-                $ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
-                //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-                foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-                if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
-                //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-                foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
-                if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
-                //******************************************************************************************************************* */
-                /**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
-                if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
-                }else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
-                    if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
-                    }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
-                            if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
-                    }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
-                            if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
-                }else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
-                    if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
-                else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
-                    if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
-                /////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
-                if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
-                }else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
-                if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
-                //--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-                /*$s_id1= Auth::user()->student_id;
-            // $s_id2 = $ref_result->student_id;
-                if($s_id1 != $s_id2){
-                    return redirect('/');
-                }*/
-                    return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult'));
-                
-
-                }
-//.....................................TIME finish ..................................................................................................
+    }
 
    $serial0 =  $request->serial0;
-  // dd($serial0);
 
    //return $serial0;
     $attempno = $request->attempno;
     $id = $request->attempno;
     $timeing = $request->timeing;
-    //dd($timeing);
     $selected_option = $request->selected_option;
-    //dd($selected_option);
-
     $mini = DB::table('result')->where('attempno',$attempno)->where('serial', $serial0)->first();
     $count = DB::table('result')->where('attempno',$attempno)->where('serial', $serial0)->count();
     //$count = DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)->count();
@@ -1675,8 +1295,6 @@ if($s_id1 != $s_id2){
         $timeArr = explode(':', $timeing);
         $decTime = ($timeArr[0]) + ($timeArr[1]/60);
         $timeing = $decTime; 
-      //  dd($timeArr);
-       // dd($decTime);
 
  
     $ques_id = $mini->ques_id;
@@ -1684,27 +1302,23 @@ if($s_id1 != $s_id2){
  //return $serial;$selected_option = $request->selected_option;
 if($selected_option == $question->correct_option){
     $givenmarks = $question->marks;
-       // dd($givenmarks);
-
-
 }else{
     $givenmarks = 0;
 }
-DB::table('result')->where([['serial',$serial],['attempno',$attempno]])->update( ['timing' => $timeing] );
-DB::table('result')->where([['serial',$serial],['attempno',$attempno]])->update( ['givenmarks' => $givenmarks] );
-DB::table('result')->where([['serial',$serial],['attempno',$attempno]])->update( ['selected_option' => $selected_option] );
+DB::table('result')->where('serial',$serial)->update( ['timing' => $timeing] );
+DB::table('result')->where('serial',$serial)->update( ['givenmarks' => $givenmarks] );
+DB::table('result')->where('serial',$serial)->update( ['selected_option' => $selected_option] );
 /*----------------------------------------------After Update ------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 $countx = DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)->count();
 if($countx < 1){
 
-       $attempno = $request->attempno;
-       $id4 = $request->attempno;
+    $attempno = $request->attempno;
+    $id4 = $request->attempno;
        $result = DB::table('result')->where('attempno',$id4)->first();
        $ref_result = DB::table('ref_result')->where('id',$id4)->first();
        $attempno = $result->attempno;
        $id = $ref_result->id;
        $lastresult = DB::table('ref_result')->where('id',$id)->first();
-      // dd($lastresult);
        $memberid=$lastresult->student_id;
        $member1 = DB::table('users')->where('student_id',$memberid)->first();
        $examcode = $ref_result->examcode;
@@ -1720,146 +1334,98 @@ if($countx < 1){
       
       DB::table('proctordate')->where('subject_id',$id4)->where('procrordate',$today)->where('user_id',$memberid)->update(['used'=>1]);
     
-                if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
+       if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
        $result = Ref_result::find($id);
-                foreach($resultq as $res_q){
-                    $tot_mark =  $res_q->givenmarks+$tot_mark;
-                
-                    } 
-                if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
+       foreach($resultq as $res_q){
+           $tot_mark =  $res_q->givenmarks+$tot_mark;
+    
+           } 
+           if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
             $tot_correct = $tot_mark/$totQ;
      
        $member = array( 'name' => $member1->name,'phone' => $member1->phone,'email' => $member1->email,'totQ' => $totQ,'examname' => $exam->examtitle,'tot_mark' => $tot_mark,'tot_correct' => $tot_correct,'attempno' => $attempno, );
     if($lastresult->mailing == 0){  $email = $member1->email;
-       //Mail::to($email)->send(new ExamResult($lastresult));
-    //    Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-    //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+       Mail::to($email)->send(new ExamResult($lastresult));
+       //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
     
     }
-                //--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-                $student_id=$lastresult->student_id;
-                $GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
-                $pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
-                //FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
-                foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
-                if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
-                //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-                foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-                if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
-                //FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-                foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-                if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
-                //********************************************************EXAm NO 9*********************************************************** */
-                $ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
-                //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-                foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-                if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
-                //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-                foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
-                if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
-                //******************************************************************************************************************* */
-                /**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
-                if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
-                }else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
-                if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
-                }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
-                        if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
-                }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
-                        if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
-                }else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
-                if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
-                else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
-                if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
-                /////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
-                if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
-                }else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
-                if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
-                //--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-                    return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult')); 
-                
-                
-                /*---------------------------------------------------------------------------------------------------------*/
+    //--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+    $student_id=$lastresult->student_id;
+    $GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
+    $pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
+    //FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
+    foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
+    if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
+    //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
+    //FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
+    //********************************************************EXAm NO 9*********************************************************** */
+    $ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
+    //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
+    //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
+    //******************************************************************************************************************* */
+    /**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
+    if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
+    }else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
+       if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
+       }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
+               if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
+       }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
+               if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
+    }else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
+       if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
+    else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
+       if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
+    /////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
+    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
+    }else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
+    if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
+    //--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+        return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult')); 
+     
+    
+    /*---------------------------------------------------------------------------------------------------------*/
      
 }
+   $resulttime= DB::table('result')->where('attempno',$attempno)->get();
 
-if (DB::table('result')->where('attempno',$attempno)->exists()) {
-    $res = DB::table('result')->where('attempno',$attempno)->get();
-    DB::table('result')->where([['attempno',$attempno],['givenmarks', Null]])->update( ['timing' => $timeing] );
-    
-    $attempdata =   DB::table('result')->where([['attempno',$attempno],['givenmarks', Null]])
-    ->orderBy('order','asc')
-    ->first();
-    //dd($attempdata);
-    
-    $resultdata = DB::table('result')->where([['attempno',$attempno],['givenmarks', Null]])
-    ->orderBy('order','asc')
-    ->first();
 
-    return view('exam.firstquestion',compact('attempno','attempdata','resultdata','timeing'));
-
-    //dd($res);
+foreach($resulttime as $r){
+    DB::table('result')->where('givenmarks', Null)->update( ['timing' => $timeing] );
 }
-    $resulttime= DB::table('result')->where([['attempno',$attempno],['givenmarks', Null]])->get();
-
-//dd($resulttime);
-    foreach($resulttime as $r){
-        DB::table('result')->where([['attempno',$attempno],['givenmarks', Null]])->update( ['timing' => $timeing] );
-    }
-//dd($attempno);
-
-    $attempdata =   DB::table('result')->where([['attempno',$attempno],['givenmarks', Null]])->where('givenmarks', Null)
-    ->orderBy('order','asc')
-    ->first();
-    //dd($attempdata);
-
-    $resultdata = DB::table('result')->where([['attempno',$attempno],['givenmarks', Null]])
-    ->orderBy('order','asc')
-    ->first();
-    return view('exam.firstquestion',compact('attempno','attempdata','resultdata','timeing'));
-
-    }
-
-
+$attempdata =   DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)
+->orderBy('order','asc')
+->first();
+$resultdata = DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)
+->orderBy('order','asc')
+->first();
+return view('exam.firstquestion',compact('attempno','attempdata','resultdata','timeing'));
 });
 
 
+
 //--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------//--------------------------------------
-
-
-Route::post('firstquestion',function(Request $request){ 
-
-
-
-//---------------------- CORRECTION -------------------------------------------------------------------------//
-    $results11 = DB::table('ref_result')->where([['examcode','!=',66],['pass','!=','Exempt'],['pass','!=','In progress'],['pass','!=','Open'],['pass','!=','Fail'],['percetage','<', 64]])->get(); 
-    $fail = "Fail";
-    $pass = "Pass";
-    foreach ($results11 as $r11){
-        $attempno = $r11->id;
-        $tot_mark = 0;
-        $resultq  = DB::table('result')->where('attempno',$r11->id)->get();
-                foreach($resultq as $res_q){ $tot_mark =  $res_q->givenmarks+$tot_mark;}//end foreach($resultq
-                            
-                             DB::table('ref_result')->where('id',$attempno)->update(['percetage'=> $tot_mark]);
-
-                             if($tot_mark < 65){ DB::table('ref_result')->where('id',$attempno)->update(['pass'=> $fail]); }
-                             else{DB::table('ref_result')->where('id',$attempno)->update(['pass'=> $pass]);}
-                   
-        }//end foreach ($results11
- //---------------------- CORRECTION -------------------------------------------------------------------------//
-
-
+Route::post('firstquestion',function(Request $request){  
     $timeing = $request->timeing;
 
     $timestamp = strtotime($timeing);
@@ -1876,22 +1442,22 @@ Route::post('firstquestion',function(Request $request){
             
             $attempno = $request->attempno;
             $id4 = $request->attempno;
-            $result = DB::table('result')->where('attempno',$id4)->first();
-            $ref_result = DB::table('ref_result')->where('id',$id4)->first();
-            $attempno = $result->attempno;
-            $id = $ref_result->id;
-            $lastresult = DB::table('ref_result')->where('id',$id)->first();
-            $memberid=$lastresult->student_id;
-            $member1 = DB::table('users')->where('student_id',$memberid)->first();
-            $examcode = $ref_result->examcode;
-            $exam = DB::table('exam')->where('examcode',$examcode)->first();
-            $resultq = DB::table('result')->where('attempno',$id)->get();
-            $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
-            $tot_mark = 0;
-            $tot_correct=0;
+       $result = DB::table('result')->where('attempno',$id4)->first();
+       $ref_result = DB::table('ref_result')->where('id',$id4)->first();
+       $attempno = $result->attempno;
+       $id = $ref_result->id;
+       $lastresult = DB::table('ref_result')->where('id',$id)->first();
+       $memberid=$lastresult->student_id;
+       $member1 = DB::table('users')->where('student_id',$memberid)->first();
+       $examcode = $ref_result->examcode;
+       $exam = DB::table('exam')->where('examcode',$examcode)->first();
+       $resultq = DB::table('result')->where('attempno',$id)->get();
+       $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
+       $tot_mark = 0;
+       $tot_correct=0;
 
       // DB::table('ref_result')->where('pass','In progress' )->where('examcode',$id4)->where('student_id',$memberid)->delete();
-      $today = date('Y-m-d');
+       $today = date('Y-m-d');
       $pro =  DB::table('proctordate')->get();
       
       DB::table('proctordate')->where('subject_id',$id4)->where('procrordate',$today)->where('user_id',$memberid)->update(['used'=>1]);
@@ -1902,11 +1468,12 @@ Route::post('firstquestion',function(Request $request){
        $result = Ref_result::find($id);
        foreach($resultq as $res_q){
            $tot_mark =  $res_q->givenmarks+$tot_mark;
+
            } 
            if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
             $tot_correct = $tot_mark/$totQ;
-
-      DB::table('ref_result')->where('id',$attempno)->update(['pass'=> $status]);
+       //$lastresult =  DB::table('ref_result')->where('id',$id)->first();
+       //$lastresult['tot_mark'] = $tot_mark;
 
 
        $member = array(
@@ -1921,9 +1488,10 @@ Route::post('firstquestion',function(Request $request){
 
        );
 if($lastresult->mailing == 0){  $email = $member1->email;
-       //Mail::to($email)->send(new ExamResult($lastresult));
-     //   Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-     //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+       Mail::to($email)->send(new ExamResult($lastresult));
+       //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+       Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
        DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
 
    }
@@ -2062,9 +1630,10 @@ if($s_id1 != $s_id2){
                
            );
     if($lastresult->mailing == 0){  $email = $member1->email;
-           //Mail::to($email)->send(new ExamResult($lastresult));
-         //   Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
-         //  Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+           Mail::to($email)->send(new ExamResult($lastresult));
+           //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
            DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
     
        }
@@ -2141,15 +1710,10 @@ if($s_id1 != $s_id2){
 
 return view('exam.firstquestion',compact('attempno','attempdata','resultdata','timeing'));
 });
-
-
-
-
 //******************* *///******************* *///******************* *///******************* *///******************* *///******************* */
 Route::post('instruction',function(Request $request){
     $attempno = $request->attempno;
-    $timeings  = DB::table('result')->where('givenmarks', Null)
-                                    ->orderBy('order','asc')->where('attempno', $attempno)->first();
+    $timeings  = DB::table('result')->where('givenmarks', Null)->orderBy('order','asc')->where('attempno', $attempno)->first();
     $timeing = $timeings->timing;
     if($attempno < 1){
         return redirect()->back();
@@ -2171,6 +1735,15 @@ Route::post('selectattemp',function(Request $request){
    $resultdata = DB::table('result')->where('attempno',$attempno)->get();
    return view('exam.selectattemp',compact('attempno','attempdata','resultdata'));
 });
+Route::get('selectexamx2',function(){
+    $disable =0;
+    $examcode = 0;
+    $attempno =0;
+    $student_id = Auth::user()->student_id;
+    $ref_results = DB::table('ref_result')->where('student_id',$student_id)->get();
+    $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
+    return view('exam.selectexam2',compact('student_id','ref_results','exams','disable','examcode','attempno'));
+});
 
 Route::any('examhall',function(Request $request){
     $examcode = $request->examcode;
@@ -2181,6 +1754,241 @@ Route::any('examhall',function(Request $request){
     $ref_results1 = DB::table('ref_result')->where('examcode',$examcode)->where('student_id',$student_id)->where('mailing',0)->max('id'); 
     $disable = $ref_results1;
     $attempno = $ref_results1;
+    return view('exam.selectexam3',compact('student_id','ref_results','exams','disable','examcode','attempno'));
+});
+
+Route::any('selectexam3',function(Request $request){
+    $student_id = Auth::user()->student_id;
+    $examcode = $request->examcode;
+    if($examcode == 66){
+        $date = date('Y-m-d');
+        $id = $request->input('student_id');
+        $user = DB::table('users')->where('student_id', $student_id)->first();
+        $proctordate = new Proctordate;
+        $proctordate->user_id = $student_id;
+        $proctordate->subject_id = 66;
+        $proctordate->procrordate = $date;
+        $proctordate->open = 0;
+        $proctordate->save();
+$proctor_id = DB::table('proctordate')->max('id');
+        $ref_result = new Ref_result;
+        $ref_result->pass = 'Open' ;
+        $ref_result->student_id =$student_id;
+        $ref_result->examcode = 66;
+        $ref_result->mailing = 0;
+       // $proctor_id = DB::table('proctordate')->max('id');
+        $ref_result->proctor_id = $proctor_id;
+        $ref_result->save();
+
+        
+    $ref_max = DB::table('ref_result')->where( 'student_id', $student_id)->where('examcode', $examcode)->max('id');
+
+ $attemno = $ref_max;
+
+
+        $questions = DB::table('exam_question')->inRandomOrder()->where('examcode', 66)->limit(10)->get();
+        $timing = '30:00';
+
+        $i =1;
+        foreach($questions as $q){
+            $student_id = Auth::user()->student_id;
+
+            $result = new Result;
+            $result->student_id = $student_id;
+            $result->ques_id = $q->id;
+            $result->selected_option = Null;
+            $result->attempno = $attemno;
+            $result->givenmarks = null;
+            $result->timing = "30.00";
+            $result->serial = $i;
+            $result->save();
+     
+        $i = $i +1;
+        }    
+        $ref_results =  DB::table('ref_result')->where('student_id',$student_id)->get();
+        $attempno = DB::table('ref_result')->where('student_id',$student_id)->where('examcode',66)->max('id');
+        $exams = Exam::all();
+        $examcode = 66;
+        return view('exam.selectexam3',compact('student_id','ref_results','exams','examcode','attempno'));
+    }
+
+    $student_id = Auth::user()->student_id;
+    $ref_results = DB::table('ref_result')->where('student_id',$student_id)->get();
+    $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
+    $exam = DB::table('exam')->where('examcode',$examcode)->first();
+    $count =  DB::table('ref_result')->where('examcode',$examcode)->where('student_id',$student_id)->where('mailing',0)->count(); 
+
+    $ref_results_1 = DB::table('ref_result')->where('examcode',$examcode)->where('student_id',$student_id)->where('mailing',0)->first(); 
+    $ref_results1 = DB::table('ref_result')->where('examcode',$examcode)->where('student_id',$student_id)->where('mailing',0)->max('id'); 
+//dd($ref_results1);
+    $date = date('Y-m-d');
+    $count_proctordate = DB::table('proctordate')->where('subject_id',$examcode)->where('procrordate',$date)->where('user_id',$student_id)->where('used',0)->where('open',1)->count(); 
+    if(($count_proctordate < 1)||($count < 1)){
+        $disable = -1;
+        $attempno = -1;
+        return view('exam.selectexam3',compact('student_id','ref_results','exams','disable','examcode','attempno'));
+
+       
+    }    
+    $attempno = $ref_results1;
+//dd($attempno);
+    $ref_result = DB::table('ref_result')->where('id',$attempno)->first(); 
+    $result = DB::table('result')->where('attempno',$attempno)->where('givenmarks',Null)->first(); 
+    $count = DB::table('result')->where('attempno',$attempno)->where('givenmarks',Null)->count(); 
+    if($count < 1){
+        
+    $ref_results1 = DB::table('ref_result')->where('examcode',$examcode)->where('student_id',$student_id)->where('mailing',0)->max('id'); 
+
+    $attempno = $ref_results1;
+
+    $ref_result = DB::table('ref_result')->where('id',$attempno)->first();
+    $attemp = DB::table('ref_result')->where('id',$attempno)->first();
+    $id = $ref_result->id;        
+    $examcode = $ref_result->examcode;
+    $memberid= Auth::user()->student_id;
+    $today = date('Y-m-d');
+    $NewDate=Date('Y-m-d', strtotime('-13 days'));
+    $pro =  DB::table('proctordate')->get();
+       DB::table('proctordate')->where('subject_id',$examcode)
+        ->where('procrordate',$today)->where('user_id',$memberid)->update(['procrordate'=> $NewDate]);
+
+    DB::table('proctordate')->where('subject_id',$examcode)->where('procrordate',$today)->where('user_id',$memberid)->update(['open'=> 2]);
+    DB::table('ref_result')->where('id',$attempno)->update(['pass'=> 'In progress']);
+    DB::table('proctordate')->where('id',$attemp->proctor_id)->update(['open'=> 0]);
+
+
+    $id =  $ref_results1;
+    $timeing = $request->timeing;
+    $selected_option = $request->selected_option;
+    $attempno =  $ref_results1;
+    $lastresult=  $ref_results1;
+    $count = DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)->count();
+    if($count < 1){
+        DB::table('ref_result')->where('id',$attempno)->update(['pass'=> 'In progress']);
+
+       // $attempno = $request->attempno;
+        $id4 =  $ref_results1;
+        $result = DB::table('result')->where('attempno',$id4)->first();
+        $ref_result = DB::table('ref_result')->where('id',$attempno)->first();
+
+        $attempno =  $ref_results1;
+            $id = $ref_result->id;        
+            $id4 = $ref_result->examcode;
+
+        $lastresult = DB::table('ref_result')->where('id',$id)->first();
+        $memberid=$lastresult->student_id;
+        $member1 = DB::table('users')->where('student_id',$memberid)->first();
+        $examcode = $ref_result->examcode;
+        $exam = DB::table('exam')->where('examcode',$examcode)->first();
+        $resultq = DB::table('result')->where('attempno',$id)->get();
+        $exam_question = DB::table('exam_question')->where('examcode',$id4)->first();
+        $tot_mark = 0;
+        $tot_correct=0;
+    
+        //DB::table('ref_result')->where('pass','In progress' )->where('examcode',$id4)->where('student_id',$memberid)->delete();
+        $today = date('Y-m-d');
+          $pro =  DB::table('proctordate')->get();
+             DB::table('proctordate')->where('subject_id',$id4)
+          ->where('procrordate',$today)->where('user_id',$memberid)->update(['used'=>1]);
+      
+           if($exam->examtitle === 'Mook Exam'){$totQ=10;}else{$totQ=40;}
+           $result = Ref_result::find($id);
+           foreach($resultq as $res_q){
+               $tot_mark =  $res_q->givenmarks+$tot_mark;
+    
+               } 
+               if($tot_mark < 65){$status='Fail';}else{$status = 'Pass';} 
+                $tot_correct = $tot_mark/$totQ;
+           //$lastresult =  DB::table('ref_result')->where('id',$id)->first();
+           //$lastresult['tot_mark'] = $tot_mark;
+    
+    
+           $member = array(
+               'name' => $member1->name,
+               'phone' => $member1->phone,
+               'email' => $member1->email,
+               'totQ' => $totQ,
+               'examname' => $exam->examtitle,
+               'tot_mark' => $tot_mark,
+               'tot_correct' => $tot_correct,
+               'attempno' => $attempno,
+               
+           );
+    if($lastresult->mailing == 0){  $email = $member1->email;
+           Mail::to($email)->send(new ExamResult($lastresult));
+           //Mail::to('seralkhatem123@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('seralkhatem332211@gmail.com')->send(new ExamResult($lastresult));
+           Mail::to('info@acpaglobal.net')->send(new ExamResult($lastresult));
+           DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
+    
+       }
+    //--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+    $student_id=$lastresult->student_id;
+    $GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
+    $pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
+    //FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
+    foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
+    if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
+    //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
+    //FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+       if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
+    //********************************************************EXAm NO 9*********************************************************** */
+    $ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
+    //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
+    //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
+    //******************************************************************************************************************* */
+    /**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
+    if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
+    }else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
+           if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
+           }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
+                   if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
+           }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
+                   if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
+    }else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
+           if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
+    else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
+           if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
+    /////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
+    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
+    }else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
+       if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
+    //--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+  
+          
+    $ref_result = DB::table('ref_result')->where('id',$attempno)->first();
+    $s_id1= Auth::user()->student_id;
+    $s_id2 = $ref_result->student_id;
+    if($s_id1 != $s_id2){
+        return redirect('/');
+    }
+    return view('pass.showlastresult2',compact('result','pro','attempno','id4','lastresult'));
+    
+
+    }
+        return redirect()->back();
+    }
+    
+    echo   $result= $result->timing;
+    $disable = $ref_results1;
+
     return view('exam.selectexam3',compact('student_id','ref_results','exams','disable','examcode','attempno'));
 });
 
@@ -2606,9 +2414,9 @@ Route::any('pems/uploadpdf',function(Request $request){
 
         return redirect()->back()->with('attach',$attachname)->with('error', 'File not uploaded.');
    
-    
-    
-    
+	
+	
+	
 });
 Route::get('examQedit/editexam/{examcode}',function($examcode)
 {
@@ -2721,72 +2529,7 @@ Route::get('/layout', function(){   return view('layout.layout'); });
 Route::get('/copyright', function(){ return view('pages.copyright'); });
 Route::get('/termsandconditions', function(){  return view('pages.termsandconditions'); });
 
-Route::any('/', function(){ 
-/*
-    $users = DB::table('users')->get();
-    foreach($users as $user){
-    $student_id=$user->student_id;
-    $ref_results = DB::table('ref_result')->where('student_id',$student_id)->get();
-    dd($ref_results);
-    froeach($ref_results as $res){
-        if()
-    }
-//dd ($users);
-
-    }*/
-//--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-    /*$GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
-    $pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->where('examtitle','!=','Empty')->get();
-    //FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
-    foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
-    if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
-    //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-    if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
-    //FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-       if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
-    //********************************************************EXAm NO 9*********************************************************** */
-   /* $ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
-    //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
-    if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
-    //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
-    foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
-    if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
-    //******************************************************************************************************************* */
-    /**//*if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
-    if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
-    }else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
-           if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
-           }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
-                   if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
-           }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
-                   if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
-    }else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
-           if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
-    else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
-           if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
-    /////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
-    if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
-    }else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
-       if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
-    //--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-  
-
-*/
-
- return view('pages.index');    });
+Route::any('/', function(){  return view('pages.index');    });
 /*--------------------------------------------------------- ----------------------------------------------*/
 Route::get('map/login', 'Auth\LoginController@showLoginForm');
 Route::get('/admin/login', 'Admin\LoginController@showLoginForm');
@@ -2813,17 +2556,14 @@ Route::any('/checkmembership',function(Request $request){
     $student_id = $request->id;
     if($student_id < 10000){
         return redirect('/')->with('error','There is no membership for this id...');
-    }else{
-        $count = DB::table('memberlevel')->where('student_id',$student_id)->count();
-            if($count < 1 ){
-                return redirect('/')->with('error','There is no Certificate for this id...');
-            }  
+    }   
+     $count = DB::table('memberlevel')->where('student_id',$student_id)->count();
+if($count < 1 ){
+    return redirect('/')->with('error','There is no Certificate for this id...');
+}  
     $user = DB::table('users')->where('student_id',$student_id)->first();
     $levels = DB::table('memberlevel')->where('student_id',$student_id)->get();
-   // dd($user);
     return view ('pages.memberlevels',compact('levels','user'));
-    }   
-     
 });
 Route::get('/test3',function(){return view ('test3');});
 Route::get('/theme1',function(){return view ('theme');});
@@ -2979,9 +2719,10 @@ Route::any('/examQedit/{examcode}','PemsController@examQedit')->name('/examsedit
 Route::any('/exameditquestion/{examcode}','PemsController@exameditquestion')->name('/exameditquestion/{examcode}')->middleware('auth:admin'); 
 Route::post('/exameditquestionoffline/{examcode}','PemsController@exameditquestionoffline')->name('/exameditquestionoffline/{examcode}')->middleware('auth:admin'); 
 //-----------------------------------Add New Question ---------------------------------------------------------------------------------------//
-Route::any('/pems/addnewquestion1',function(Request $request)
-    { $examcode = $request->examcode;    
-        return view('pems.addnewquestion1',compact('examcode'));})->middleware('auth:admin');
+Route::any('/pems/addnewquestion1',function(Request $request){
+    $examcode = $request->examcode;
+    return view('pems.addnewquestion1',compact('examcode'));
+});
  
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 Route::post('/addnewquestion/{examcode}','PemsController@addnewquestion1')->name('/addnewquestion/{examcode}')->middleware('auth:admin'); 
