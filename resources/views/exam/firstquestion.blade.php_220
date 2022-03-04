@@ -1,0 +1,662 @@
+@extends('layouts.masterpass2')
+@section('PageTitle', 'NBC')
+@section('Description',('This is Home Page Description'))
+@section('content')
+<style>
+#status {
+  position: fixed;
+  width: 100%;
+  font: bold 1em sans-serif;
+  color: #FFF;
+  padding: 0.5em;
+}
+
+#log {
+  padding: 2.5em 0.5em 0.5em;
+  font: 1em sans-serif;
+}
+
+.online {
+  background: green;
+}
+
+.offline {
+  background: red;
+}
+</style>
+<script>
+//--------------------------------Online Offline status 
+window.addEventListener('load', function() {
+  var status = document.getElementById("status");
+  var log = document.getElementById("log");
+
+  function updateOnlineStatus(event) {
+    var condition = navigator.onLine ? "online" : "offline";
+
+    status.className = condition;
+    status.innerHTML = condition.toUpperCase();
+
+    log.insertAdjacentHTML("beforeend", "Event: " + event.type + "; Status: " + condition);
+  }
+
+  window.addEventListener('online',  updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+});
+//--------------------------------end Online Offline status 
+
+
+
+   /* $("#prospects_form").submit(function(e) {
+    e.preventDefault();
+});*/
+</script>
+<script>/*
+    window.onload = function() {
+    var el = document.documentElement,
+        rfs = el.requestFullScreen
+        || el.webkitRequestFullScreen
+        || el.mozRequestFullScreen;
+    rfs.call(el);
+};
+</script>
+<script>/*
+    function FullScreen() {
+           var docElm = document.documentElement;
+           if (docElm.requestFullscreen) {
+               docElm.requestFullscreen();
+           }
+           else if (docElm.mozRequestFullScree)n) {
+               docElm.mozRequestFullScreen();
+           }
+           else if (docElm.webkitRequestFullScreen) {
+               docElm.webkitRequestFullScreen();
+           }
+       }
+</script>
+
+<script type="text/javascript">/*
+function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
+
+    $(document).ready(function(){
+     $(document).on("keydown", disableF5);
+});
+</script>
+
+<script type="text/javascript">/*
+//---------------------------------------------------------PERVENT BACK---------------------------------------------------
+	function preback(){window.history.forward();}
+    setTimeout("preback()",0);
+    window.onunload=function(){null};
+//------------------------------------------------------End-PERVENT BACK--------------------------------------------------
+</script>
+
+<script type="text/javascript">/*
+	//-------------------------Prevent righ click context ------------------------
+	document.oncontextmenu = preventDefaultAction;
+	function preventDefaultAction(event)}
+		event = event || wndow.event;
+	if(event.preventDefault){
+		event.preventDefault():
+	}
+	else{
+		event.returnValue = false;
+	}
+} 
+
+</script>
+
+
+<script type="text/javascript">/*
+function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
+
+$(document).ready(function(){
+     $(document).on("keydown", disableF5);
+});*/
+</script>
+
+<script type="text/javascript">/*
+    $(document).ready(function(){
+
+        window.onbeforeunload = function() {
+            return "Dude, are you sure you want to leave? Think of the kit    SSSSSSSSSSSSSSSSSSSSSSSStens!";
+        }
+    });*/
+</script>
+<script>
+/* Get the documentElement (<html>) to display the page in fullscreen *//*
+var elem = document.documentElement;
+
+/* View in fullscreen *//*
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari *//*
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 *//*
+    elem.msRequestFullscreen();
+  }
+}
+
+/* Close fullscreen *//*
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari *//*
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 *//*
+    document.msExitFullscreen();
+  }
+}
+
+
+
+   // $(document).ready(function(){
+   //  $(document).on("keydown", disableF5);
+//});
+</script>
+<script>/*
+$(document).ready(function(){
+ //Fullscreen mode----------------------------------------alsir-------------------------------------
+            if (elem.mozRequestFullScreen) { /* Firefox */
+           /* elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+       /*     elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        /*    elem.msRequestFullscreen();
+        }*/
+        
+       /* window.onload = maxWindow;
+
+            function maxWindow() {
+                window.moveTo(0, 0);
+
+                if (document.all) {
+                    top.window.resizeTo(screen.availWidth, screen.availHeight);
+                }
+
+                else if (document.layers || document.getElementById) {
+                    if (top.window.outerHeight < screen.availHeight || top.window.outerWidth < screen.availWidth) {
+                        top.window.outerHeight = screen.availHeight;
+                        top.window.outerWidth = screen.availWidth;
+                    }
+                }
+            }
+        
+}); */
+</script>
+<script>/*
+$(document).ready(function(){
+                function requestFullScreen(element) {
+                    // Supports most browsers and their versions.
+                    var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+
+                    if (requestMethod) { // Native full screen.
+                        requestMethod.call(element);
+                    } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+                        elem.mozRequestFullScreen();
+
+                        var wscript = new ActiveXObject("WScript.Shell");
+
+                        if (wscript !== null) {                                            
+                            elem.mozRequestFullScreen();
+                            wscript.SendKeys("{F11}");
+                        }
+                    }
+                }
+
+                var elem = document.body; // Make the body go full screen.
+                requestFullScreen(elem);
+//End Fullscreen mode----------------------------------------alsir-------------------------------------
+});
+</script>
+
+<script>
+    var res = "success Test Java Script pass data to PHP";
+</script>
+ <script>/*
+$(function() {
+	// check native support
+	$('#support').text($.fullscreen.isNativelySupported() ? 'supports' : 'doesn\'t support');
+	// open in fullscreen
+	$('#fullscreen .requestfullscreen').click(function() {
+		$('#fullscreen').fullscreen();
+		return false;
+	});
+	// exit fullscreen
+	$('#fullscreen .exitfullscreen').click(function() {
+		$.fullscreen.exit();
+		return false;
+	});
+	// document's event
+	$(document).bind('fscreenchange', function(e, state, elem) {
+		// if we currently in fullscreen mode
+		if ($.fullscreen.isFullScreen()) {
+			$('#fullscreen .requestfullscreen').hide();
+			$('#fullscreen .exitfullscreen').show();
+		} else {
+			$('#fullscreen .requestfullscreen').show();
+			$('#fullscreen .exitfullscreen').hide();
+		}
+		$('#state').text($.fullscreen.isFullScreen() ? '' : 'not');
+	});
+});*/
+</script>
+<style>
+    .modal-ku {
+        width: 750px;
+        margin: auto;
+    }
+    lable{
+        font-size:12px;
+        color:red;
+    }
+</style>
+ 
+<div class="container">      
+            <section class="main-content">
+                    <!--    <center><a href="#"><button id="view-fullscreen">view full size page large</button></a><center>-->
+                    <script>
+                    /*(function () {
+                    var viewFullScreen = document.getElementById("view-fullscreen");
+                    if (viewFullScreen) {
+                    viewFullScreen.addEventListener("click", function () {
+                    var docElm = document.documentElement;
+                    if (docElm.requestFullscreen) {
+                    docElm.requestFullscreen();
+                    }
+                    else if (docElm.mozRequestFullScreen) {
+                    docElm.mozRequestFullScreen();
+                    }
+                    else if (docElm.webkitRequestFullScreen) {
+                docElm.webkitRequestFullScreen();
+            }
+        }, false);
+    }
+    })();*/</script>
+    </section>
+</div>
+
+ 
+<?php
+$question = DB::table('exam_question')->where('id',$resultdata->ques_id)->first(); 
+ $serial = $resultdata->serial;
+?>
+<!--<div class="modal" tabindex="-1" role="dialog">-->
+<div class="container">
+<div  class="row" id="view-fullscreen">
+    <div class="col-lg-12">
+<!--   <input id="time" type="text" value="{{$timeing}}" >
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    || to submit if time ot
+    ||                                                                                                                        ||
+    ||
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+-->
+    <div class="body">
+<?php
+$t =  $timeing * 60 ;  
+   // echo $t;
+/*
+
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    || to submit if time ot
+    ||                                                                                                                        ||
+    ||
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+*/
+?> 
+
+    <form action="" method="post" name="mcQuestion" id="mcQuestion2">
+<!--
+
+
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    || to submit if time ot
+    ||                                                                                                                        ||
+    ||
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+    -->
+                <input hidden type="test" name="name" value="Test">
+                <div><span hidden id="display" style="color:#FF0f00;font-size:15px"></span></div>
+                <div><input hidden type="text" id="display" style="color:#FF0f00;font-size:15px"></span></div>
+                <div><span hidden id="submitted" style="color:#FF0000;font-size:15px"></span></div>
+            </form>
+    <script>
+    /*
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|| to submit if time ot
+||                                                                                                                        ||
+||
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    */
+            var input = document.getElementById('display1');
+             var div = document.getElementById('display');
+            var submitted = document.getElementById('submitted');
+
+              function CountDown(duration, display) {
+
+                        var timer = duration, minutes, seconds;
+
+                      var interVal=  setInterval(function () {
+                            minutes = parseInt(timer / 60, 10);
+                            seconds = parseInt(timer % 60, 10);
+
+                            minutes = minutes < 10 ? "0" + minutes : minutes;
+                            seconds = seconds < 10 ? "0" + seconds : seconds;
+                    display.innerHTML ="<b>" + minutes + "m : " + seconds + "s" + "</b>";
+                            if (timer > 6) {
+                               --timer;
+                            }else{
+                       clearInterval(interVal)
+                                SubmitFunction();
+                             }
+
+                       },1000);
+
+                }
+
+              function SubmitFunction(){
+
+                submitted.innerHTML="Time is up!";
+                document.getElementById('mcQuestion').submit();
+
+               }
+               CountDown('{{$t}}',div);
+              // CountDown(5,div);
+            </script>
+
+
+
+
+
+
+    <?php
+
+     $num = $timeing;
+    $intpart = floor( $num )  ;  // results in 3
+    $fraction = $num - $intpart; //results in 0.75
+    $fraction1 = $fraction * 60;
+    //echo $intpart.'<br>';
+    //echo $fraction.'<br>';
+    //echo $fraction1.'<br>';
+    //if($fraction > 0.49) $timeing = $timeing +1;
+    // 
+?>
+<script>   
+       // var timer2 = "03:9";            
+        var timer2 = "{{$timeing}}:{{$fraction1}}";    
+
+        var interval = setInterval(function() {
+        var timer = timer2.split(':');
+        //by parsing integer, I avoid all extra string processing
+        var minutes = parseInt(timer[0], 10);
+        var seconds = parseInt(timer[1], 10);
+            if(minutes < 0){
+                 
+            $('.countdown').html(minutes + ':111111l' + seconds);
+            element.innerHTML ='<h2>Countdown Complete!</h2>';
+            element.innerHTML += '<a herf="#">CliCK here now</a>';
+            $("#instruction").addClass('hidden'); 
+            clearTimeout(timer); 
+
+            element.innerHTML ='<h2>Countdown Complete!</h2>';
+            element.innerHTML += '<a herf="#">CliCK here now</a>';
+            $("#instruction").addClass('hidden'); 
+
+            }
+    --seconds;
+
+  minutes = (seconds < 0) ? --minutes : minutes;
+  if (minutes < 0) clearInterval(interval);
+ 
+  seconds = (seconds < 0) ? 59 : seconds;
+  seconds = (seconds < 10) ? '0' + seconds : seconds;
+  //minutes = (minutes < 10) ?  minutes : minutes;
+  $('.countdown').html(minutes + ':' + seconds);
+  timer2 = minutes + ':' + seconds;
+}, 1000);
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<?php 
+    $allresults = DB::table('result')->where('attempno',$attempno)->where('givenmarks', Null)->orderBy('order','asc')->get(); 
+    $attemp = DB::table('ref_result')->where('id',$attempno)->first();
+    $exam = DB::table('exam')->where('examcode',$attemp->examcode)->first();
+    $user = DB::table('users')->where('id',Auth::user()->id)->first();
+    ?>
+
+<div id="status"></div>
+<div id="log"></div>
+ <h3 >
+ @if(Cache::has('user-is-online-' . $user->id))
+    <span class="text-success">Online</span>
+@else
+    <span class="text-secondary">Offline</span>
+@endif
+</h3>   
+<h1 style="color:#DAA520;background-color:#F5FFFA;padding-top:20px;padding-bottom:20px;"><b>{{$exam->realcode}} : {{$exam->examtitle}}  </b></h1>
+<h3 style="color:#FF4500;"><b>Select Question From Here >>></b></h3>
+<form action="selectthisquestion" method='POST' id="mcQuestion">
+    @csrf
+  <select class="btn btn-default" name="timeing">
+  <option   class="countdown" >
+            <!--<option id="mcQuestion" class="countdown"></option>-->
+        </select>
+        <select name="id0" class="btn btn-warning" style="color:#000000">        
+            @foreach($allresults as $result0)
+            <?php $question0 = DB::table('exam_question')->where('id',$result0->ques_id)->first(); ?>
+
+            <option class="btn btn-info btn-lg btn-block"   value="{{$result0->id}}">{{$result0->serial}} - {{$question0->question}}</option>
+        @endforeach
+        </select>
+<input type="hidden" name="examcode" value="{{$question->examcode}}" />
+<input type="hidden" name="serial0" value="{{$serial}}" />
+<input type="hidden" name="attempno" value="<?php echo $attempdata->attempno;  ?>" />
+        <!--------- btn btn-outline-success select-button ---->
+<input type="submit"   class="btn btn-danger" value="Select This Question" id="view-fullscreen">
+</form>
+        </div>
+    </div>
+</div>
+
+
+
+<div  class="row" id="view-fullscreen">
+    <div class="col-lg-12">
+     <!--   <input id="time" type="text" value="{{$timeing}}" >-->
+    <div class="body">
+
+<!-- <div class="countdown"></div>-->
+ 
+<form action="subquestion" method='POST'>
+    @csrf
+       
+        <div class="card">
+            <div style="{border:1px solid #1E90FF;padding:15px;color:#000000;background-color:#F8F8FF" class="alert alert-light text-justify col-sm-12">
+                    <input type="hidden" value='{{$question->id}}'>
+                    
+                    <h2><span class="btn btn-primary btn-lg"><b>Ques no : </span>
+                    <span class="btn btn-primary btn-lg">{{$resultdata->serial}}</span>  </b></h2>
+<!--<p class="text-primary">.primaryprimaryprimaryprimaryprimary..</p>-->
+ 
+<div class="col-sm-12" style="padding:10px;font-size:18px;">
+    <p
+    ><?php //echo '<p style="{border:1px solid #1E90FF;padding:15px;color:#1E90FF;background-color:#F8F8FF">'.$question->question.'</p>'; ?>
+     <label style="color:#660000 !important;font-weight: bold;font-size:18px;" >
+   <style>
+    p{
+        color:#660000 !important;
+        font-size:18px;
+        font-weight: bold;
+    }
+    #radio{
+        color:#660000 !important;
+        font-size:18px;
+        font-weight: bold;
+    }
+    </style>
+  {!!$question->question!!}
+        @if ($question->image != NULL)
+            <div>
+            <img class="img-responsive center-block" src="https://acpaglobal.net">
+            </div>
+        @endif
+        </label >
+        </p>
+
+        </div>
+    </div>
+ <div>
+                        <!-- radio button -->
+<p class="col-sm-12" style="padding:10px">
+    <table class="table table-bordered table-hover">   
+        <tr class="bg-default"><td width="15px">
+            <input type="radio" name="selected_option" value="A" required></td>
+            <td> <label >{!!$question->option_A!!}</label></td>
+                @if ($question->image_A != NULL)
+                <div>
+                    <img class="img-responsive center-block" style="max-width: 250px; max-height: 359px;"  src="https://acpaglobal.net">
+                </div>
+            @endif
+         </tr>
+        <tr class="bg-default"><td>
+            <input type="radio" name="selected_option" value="B" required></td><td>
+            <label>{!!$question->option_B!!}</label></td>
+            @if ($question->image_B != NULL)
+                <div>
+                    <img class="img-responsive center-block" style="max-width: 250px; max-height: 359px;"  src="https://acpaglobal.net/aecapp/public/images/{!!$question->image_B!!}">
+                </div>
+            @endif
+         </tr>
+        <tr class="bg-default"><td>
+
+            <input type="radio" name="selected_option" value="C" required></td><td>
+            <label>{!!$question->option_C!!}</label></td>
+            @if ($question->image_C != NULL)
+                <div>
+                    <img class="img-responsive center-block" style="max-width: 250px; max-height: 359px;" src="https://acpaglobal.net/aecapp/public/images/{!!$question->image_C!!}">
+                </div>
+            @endif
+        </tr>
+        <tr  class="bg-default"><td>
+
+            <input type="radio" name="selected_option" value="D" required></td><td>
+            <label  >{!!$question->option_D!!}</label></td>
+            </table>
+            @if ($question->image_D != NULL)
+                <div>
+                    <img style="max-width: 250px; max-height: 359px;" class="img-responsive center-block"  src="https://acpaglobal.net/aecapp/public/images/{!!$question->image_D!!}">
+                </div>
+            @endif
+            </tr>
+            </p>
+             <?php
+            //Show java variables on PHP 
+            // echo "<script>document.writeln(res);</script>";
+                ?>         
+<lable>Timer Exam Finished At: </lable>
+<select class="btn btn-default" name="timeing">
+    <option  class="countdown">Timer:</option>
+</select>
+<input type="hidden" name="examcode" value="{{$question->examcode}}" />
+<input type="hidden" name="serial0" value="{{$serial}}" />
+<input type="hidden" name="attempno" value="<?php echo $attempdata->attempno; $id = $attempdata->attempno; ?>" />
+        <!--------- btn btn-outline-success select-button ---->
+<input type="submit" class="btn btn-success" value="Save & Next" id="view-fullscreen">
+<!--Route::post('firstquestion/{id}',function(Request $request){  -->
+<a href="/finishexam/{{$id}}"  class="btn btn-danger pull-right" id="view-fullscreen" >Finished</a>
+
+    <!--<input type="submit" name="bookmarking" value="1"  class="btn btn-info" value="BookMark This Question ">-->
+    <!--------- btn btn-outline-info select-button ---
+    <button type="button"  class="btn btn-info">BookMark This Question</button>-->
+    <!-- <button type="button" onclick="finish()" class="Finshexam btn btn-outline-primary select-button hidden">Finish</button>-->
+ </form> 
+
+        </div>
+    </div>
+</div>
+ <div  class="row" id="view-fullscreen">
+    <div class="col-lg-12">
+     <!--   <input id="time" type="text" value="{{$timeing}}" >-->
+    <div class="body">
+
+
+<form action="bookmark" method='POST'>
+    @csrf
+  <select class="btn btn-default" type="hidden" name="timeing">
+            <option  class="countdown"></option>
+        </select>
+<input type="hidden" name="examcode" value="{{$question->examcode}}" />
+<input type="hidden" name="serial0" value="{{$serial}}" />
+<input type="hidden" name="attempno" value="<?php echo $attempdata->attempno;  ?>" />
+        <!--------- btn btn-outline-success select-button ---->
+<input type="submit"   class="btn btn-warning" value="Bookmark This Question" id="view-fullscreen">
+</form>
+
+</div>
+    </div>
+</div>                     <!-- End Radio Button -->
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+                        <?php //$tmarks = $tmarks + $question->marks; ?>
+<!--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+                    </div>
+                    <div class="row">
+                            <div class="col-xs-12 text-center" style="margin-bottom:20px;">
+                                @if ($question->id > 2)
+                                <!--------- btn btn-outline-warning select-button ---->
+                                <!--
+                                <button type="button" onclick="Previous('{ {$ no-1}}',{ {$question->id}})" class="btn btn-warning">Previous</button>-->
+                                @endif
+                               
+                            </div>
+             <form action="showlastresult/{!!$question->examcode!!}">
+             @csrf
+             <input type="hidden" name="examcode" value="{{$question->examcode}}" />
+
+             <input name="student_id" type="hidden" value="">
+
+                    </div>
+                    
+                </div>
+            
+            </div>
+     
+        
+            
+        </div>
+    </div>
+</div>
+
+<div>
+
+</div>
+</div>
+</div>
+</div>
+</div>          
+</div>          
+
+<script type="text/javascript">
+/*
+function countDown(secs,elem){
+var element = document.getElementById(elem);
+element.innerHTML = "Please wait for "+secs+" Seconds";
+if(secs <1){
+clearTimeout(timer);
+element.innerHTML ='<h2>Countdown Complete!</h2>';
+element.innerHTML += '<a herf="#">CliCK here now</a>';
+}
+secs--;
+var timer = setTimeout('countDown('+secs+',"'+elem+'")',1000);
+
+}*/
+</script>
+<!--<div id="status"></div>-->
+<script type="text/javascript"> /* countDown(99,"status"); */</script>
+
+
+ 
+@endsection

@@ -1,0 +1,186 @@
+@extends('layouts.mastermap')
+@section('content')
+<div class="container">
+
+<style>
+body {
+  font-family: 'Eczar';font-size: 22px;}
+nav {
+  font-family: 'Eczar';font-size: 18px;}
+  .panel-heading{background-color:yellow;color:white;padding:10px;margin-bottom:5px;}
+  .panel-title{background-color:#1E90FF;color:#fff;padding:10px;}
+  .panel-body{border:1px solid #1E90FF;padding:15px;}
+  .col-lg-12{border:1px solid #1E90FF;padding:15px;}
+  .col-lg-8{border:1px solid #1E90FF;padding:15px;}
+  .col-lg-6{border:1px solid #1E90FF;padding:15px;}
+  .col-lg-4{border:1px solid #1E90FF;padding:15px;}
+  select{border:1px solid #1E90FF;font-family: 'Archivo Black';font-weight:bold;height:50px;color:#00008B !important;background-color:#1E90FF;}
+  input{padding:5px;margin:5px;}
+  
+</style>
+    <!-- Marketing Icons Section -->
+  
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                    <h3>Part One</h3>
+                    <strong>Session 4: Video -1 </strong></div>
+                    <div class="panel-body">
+                     
+
+                <video width="100%" height="100%" controls>
+                    <source src="{{URL::asset('/public/videos/part1/0004/018.mp4')}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                     <strong>Session 4: Video -2 </strong></div>
+                    <div class="panel-body">
+                     
+
+                <video width="100%" height="100%" controls>
+                    <source src="{{URL::asset('/public/videos/part1/0004/019.mp4')}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                     <strong>Session 4: Video -3 </strong></div>
+                    <div class="panel-body">
+                     
+
+                <video width="100%" height="100%" controls>
+                    <source src="{{URL::asset('/public/videos/part1/0004/020.mp4')}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+            </div>
+        </div>
+
+   
+  
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                     <strong>Session 4: Video -4 </strong></div>
+                    <div class="panel-body">
+                     
+
+                <video width="100%" height="100%" controls>
+                    <source src="{{URL::asset('/public/videos/part1/0004/p1s1v1.mp4')}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                     <strong>Session 4: Video -5 </strong></div>
+                    <div class="panel-body">
+                     
+
+                <video width="100%" height="100%" controls>
+                    <source src="{{URL::asset('/public/videos/part1/0004/p1s1v1.mp4')}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                     <strong>Session 4: Video -6 </strong></div>
+                    <div class="panel-body">
+                     
+
+                <video width="100%" height="100%" controls>
+                    <source src="{{URL::asset('/public/videos/part1/0004/p1s1v2.mp4')}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+            </div>
+        </div>
+
+       
+  
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                     <strong>Session 4: Video -7 </strong></div>
+                    <div class="panel-body">
+                     
+
+                <video width="100%" height="100%" controls>
+                    <source src="{{URL::asset('/public/videos/part1/0004/p1s1v3.mp4')}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+            </div>
+        </div>
+ 
+ 
+  
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                     <strong>Session 4: Video -8 </strong></div>
+                    <div class="panel-body">
+                     
+
+                <video width="100%" height="100%" controls>
+                    <source src="{{URL::asset('/public/videos/part1/0004/p1s1v4.mp4')}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+            </div>
+        </div>
+
+  
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                     <strong>Session 4: Video -9 </strong></div>
+                    <div class="panel-body">
+                     
+
+                <video width="100%" height="100%" controls>
+                    <source src="{{URL::asset('/public/videos/part1/0004/p1s1v5.mp4')}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                </div>
+            </div>
+        </div>
+
+                </div>
+            </div>
+        </div>
+
+@endsection
+
+
+

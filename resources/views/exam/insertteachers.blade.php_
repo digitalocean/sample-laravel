@@ -1,0 +1,42 @@
+@extends('layouts.masterpass1')
+@section('PageTitle', 'NBC')
+@section('Description',('This is Home Page Description'))
+@section('content')
+
+<br>
+<br>
+<br>
+
+<div class="container">    
+<div class="row">
+  <div class="col-lg-12">
+  <br><br><br>
+        <div class="panel panel-default">   
+<?php    $today = date('Y-m-d');
+         $n_today = strtotime($today);
+                  echo $today.'Date as number'.$n_today; ?>            
+<h2>Insert Teachers </h2>
+	<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">Fill  fields of Teachers </div>
+			<div class="panel-body">
+                <form action="postinsertteachers">
+                    @csrf
+                    <input name="name" type="text" palceholder="Insert Teacher Name ...">
+                    <input name="comment" type="text" palceholder="Insert comment   ...">
+                    <input class="btn btn-success" type="submit" value="Insert Teacher">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+        </div>
+    </div>
+</div>
+</div>
+        </div>
+    </div>
+</div>
+
+@endsection

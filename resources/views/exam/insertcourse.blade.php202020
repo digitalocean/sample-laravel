@@ -1,0 +1,76 @@
+@extends('layouts.masterpems')
+@section('PageTitle', 'NBC')
+@section('Description',('This is Home Page Description'))
+@section('content')
+
+ 
+<div class="container">    
+    <div class="row">
+        <div class="col-lg-12">
+            <br><br><br>
+                <div class="panel panel-default">   
+                   
+                    <div class="panel-body">
+                        <P>  </P>
+                         
+  
+        <form action="postinsertcourse" method="post" enctype="multipart/form-data">
+                @csrf
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                    <tr><th>Insert New Course Here ........ .... . !   </th><th></th> </tr>
+            </thead>
+            <tbody>
+<tr>
+<td>
+            <lable>Course Name : </lable></td> 
+                <th><input type="text" name="name" value="" placeholder="Insert Course Name">  
+            </td> 
+</tr>
+
+            <tr><td>
+                <lable>Teacher Name : </lable></td><td>
+                <select name="teacher_id" >
+                    <?php $teachers = DB::table('teachers')->get(); ?>
+                    @foreach($teachers as $teacher)
+                    <option value="{{$teacher->id}}">{{$teacher->name}}</option> 
+                    @endforeach
+                </selecct>
+               </td> </tr>
+                <tr><td>
+                <lable>Course Fee : </lable></td><td><input type="text" name="fee" value="" placeholder="Insert Fee"> 
+                 </td> </tr>
+                <tr><td>
+                <lable>Course Comment : </lable></td><td><input type="text" name="comment" value="" placeholder="Insert comment"> 
+                 </td> </tr>
+                <tr><td>
+                <input type="submit" class="btn btn-success"  value="Insert Teacher"  > </td> </tr>
+                </tbody>
+                </table>
+            </form>
+            <br />
+            <br />
+            <?php $courses =  DB::table('subjects')->get(); ?>
+            <table class="table table-hover">
+                    <thead class="thead-dark">
+                      <tr><th>ID</th><th>Name</th><th>teacher</th><th>fee</th><th>Comment</th><th>Action </th> </tr>
+                </thead>
+                    <tbody>
+                        @foreach($courses as $course)
+                        <tr><td>{{$course->id}}</td><td>{{$course->name}}</td><td>{{$course->teacher_id}}</td><td>{{$course->fee}}</td><td>{{$course->comment}}</td><td><a class="btn btn-danger" href="/deletecourse/{{$course->id}}" >Delete</a> <a class="btn btn-warning"  href="/editcourse/{{$course->id}}" >Edit</a></td></tr>
+                        @endforeach
+                    </tbody>
+            </table>
+            </div>
+        </div>
+        </div>
+        </div>
+       </div>
+        </div>
+
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection()
