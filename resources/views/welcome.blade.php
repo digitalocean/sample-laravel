@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    NBCNBC
+                    NBCNBC https://github.com/digitalocean/sample-laravel.git
                 </div>
 
                 <div class="links">
