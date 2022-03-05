@@ -84,7 +84,7 @@
  NBCNBC https://github.com/digitalocean/sample-laravel.git w
                      <h2>{{$user->name}}</h2>
                  </div>
-                 NBCNBC https://github.com/digitalocean/sample-laravel.git w
+                 NBCNBCNBCNBC https://github.com/digitalocean/sample-laravel.git w
                  Welcome Welcome 
                 <div class="links">
                     <a href="{{url('/')}}">Home</a>
