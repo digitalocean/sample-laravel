@@ -81,14 +81,10 @@
 
             <div class="content">
                 <div class="title m-b-md">
-<<<<<<< Updated upstream
-NBCNBC https://github.com/digitalocean/sample-laravel.git w
-NBCNBC https://github.com/digitalocean/sample-laravel.git w
-=======
-                    <h2>{{$user->name}}</h2>
->>>>>>> Stashed changes
-                </div>
-                Welcome
+ NBCNBC https://github.com/digitalocean/sample-laravel.git w
+                     <h2>{{$user->name}}</h2>
+                 </div>
+                 NBCNBC https://github.com/digitalocean/sample-laravel.git w
                 Welcome
                 <div class="links">
                     <a href="{{url('/')}}">Home</a>
