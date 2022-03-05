@@ -86,13 +86,13 @@
                      <h2>{ {$ user->name}}</h2>
                  </div>
                  NBCNBCNBCNBC a  https://github.com/digitalocean/sample-laravel.git w
-                 Welcome Welcome 
-                <div class="links">
-                    <a href="{{url('/')}}">Home</a>
-                    <a href="{{route('about')}}">About</a>
-                    <a href="{{route('services.webdesign')}}">webdesign</a>
+                 Welcome Welcome
+                <!-- <div class="links">
+                    <a href="{ {url('/')}}">Home</a>
+                    <a href="{ {route('about')}}">About</a>
+                    <a href="{ {route('services.webdesign')}}">webdesign</a>
 
-                </div>
+                </div> -->
             </div>
         </div>
     </body>
