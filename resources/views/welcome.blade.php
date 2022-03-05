@@ -81,7 +81,8 @@
 
             <div class="content">
                 <div class="title m-b-md">
- NBCNBC https://github.com/digitalocean/sample-laravel.git w
+                NBCNBC https://github.com/digitalocean/sample-laravel.git w
+                NBCNBC https://github.com/digitalocean/sample-laravel.git w
                      <h2>{{$user->name}}</h2>
                  </div>
                  NBCNBCNBCNBC a  https://github.com/digitalocean/sample-laravel.git w
