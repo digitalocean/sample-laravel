@@ -1,0 +1,8 @@
+ public function storeref(Request $request){
+            $user = User::find(1);
+            $references=Reference::join('users','users.id','=','references.user_id')
+            ->select('users.id as id', 'references.id as id', 'references.name as name', 'references.phone as phone', 'references.address as address', 'references.email as email', 'references.relationship as relationship')
+            ->get();
+            return view('map.myreferences')->with('success', 'References Created')->with(['user'=>1,'references' => $references ]);
+
+        }

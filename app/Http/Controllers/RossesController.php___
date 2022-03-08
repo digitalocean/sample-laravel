@@ -1,0 +1,771 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Session;
+use Hash;
+use Image;
+use PDF;
+use DB;
+use Mail;
+use App\User;
+use App\Ref_result;
+use App\Phone;
+use App\Email;
+use App\Admin;
+use App\Student;
+use App\Payment;
+use App\Subject;
+use App\Invoice;
+use App\Scorecard;
+use App\Proctordate;
+use App\Mail\SendMailable2;
+use App\Mail\SendBooking;
+use App\Mail\SendInvoice;
+use App\Mail\SendPayment;
+use App\Mail\SendExemptExam;
+
+use App\Notifications\InvoicePaid;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+
+class RossesController extends Controller
+{
+    public function __construct(){
+       // $this->middleware('auth:admin');
+       $this->middleware('auth');
+    }
+    public function ross(){
+        return view('ross.ross');
+    }
+    public function proctor(){
+        $users = User::all();
+        return view('ross.proctor')->with('users', $users);
+    }
+    public function profiles(){
+        $users = User::all();
+        $members = DB::table('users')->where('is_admin',2)->orderBy('student_id', 'DESC')->get();
+        return view('ross.profiles',compact('members','users'));
+    }
+    public function registerations(){
+        $users = User::all()->where('is_admin',0);
+        return view('ross.registerations')->with('users', $users);
+    }
+    public function showreceipts(){
+        $users = User::all();
+        return view('ross.showreceipts')->with('users', $users);
+    }
+    public function receipts(){
+        $members = User::all();
+        return view('ross.receipts')->with('members', $members);
+    }
+    public function receipts2(){
+        $members = User::all();
+        return view('ross.receipts')->with('members', $members);
+    }
+    public function members(){
+        $members = User::all();
+        return view('ross.members')->with('members', $members);
+        }
+    public function schloarship(){
+        $members = User::all();
+        return view('ross.schloarship')->with('members', $members);
+    }
+    public function selectscholarship($id){
+        $member = User::find($id);
+        DB::table('users')->where('id', $member->id)->update(['scholarship' => 1]);
+        $members = User::all();
+        return view('ross.schloarship')->with('members', $members);
+    }
+    
+    public function showmembers(){
+        $users = User::all();
+        return view('ross.showmembers')->with('users', $users);
+    }
+    
+                    //DB::table('users')->where('id', $id)->update(['schloarship' => 1]);
+
+//-------------------------------Proctor Query----------------------------------------------------------------------------
+public function proctorq(Request $request){
+    $q = $request->input('q');
+    $count = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->count();
+    if($count < 1){
+        return  redirect()->back();
+    }
+    $user1 = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+    $user = DB::table('users')->where([['student_id','=',$user1->student_id],['is_admin','>', 0]])->first();
+
+    $members= User::all();
+    $subjects= Subject::all();
+    if(count($user) > 0)
+
+    return view('ross.proctorq')->with('user',$user)->with('members',$members)->with('subjects',$subjects);
+    else
+    $users= User::all();
+    return view ('ross.proctor')->withMessage('No Details found. Try to search again !')->with('users',$users);
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///-------------------------------Proctor1 Query----------------------------------------------------------------------------
+    public function proctorq1(Request $request){
+        $q = $request->input('q');
+    $count = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->count();
+    if($count < 1){
+        return  redirect()->back();
+     }
+    $usr = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+    $count = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->count();
+    $members= User::all();
+    $users = User::all();
+    if($count == 0)
+    return view ('ross.proctor')->withMessage('No Details found. Try to search again !')->with('users',$users);
+    else
+        return view('ross.proctorq1')->with('usr',$usr)->with('members',$members) ;
+
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function receiptsq(Request $request){
+        $q = $request->input('q');
+        $count = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->count();
+        if($count < 1){
+        return  redirect()->back();
+    }
+
+        $id = $request->input('q');
+        $user = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+        $account = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+       // $account = DB::table('users')->Where('student_id',$q)->first();
+         $id1 = $account->student_id;
+         $count = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->count();
+
+        if($count > 0)
+        return view('ross.receiptsq')->with('user',$user)->with('id',$id)->with('id1',$id1);
+        else
+        $members= User::all();
+        $subjects= Subject::all();
+        $users= User::all();
+        return view ('ross.receipts')->withMessage('No Details found. Try to search again !')->with('users',$users)->with('members',$members)->with('subjects',$subjects);
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function exambookingsystemq(Request $request){
+        $q = $request->input('q');
+    $count = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->count();
+    if($count < 1){
+        return  redirect()->back();
+    }
+
+        $id = $request->input('q');
+        $user =DB::table('users')->where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+        $accounts = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+        $id1 = $user->student_id;
+
+        if($count > 0)
+        return view('ross.exambookingsystemq')->with('user',$user)->with('id',$id)->with('id1',$id1)->with('accounts',$accounts);
+        else
+        $members= User::all();
+        $subjects= Subject::all();
+        $users= User::all();
+        return view ('ross.exambookingsystem')->withMessage('No Details found. Try to search again !')->with('users',$users)->with('members',$members)->with('subjects',$subjects);
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public function exambookingsystemdate(Request $request){
+ $q = $request->input('student_id');
+         $count = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->count();
+if($count < 1){
+return redirect()->back()->whth('error','Error Entered Data....?');
+} 
+
+        $id = $request->input('student_id');
+        $user = DB::table('users')->where('student_id', $q)->first();
+        $proctordate = new Proctordate;
+        $proctordate->user_id = $request->input('student_id');
+        $proctordate->subject_id = $request->input('subject');
+        $proctordate->procrordate = $request->input('examdate');
+        $proctordate->open = 0;
+        $proctordate->save();
+
+        $ref_result = new Ref_result;
+        $ref_result->pass = 'Open' ;
+        $ref_result->student_id =$request->input('student_id');
+        $ref_result->examcode = $request->input('subject');
+        $ref_result->mailing = 0;
+        $ref_result->save();
+
+        if($user->scholarship == 1){
+            $invoice = new Invoice;
+                $invoice->amount = 10;
+                $invoice->student_id = $request->input('student_id');
+                $invoice->subject_id = $request->input('subject');
+                $invoice->description = $request->input('subject');
+                $invoice->save();
+//------------------------------------------------------------------Send New Invoice ---------------------------------------------------------
+        $max_inv = DB::table('invoices')->where('student_id',$q)->max('id');
+        $invoice = DB::table('invoices')->where('id',$max_inv)->first();
+        $booking = DB::table('invoices')->where('id',$max_inv)->first();
+
+        $id1= $ref_result->student_id;
+        $user1 = DB::table('users')->where('student_id',$id1)->first();
+            
+            $email=$user1->email;
+            Mail::to($email)->send(new Sendbooking($booking));
+            Mail::to('seralkhatem123@gmail.com')->send(new Sendbooking($booking));
+            Mail::to('info@acpaglobal.net')->send(new Sendbooking($booking));
+
+            $user =DB::table('users')->where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+            $accounts = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+            $id1 = $user->student_id;
+
+            if($count > 0)
+        return view('ross.exambookingsystemq')->with('user',$user)->with('id',$id)->with('id1',$id1)->with('accounts',$accounts);
+            else
+            $members= User::all();
+            $subjects= Subject::all();
+            $users= User::all();
+            return view ('ross.exambookingsystem')->withMessage('No Details found. Try to search again !')->with('users',$users)->with('members',$members)->with('subjects',$subjects);
+}
+
+        $invoice = new Invoice;
+        $invoice->amount = 23;
+        $invoice->student_id = $request->input('student_id');
+        $invoice->subject_id = $request->input('subject');
+        $invoice->description = $request->input('subject');
+        $invoice->save();
+//------------------------------------------------------------------Send New Invoice ---------------------------------------------------------
+        $max_inv= DB::table('invoices')->where('student_id',$q)->max('id');
+        $invoice=DB::table('invoices')->where('id',$max_inv)->first();
+        $booking=DB::table('invoices')->where('id',$max_inv)->first();
+
+        $id1= $ref_result->student_id;
+        $user1 = DB::table('users')->where('student_id',$id1)->first();
+        $email=$user1->email;
+        Mail::to($email)->send(new Sendbooking($booking));
+        Mail::to('seralkhatem123@gmail.com')->send(new Sendbooking($booking));
+        Mail::to('info@acpaglobal.net')->send(new Sendbooking($booking));
+
+        $user =DB::table('users')->where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+        $accounts = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+        $id1 = $user->student_id;
+
+        if($count > 0)
+        return view('ross.exambookingsystemq')->with('user',$user)->with('id',$id)->with('id1',$id1)->with('accounts',$accounts);
+        else
+        $members= User::all();
+        $subjects= Subject::all();
+        $users= User::all();
+        return view ('ross.exambookingsystem')->withMessage('No Details found. Try to search again !')->with('users',$users)->with('members',$members)->with('subjects',$subjects);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function openexam($id){
+        $proctordate =  DB::table('proctordate')->where('id',$id)->first();
+        $usr = DB::table('users')->where('student_id',$proctordate->user_id)->first();
+        $Today=date('Y-m-d');
+        DB::table('proctordate')
+            ->where('id', $id)
+            ->update(['procrordate' => $Today,'open' => 1]);
+        $pro_date=DB::table('proctordate')
+            ->where('id', $id)
+            ->first();
+            $q = $proctordate->user_id;
+            $id =$proctordate->user_id;
+        $user =DB::table('users')->where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+        $accounts = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+        $id1 = $user->student_id;
+
+         return view('ross.proctorq1')->with('pro_date',$pro_date)->with('user',$user)->with('id',$id)->with('id1',$id1)->with('accounts',$accounts)->with('usr',$usr);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /*public function printPDF()
+    {
+      // This  $data array will be passed to our PDF blade
+        $data = [ 'title' => 'First PDF for Medium', 'heading' => 'Hello from 99Points.info',
+        'content' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took
+        a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+         but also the leap into electronic typesetting, remaining essentially unchanged.'
+        ];
+
+        $pdf = PDF::loadView('pdf_view', $data);
+        return $pdf->download('medium.pdf');
+    }*/
+
+ public function insertPay1(Request $request , $id){
+
+        $payment = new Payment;
+        $payment->user_id = $request->input('user_id');
+        $payment->payment = $request->input('payment');
+        $payment->save();
+
+        $maxpay = DB::table('payments')->max('id');
+        $max_pay = Payment::find($maxpay);
+        $id1= $max_pay->user_id;
+        $user1 = DB::table('users')->where('student_id',$id1)->get()->first();
+        if($id1 > 10000){
+            $user = DB::table('users')->where('student_id',$id1)->get()->first();
+        $email= $user->email;
+        $user = Payment::find($maxpay);
+        Mail::to($email)->send(new SendPayment($user));
+        Mail::to('seralkhatem123@gmail.com')->send(new SendPayment($user));
+        Mail::to('info@acpaglobal.net')->send(new SendPayment($user));
+
+
+    }
+
+        $subjects= Subject::all();
+        $NetBalance=0;
+        $totInvoice=0;
+        $account = DB::table('users')->where('student_id',$id)->first();
+        $user = DB::table('users')->where('student_id',$id)->first();
+        /* $invoices=Invoice::select('*')->where('id','LIKE',$id)->join('users','users.id','=','invoices.student_id')
+                                ->select('users.id as id', 'invoices.invoice as invoice','invoices.created_at as created_at')
+                                ->get();*/
+            $invoices = DB::table('invoices')->where('student_id', '=', $id)->get();
+            $payments=DB::table('payments')->where('user_id','=', $id)->get();
+            return view('ross.receiptsq')->with('user',$user)
+            ->with('subjects',$subjects)
+            ->with(['account'=>$account,'invoices' => $invoices ,'payments' => $payments,'NetBalance'=>$NetBalance,'totInvoice'=>$totInvoice]);
+            }
+
+    public function showprofile($id){
+
+                //$payment = Payment::find($user_id);
+
+                $subjects= Subject::all();
+                $NetBalance=0;
+                $totInvoice=0;
+                $account = User::find($id);
+                $user = User::find($id);
+                $members=User::all();
+                $score=Scorecard::find($id);
+                if($score->faccount == 'Exempted')
+                $bcolor='yellow';
+                else
+                $bcolor='light';
+
+        /* $invoices=Invoice::select('*')->where('id','LIKE',$id)->join('users','users.id','=','invoices.student_id')
+                                ->select('users.id as id', 'invoices.invoice as invoice','invoices.created_at as created_at')
+                                ->get();*/
+            $invoices = DB::table('invoices')->where('student_id', '=', $id)->get();
+            $payments=DB::table('payments')->where('user_id','=', $id)->get();
+            return view('ross.showprofile')->with('user',$user)
+            ->with('subjects',$subjects)->with('score',$score)->with('bcolor',$bcolor)
+            ->with(['members'=>$members,'id'=> $id,'account'=>$account,'invoices' => $invoices ,'payments' => $payments,'NetBalance'=>$NetBalance,'totInvoice'=>$totInvoice]);
+            }
+
+           public function showmembersq($id){
+                $u = User::find($id);
+                $id =$u->student_id;
+                //$payment = Payment::find($user_id);
+
+                $subjects= Subject::all();
+                $NetBalance=0;
+                $totInvoice=0;
+                $account = User::find($id);
+                $user = User::find($id);
+
+                $members=User::all();
+                $score=Scorecard::find($id);
+                if($score->faccount == 'Exempted')
+                $bcolor='yellow';
+                else
+                $bcolor='light'; 
+            $invoices = DB::table('invoices')->where('student_id', '=', $id)->get();
+            $payments=DB::table('payments')->where('user_id','=', $id)->get();
+            return view('ross.membersq3')->with('user',$user)
+            ->with('subjects',$subjects)->with('score',$score)->with('bcolor',$bcolor)
+            ->with(['members'=>$members,'id'=> $id,'account'=>$account,'invoices' => $invoices ,'payments' => $payments,'NetBalance'=>$NetBalance,'totInvoice'=>$totInvoice]);
+            }
+ 
+public function receiptsq1(Request $request){
+
+            $student_id= $request->input('user_id');
+            $subjectinput = $request->input('subject_id') ;
+            $user= DB::table('users')->where('student_id',$student_id)->first();;
+$fee = $user->fee;
+            //$payment = Payment::find($user_id);
+            $payment = new Payment;
+            $payment->user_id = $request->input('user_id');
+            $payment->subject_id = $request->input('subject_id');
+            $payment->payment = $request->input('payment');
+            $payment->save();
+            $fee = $fee+ $request->input('payment');
+            DB::table('users')->where('student_id', $student_id)->update(['fee' => $fee]);
+
+
+
+            $account = DB::table('users')->where('student_id',$student_id)->first();
+            $user= DB::table('users')->where('student_id',$student_id)->first();;
+          
+            $invoices = DB::table('invoices')->where('student_id', '=', $student_id)->get();
+            $payments=DB::table('payments')->where('user_id','=', $student_id)->get();
+            $members= User::all();
+            $q = $request->input('user_id');
+            $id = $request->input('user_id');
+            $user = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+            $account = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+            $maxpay = DB::table('payments')->max('id');
+            $max_pay = Payment::find($maxpay);
+            $id1= $max_pay->user_id;
+            $user1 = DB::table('users')->where('student_id',$id1)->get()->first();
+            if($id1 > 10000){
+                $user = DB::table('users')->where('student_id',$id1)->get()->first();
+            $email= $user->email;
+            $user = Payment::find($maxpay);
+            Mail::to($email)->send(new SendPayment($user));
+            Mail::to('seralkhatem123@gmail.com')->send(new SendPayment($user));
+            Mail::to('info@acpaglobal.net')->send(new SendPayment($user));
+            
+
+
+            if($id1 > 10000){
+            $user = DB::table('users')->where('student_id',$id1)->get()->first();
+           // return  redirect()->back();
+
+            return view('ross.receiptsq')->with('user',$user)->with('id1',$id1);
+
+        }
+           // return  redirect()->back();
+           return redirect('/receiptsq');
+           //return redirect()->route('/receiptsq', [$id]);
+            }
+        }
+        public function takescholarship(Request $request){
+            $student_id= $request->input('user_id');
+            $scholarsip = $request->input('scholarsip') ;
+                 DB::table('users')->where('student_id', $student_id)->update(['scholarship' => 1]);
+                 $user= DB::table('users')->where('student_id',$student_id)->first();;
+                $id = $request->input('user_id');
+                $id1 = $request->input('user_id');
+                return view('ross.receiptsq')->with('user',$user)->with('id1',$id1);
+            }
+public function proctordate(Request $request){
+            $id= $request->input('user_id');
+            $user = DB::table('users')->where('student_id',$id)->first();
+            if($user->scholarship == 1){
+                $pay=10;
+            }else{
+                $pay=23;
+
+            }
+            //$payment = Payment::find($user_id);
+            $proctordate = new Proctordate;
+            $proctordate->user_id = $request->input('user_id');
+            $proctordate->subject_id = $request->input('subject_id');
+            $proctordate->procrordate = $request->input('procrordate');
+            $proctordate->save();
+            $invoice = new Invoice;
+            $invoice->amount = $pay;
+            $invoice->student_id = $request->input('user_id');
+            $invoice->subject_id = $request->input('subject_id');
+            $invoice->description = $request->input('subject_id');
+            $invoice->save();
+//------------------------------------------------------------------Send New Invoice ---------------------------------------------------------
+            $max_inv= DB::table('invoices')->max('id');
+            $user=DB::table('invoices')->where('id',$max_inv)->first();
+            $id1=$user->student_id;
+            $user1 = DB::table('users')->where('student_id',$id1)->first();
+            $email=$user1->email;
+            Mail::to($email)->send(new SendInvoice($user));
+            Mail::to('seralkhatem123@gmail.com')->send(new SendInvoice($user));
+            Mail::to('info@acpaglobal.net')->send(new SendInvoice($user));
+
+
+//------------------------------------------------------------------End Send New Invoice ---------------------------------------------------------
+            $q = $request->input('user_id');
+            $user = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->first();
+            $members= User::all();
+            $subjects= Subject::all();
+            return view('ross.proctorq')->with('user',$user)->with('members',$members)->with('subjects',$subjects);
+           // return  redirect()->back();
+
+
+          }
+
+          public function savenewphone(Request $request){
+            $student_id = $request->student_id;
+            $phone = $request->phone;
+            $phonetype = $request->phonetype;
+            $phone = new Phone;
+            $phone->phone = $request->phone;
+            $phone->phonetype = $request->phonetype;
+            $phone->student_id = $request->student_id;
+            $phone->save();
+            $account = DB::table('users')->where('student_id','=', $student_id)->first();
+            $user = DB::table('users')->where('student_id','=', $student_id)->get();
+            $members = User::all();
+            $request->student_id;
+             //$id = $user->id;
+        //    DB::table('users')->where('id', $user->id)->update(['is_admin' => 2]);
+             //return view('ross.membersq')->with('student_id',$student_id)->with('user',$user);
+             //return redirect()->back();
+             return redirect('/membersq');
+            // return view('ross.membersq')->with('user',$user)->with('members',$members)->with('account',$account);
+            // 
+            }
+            public function getsavenewphone(){
+                return view('ross.getsavenewphone');
+            }
+
+            public function savenewemail(Request $request){
+                $student_id = $request->student_id;
+                $email = $request->email;
+                $emailtype = $request->emailtype;
+                $email = new Email;
+                $email->email = $request->email;
+                $email->emailtype = $request->emailtype;
+                $email->student_id = $request->student_id;
+                $email->save();
+                $account = DB::table('users')->where('student_id','=', $student_id)->first();
+                $user = DB::table('users')->where('student_id','=', $student_id)->get();
+                $members = User::all();
+                $request->student_id;
+                 //$id = $user->id;
+            //    DB::table('users')->where('id', $user->id)->update(['is_admin' => 2]);
+                 //return view('ross.membersq')->with('student_id',$student_id)->with('user',$user);
+                 //return redirect()->back();
+                 return redirect('/membersq');
+                // return view('ross.membersq')->with('user',$user)->with('members',$members)->with('account',$account);
+                // 
+                }
+                public function getsavenewemail(){
+                    return view('ross.getsavenewemail');
+                }
+                public function exemptselect(Request $request){
+             $q = $request->input('student_id');
+         $count = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->count();
+if($count < 1){
+return redirect()->back()->whth('error','Error Entered Data....?');
+}
+                    $e = $request->input('examcode');
+                    $ref_result =new Ref_result;
+                    $ref_result->student_id = $q;
+                    $ref_result->examcode = $e;
+                    $ref_result->pass = "Exempt";
+                    $ref_result->save();
+
+
+                    $q = $request->input('student_id');
+                    //if($q != null)
+                    $user = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','LIKE','%'.$q.'%')->get();
+                    $account = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','LIKE','%'.$q.'%')->get();
+                   // $id=$user->id;
+                    $members= User::all();
+                    //$account= User::find(1);
+           
+                    if(count($user) > 0)
+                        //return view('ross.membersq')->with('user',$user)->with('members',$members);
+                        return view('ross.membersq')->with('user',$user)->with('members',$members)->with('account',$account);
+                    else
+                    $members= User::all();
+                    return view ('ross.members')->withMessage('No Details found. Try to search again !')->with('members',$members);
+                }
+                public function undoexempt(Request $request){
+             $q = $request->input('student_id');
+         $count = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','=',$q)->count();
+if($count < 1){
+return redirect()->back()->whth('error','Error Entered Data....?');
+}
+                    $id= $request->input('id');
+                    DB::table('ref_result')->where('id',$id)->delete(); 
+
+
+                    $q = $request->input('student_id');
+                    //if($q != null)
+                    $user = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','LIKE','%'.$q.'%')->get();
+                    $account = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','LIKE','%'.$q.'%')->get();
+                   // $id=$user->id;
+                    $members= User::all();
+                    //$account= User::find(1);
+                
+                    if(count($user) > 0)
+                        //return view('ross.membersq')->with('user',$user)->with('members',$members);
+                        return view('ross.membersq')->with('user',$user)->with('members',$members)->with('account',$account);
+                    else
+                    $members= User::all();
+                    return view ('ross.members')->withMessage('No Details found. Try to search again !')->with('members',$members);
+                }
+
+    public  function selectexempt($id,$student_id){
+        $q = $student_id;
+        $e = $id;
+        $ref_result =new Ref_result;
+        $ref_result->student_id = $q;
+        $ref_result->examcode = $e;
+        $ref_result->pass = "Exempt";
+        $ref_result->save();
+
+        
+
+        $ref_id = DB::table('ref_result')->max('id');
+        $memberid=$student_id;
+        $member1 = DB::table('users')->where('student_id',$memberid)->first();
+        $lastresult = DB::table('ref_result')->where('id',$ref_id)->first();
+
+             
+        if($member1->scholarship == 1){
+            $invoice = new Invoice;
+                $invoice->amount = 10;
+                $invoice->student_id = $student_id;
+                $invoice->subject_id = $e;
+                $invoice->description = $e;
+                $invoice->save();
+        }else{
+            $invoice = new Invoice;
+                $invoice->amount = 23;
+                $invoice->student_id = $student_id;
+                $invoice->subject_id = $e;
+                $invoice->description = $e;
+                $invoice->save();
+        }
+//send exempt result---------------------------------------------------
+        if($lastresult->mailing == 0){  $email = $member1->email;
+            $status = "Exempt";
+            DB::table('ref_result')->where('id',$id)->update(['mailing' => 1,'pass' => $status ]);
+            $max_inv = DB::table('invoices')->max('id');
+             $lastresult = DB::table('invoices')->where('id',$max_inv)->first();
+
+            $id1= $ref_result->student_id;
+            $user1 = DB::table('users')->where('student_id',$id1)->first();
+                
+                $email=$user1->email;
+                Mail::to($email)->send(new SendExemptExam($lastresult));
+                Mail::to('seralkhatem123@gmail.com')->send(new SendExemptExam($lastresult));
+                Mail::to('info@acpaglobal.net')->send(new SendExemptExam($lastresult));
+
+
+            //Mail::to($email)->send(new SendExemptExam($lastresult));
+            
+            }
+
+//--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+$student_id=$lastresult->student_id;
+$GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
+$pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->get();
+//FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
+ foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
+if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
+ //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+ foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
+//FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+ foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
+//********************************************************EXAm NO 9*********************************************************** */
+$ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
+ //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+ foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
+ //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
+if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
+//******************************************************************************************************************* */
+/**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
+if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
+}else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
+        if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
+        }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
+                if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
+        }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
+                if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
+}else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
+        if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
+else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
+        if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
+/////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
+if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
+}else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
+    if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
+//--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+ 
+        //if($q != null)
+    $user = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','LIKE','%'.$q.'%')->get();
+    $account = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','LIKE','%'.$q.'%')->get();
+    // $id=$user->id;
+    $members= User::all();
+    //$account= User::find(1);
+
+    if(count($user) > 0)
+        //return view('ross.membersq')->with('user',$user)->with('members',$members); 
+        return view('ross.membersq')->with('user',$user)->with('members',$members)->with('account',$account)->with('lastresult',$lastresult)->with('ref_id',$ref_id);
+    else
+    $members= User::all();
+    return view ('ross.members')->withMessage('No Details found. Try to search again !')->with('members',$members)->with('ref_id',$ref_id);
+    }
+//----------------------------------------------------Undo Exempt Exam ---------------------------------------------------------------------------------                   
+ public function undoexemptid($id){
+    $ref = Ref_result::find($id);
+    $q = $ref->student_id;
+            DB::table('ref_result')->where('id',$id)->delete(); 
+                            
+//--------------------------------------------CALCULATE LEVEL STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+$student_id=$ref->student_id;
+$GAT = 0;$AAT = 0;$ACPA = 0;$ACCEA = 0;$ACA = 0; $FCPA = 0;$FCCEA = 0;$gat_count = 0;$aat_count = 0;$acpa_count = 0;$accea_count = 0;$fcpa_count = 0;$fccea_count = 0;
+$pass = 'Pass';$Exempt = 'Exempt';   $exams = DB::table('exam')->get();
+//FCPA----------------------------------------------------------LEVEL 1 FCPA------------------------------------------------------------
+ foreach($exams as $exam){ $ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode], ['student_id', '=', $student_id],])->count();
+if($exam->examcode<5){if($ref_result> 0){ $GAT = $GAT+1;  }}}
+ //FCPA-----------------------------------------------------------LEVEL 2 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+ foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],  ['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+if(($exam->examcode>4) and ($exam->examcode<9)){if($ref_result> 0){$AAT = $AAT+1; }}}
+//FCPA-----------------------------------------------------------LEVEL 3 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+ foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+    if(($exam->examcode>8) && ($exam->examcode<13)){if($ref_result> 0){ $ACPA = $ACPA+1;  } }}
+//********************************************************EXAm NO 9*********************************************************** */
+$ref_result9 = DB::table('ref_result')->where([ ['pass', '<>', 'Fail'], ['examcode', '=', 9], ['student_id', '=', $student_id],])->count(); if($ref_result9>0){  $ACCEA = $ACCEA+1;}
+ //FCPA-----------------------------------------------------------LEVEL 4 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+ foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],['student_id', '=', $student_id],])->count();
+if(($exam->examcode>9) && ($exam->examcode>12) and ($exam->examcode<16)){  if($ref_result> 0) { $ACCEA = $ACCEA+1;  }  } }
+ //FCPA-----------------------------------------------------------LEVEL 5 FCPA-------------------------------------------------FCPA-------------------------------------------------FCPA-------------------------------------------------------
+foreach($exams as $exam){$ref_result = DB::table('ref_result')->where([['pass', '<>', 'Fail'],['examcode', '=', $exam->examcode],    ['student_id', '=', $student_id],])->count();
+if(($exam->examcode>15) and ($exam->examcode<19)){if($ref_result> 0){$ACA = $ACA+1; }}}
+//******************************************************************************************************************* */
+/**/if(($ACA >= 3)and($ACPA >= 4)){$FCPA = 4; }else{$FCPA = 3; }
+if(($ACA >= 3)and($ACCEA >= 4)){$FCCEA = 4; }else{$FCCEA = 3; }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($GAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->delete();
+}else{ if($GAT >= 4){  $gat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','GAT']])->count();
+        if($gat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'GAT', 'student_id' => $student_id,] ); }  }   } 
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($AAT < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->delete();
+        }else{ if($AAT >= 4){  $aat_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','AAT']])->count();
+                if($aat_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'AAT', 'student_id' => $student_id,] );}}}  
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($ACPA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->delete();
+        }else{ if($ACPA >= 4){  $acpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACPA']])->count();
+                if($acpa_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACPA', 'student_id' => $student_id,]);}}} 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($ACCEA < 4){ DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->delete();
+}else{ if($ACCEA >= 4){  $accea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','ACCEA']])->count();
+        if($accea_count == 0){  DB::table('memberlevel')->insert(['levelname' => 'ACCEA', 'student_id' => $student_id,]);}}} 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->delete();}
+else{  $fccea_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCCEA']])->count();
+        if($fccea_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCCEA', 'student_id' => $student_id,] ); } }
+/////////FCPA-------------------------------------------------FCPA------------------------------------------------------------------
+if($ACA<3){  DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->delete();
+}else{  $fcpa_count=DB::table('memberlevel')->where([['student_id',$student_id],['levelname','FCPA']])->count(); 
+    if($fcpa_count==0){DB::table('memberlevel')->insert(['levelname' => 'FCPA', 'student_id' => $student_id,] ); } }
+//--------------------------------------------CALCULATE LEVEL FINISH CALCULATE LEVELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+ 
+                            //if($q != null)
+                            $user = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','LIKE','%'.$q.'%')->get();
+                            $account = User::where([['name','LIKE','%'.$q.'%'],['is_admin','>',0]])->orWhere('email','LIKE','%'.$q.'%')->orWhere('student_id','LIKE','%'.$q.'%')->get();
+                        // $id=$user->id;
+                            $members= User::all();
+                            //$account= User::find(1);
+                        
+                         //return view('ross.membersq')->with('user',$user)->with('members',$members);
+                        return view('ross.membersq')->with('user',$user)->with('members',$members)->with('account',$account);
+                 }
+
+
+}

@@ -1,0 +1,140 @@
+@charset "utf-8";
+/*
+Template Name: Modern Business
+Author: <a href="http://www.os-templates.com/">OS Templates</a>
+Author URI: http://www.os-templates.com/
+Licence: Free to use under our free template licence terms
+Licence URI: http://www.os-templates.com/template-terms
+File: Layout CSS
+*/
+
+@import url("navi.css");
+@import url("forms.css");
+@import url("tables.css");
+@import url("featured_slide.css");
+
+html{overflow-y:scroll;}
+body{margin:0; padding:0; font-size:13px; font-family:Georgia, "Times New Roman", Times, serif; color:#605B5B; background-color:#D0D0D0;}
+
+.justify{text-align:justify;}
+.bold{font-weight:bold;}
+.center{text-align:center;}
+.right{text-align:right;}
+.nostart{margin:0; padding:0; list-style-type:none;}
+
+.clear{clear:both;}
+br.clear{clear:both; margin-top:-15px;}
+
+a{outline:none; text-decoration:none; color:#FF9900; background-color:#FFFFFF;}
+
+.fl_left, .imgl{float:left;}
+.fl_right, .imgr{float:right;}
+
+img{display:block; margin:0; padding:0; border:none;}
+.imgl, .imgr{border:1px solid #C7C5C8; padding:5px;}
+.imgl{margin:0 8px 8px 0; clear:left;}
+.imgr{margin:0 0 8px 8px; clear:right;}
+
+/* ----------------------------------------------Wrapper------------------------------------- */
+
+div.wrapper{display:block; width:100%; margin:0; text-align:left;}
+div.wrapper h1, div.wrapper h2, div.wrapper h3, div.wrapper h4, div.wrapper h5, div.wrapper h6{margin:0 0 15px 0; padding:0; font-size:20px; font-weight:normal; line-height:normal;}
+.col1, .col1 a{color:#AAAAAA; background-color:#FFFFFF;}
+.col2{color:#333333; background-color:#373E46; border-bottom:1px solid #D5D5D5;}
+.col3{color:#666666; background-color:#6A737C; padding:20px 0;}
+.col4{color:#666666; background-color:#FFFFFF; border-top:1px solid #D5D5D5; border-bottom:1px solid #D5D5D5;}
+.col5{color:#666666; background-color:#E9E9E9;}
+.col5 a{color:#999999; background-color:#E9E9E9;}
+.col6, .col6 a{color:#605B5B; background-color:#D0D0D0;}
+.col7{color:#666666; background-color:#FFFFFF; padding:20px 0;}
+
+/* ----------------------------------------------Generalise------------------------------------- */
+
+#header, #topbar, #breadcrumb, #featured_intro, #latest, .container, #footer, #copyright{display:block; position:relative; width:960px; margin:0 auto;}
+
+/* ----------------------------------------------Header------------------------------------- */
+
+#header{padding:2px 0 20px 0;}
+#header .fl_left{display:block; float:left; margin-top:7px; overflow:hidden;}
+#header .fl_right{display:block; float:right; width:468px; height:60px; margin-top:21px; overflow:hidden;}
+#header h1, #header p, #header ul{margin:0; padding:0; list-style:none; line-height:normal;}
+#header h1 a{font-size:46px; color:#AAAAAA; background-color:#FFFFFF;}
+#header .fl_left p{margin-top:5px;}
+
+/* ----------------------------------------------Topbar------------------------------------- */
+
+#topbar{padding:20px 0; z-index:1000;}
+#topbar #search{display:block; float:right; margin:0; padding:0; overflow:hidden;}
+
+/* ----------------------------------------------BreadCrumb------------------------------------- */
+
+#breadcrumb ul{margin:0; padding:0; list-style:none;}
+#breadcrumb ul li{display:inline;}
+#breadcrumb ul li.current a{text-decoration:underline;}
+
+/* ----------------------------------------------Featured Intro------------------------------------- */
+
+#featured_intro{margin-top:20px; color:#666666; background-color:#FFFFFF;}
+#featured_intro div{padding:10px 15px;}
+#featured_intro div p{margin:0; padding:0; line-height:2em;}
+
+/* ----------------------------------------------Homepage Latest------------------------------------- */
+
+#latest{padding:30px 0;}
+#latest ul, #latest p{margin:0; padding:0; list-style:none; display:inline;}
+#latest h2{margin:0 0 15px 0; padding:0 0 8px 0; font-size:20px; font-weight:normal; border-bottom:1px dotted #C7C5C8;}
+#latest li{display:block; float:left; width:300px; margin:0 30px 0 0; padding:0;}
+#latest li.last{margin-right:0;}
+#latest li p.imgholder{display:block; width:290px; height:100px; margin:0 0 15px 0; padding:4px; border:1px solid #C7C5C8;}
+#latest a{font-weight:bold;}
+
+/* ----------------------------------------------Content------------------------------------- */
+
+.container{padding:20px 0;}
+.content{display:block; float:left; width:630px;}
+
+/* Comments */
+
+#comments{margin-bottom:40px;}
+#comments .commentlist{margin:0; padding:0;}
+#comments .commentlist ul{margin:0; padding:0; list-style:none;}
+#comments .commentlist li.comment_odd, #comments .commentlist li.comment_even{margin:0 0 10px 0; padding:15px; list-style:none;}
+#comments .commentlist li.comment_odd{color:#666666; background-color:#F7F7F7;}
+#comments .commentlist li.comment_odd a{color:#FF9900; background-color:#F7F7F7;}
+#comments .commentlist li.comment_even{color:#666666; background-color:#E8E8E8;}
+#comments .commentlist li.comment_even a{color:#FF9900; background-color:#E8E8E8;}
+#comments .commentlist .author .name{font-weight:bold;}
+#comments .commentlist .submitdate{font-size:smaller;}
+#comments .commentlist p{margin:10px 5px 10px 0; padding:0; font-weight:normal; text-transform:none;}
+#comments .commentlist li .avatar{float:right; border:1px solid #EEEEEE; margin:0 0 0 10px;}
+
+/* ----------------------------------------------Column------------------------------------- */
+
+.column{display:block; float:right; width:270px;}
+.column .holder{display:block; width:260px; margin-bottom:20px; padding-left:10px;}
+
+/* Sponsors Block */
+
+.column .sponsors{display:block; width:270px; margin-bottom:20px;}
+.column .sponsors h2{margin:0 0 15px 10px; padding:0;}
+.column .sponsors .b_125 ul{margin:0; padding:0; list-style:none;}
+.column .sponsors .b_125 li{float:right; margin:0 0 10px 10px;}
+
+/* ----------------------------------------------Footer------------------------------------- */
+
+#footer{padding:20px 0;}
+#footer h2, #footer p, #footer ul, #footer a{margin:0; padding:0; font-weight:normal; list-style:none; line-height:normal;}
+#footer p{line-height:1.6em;}
+#footer h2{color:#666666; background-color:#E9E9E9; font-size:18px; font-weight:normal; margin-bottom:20px;}
+#footer li{margin-bottom:5px;}
+#footer .footbox{display:block; float:left; width:200px; margin:0 20px 0 0; padding:0;}
+#footer .thumbbox{display:block; float:right; width:300px;}
+#footer .thumbbox ul{margin:0; padding:0; list-style:none;}
+#footer .thumbbox li{display:block; float:left; width:80px; height:80px; margin:0 15px 15px 0; padding:4px; border:1px solid #D0D0D0;}
+#footer .thumbbox li.last{margin-right:0;}
+#footer .last{margin:0;}
+
+/* ----------------------------------------------Copyright------------------------------------- */
+
+#copyright{padding:15px 0;}
+#copyright p{margin:0; padding:0;}
