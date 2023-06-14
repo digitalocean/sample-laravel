@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel KTv2
+                    Laravel KTv3
                 </div>
 
                 <div class="links">
