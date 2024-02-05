@@ -1,7 +1,7 @@
 import React from "react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage, Link } from "@inertiajs/react";
-import Table from "partials/table";
+import Table from "partials/Table";
 import { PresentationChartBarIcon, CurrencyDollarIcon } from "@heroicons/react/24/outline";
 
 
