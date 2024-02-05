@@ -1,7 +1,7 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage, Link } from "@inertiajs/react";
 import { UsersIcon } from '@heroicons/react/24/solid';
-import Table from "././partials/Table";
+import Table from "./partials/Table";
 
 export default function Application({auth}) {
     const {applications} = usePage().props;
