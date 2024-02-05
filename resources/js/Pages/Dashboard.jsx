@@ -1,8 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/react';
 import { BriefcaseIcon, BanknotesIcon, ClipboardDocumentListIcon, AcademicCapIcon, ArrowSmallRightIcon } from '@heroicons/react/24/solid';
-import CreatePartner from './Dashboard/partials/create_Partner';
-import Yearlychart from './Dashboard/partials/yearly-chart';
+import CreatePartner from './Dashboard/./partials/create_Partner';
+import Yearlychart from './Dashboard/./partials/yearly-chart';
 
 export default function Dashboard({ auth }) {
     const {scholarships} = usePage().props;

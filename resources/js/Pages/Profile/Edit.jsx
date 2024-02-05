@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import DeleteUserForm from 'partials/DeleteUserForm';
-import UpdatePasswordForm from 'partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from 'partials/UpdateProfileInformationForm';
+import DeleteUserForm from './partials/DeleteUserForm';
+import UpdatePasswordForm from './partials/UpdatePasswordForm';
+import UpdateProfileInformationForm from './partials/UpdateProfileInformationForm';
 import { Head } from '@inertiajs/react';
 
 export default function Edit({ auth, mustVerifyEmail, status }) {

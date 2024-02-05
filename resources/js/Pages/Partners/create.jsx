@@ -2,11 +2,11 @@ import { Fragment, useRef, useState } from 'react';
 import { router } from '@inertiajs/react'
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon  } from '@heroicons/react/24/outline';
-import SelectionCriteria from '@/Pages/Partners/partials/selection_criteria';
-import SelectionRequirements from '@/Pages/Partners/partials/selection_requirements';
-import UsesSelect from 'partials/selection_uses';
-import RenewSelect from 'partials/selection_renewable';
-import BasisSelect from 'partials/selection_basis';
+import SelectionCriteria from '@/Pages/Partners/./partials/selection_criteria';
+import SelectionRequirements from '@/Pages/Partners/./partials/selection_requirements';
+import UsesSelect from './partials/selection_uses';
+import RenewSelect from './partials/selection_renewable';
+import BasisSelect from './partials/selection_basis';
 
 
 export default function CreateApplication() {
