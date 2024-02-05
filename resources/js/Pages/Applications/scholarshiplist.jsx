@@ -1,6 +1,6 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage, Link } from "@inertiajs/react";
-import Table from "./partials/table";
+import Table from "partials/table";
 
 export default function Scholarshiplist({auth}) {
     const {applications} = usePage().props;
