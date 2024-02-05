@@ -36,7 +36,7 @@ export default function Dashboard({ auth }) {
                                 </div>
                             </div>
                             <div className="px-3 text-right basis-1/3">
-                                <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-red-900 to-red-500">
+                                <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-r from-rose-900 to-red-500">
                                 <AcademicCapIcon className='leading-none w-6 h-6 relative top-3.5 text-white'/>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ export default function Dashboard({ auth }) {
                             </div>
                             <div className="max-w-full px-3 mt-12 ml-auto text-center lg:mt-0 lg:w-5/12 lg:flex-none">
                                 <div className="h-full bg-gradient-to-tl from-red-900 to-red-500 rounded-xl">
-                                <img src="../assets/img/shapes/waves-white.svg" className="absolute top-0 hidden w-1/2 h-full lg:block" alt="waves" />
+                                <img src="assets/img/shapes/waves-white.svg" className="absolute top-0 hidden w-1/2 h-full lg:block" alt="waves" />
                                 <div className="relative flex items-center justify-center h-full">
                                     
                                 </div>
