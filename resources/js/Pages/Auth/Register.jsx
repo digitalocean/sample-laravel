@@ -187,7 +187,7 @@ export default function Register() {
                 <footer className="py-2">
                     <div className="container">
                     <div className="flex flex-wrap -mx-3">
-                        <div className="flex-shrink-0 w-full max-w-full mx-auto mb-2 text-center lg:flex-0 lg:w-8/12">
+                        {/* <div className="flex-shrink-0 w-full max-w-full mx-auto mb-2 text-center lg:flex-0 lg:w-8/12">
                         <a href="javascript:;" target="_blank" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Company </a>
                         <a href="javascript:;" target="_blank" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> About Us </a>
                         <a href="javascript:;" target="_blank" className="mb-2 mr-4 text-slate-400 sm:mb-0 xl:mr-12"> Team </a>
@@ -209,7 +209,7 @@ export default function Register() {
                         <a href="javascript:;" target="_blank" className="mr-6 text-slate-400">
                             <span className="text-lg fab fa-github"></span>
                         </a>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="flex flex-wrap -mx-3">
                         <div className="w-8/12 max-w-full px-3 mx-auto mt-1 text-center flex-0">

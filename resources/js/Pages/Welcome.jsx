@@ -5,7 +5,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
-            <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-red-800 dark:bg-dots-lighter dark:bg-red-900 selection:bg-red-500 selection:text-white">
+            <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gradient-to-r from-rose-900 to-red-500 selection:text-white">
                 <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
                     {auth.user ? (
                         <Link
@@ -28,8 +28,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                 <div className="max-w-7xl mx-auto p-6 lg:p-8">
                     <div className="flex justify-center">
-                        <BuildingOffice2Icon className='h-16 w-auto' />
-                        
+                        <img src="/assets/logos/blackscholarslogo.png" className="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-24" alt="main_logo" />
                     </div>
 
                     <div className="mt-16">
@@ -207,7 +206,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
                             <div className="flex items-center gap-4">
                                 <a
-                                    href="https://github.com/sponsors/taylorotwell"
+                                    href="https://www.urbanleagueroc.org/donate"
                                     className="group inline-flex items-center hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                 >
                                     <svg
@@ -229,7 +228,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         </div>
 
                         <div className="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                            Laravel v{laravelVersion} (PHP v{phpVersion})
+                            {/* Laravel v{laravelVersion} (PHP v{phpVersion}) */}
                         </div>
                     </div>
                 </div>

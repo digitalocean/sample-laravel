@@ -15,7 +15,7 @@ export default function Authenticated({ user, header, breadcrumb, children }) {
                 <div className="h-19.5">
                     <i className="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"></i>
                     <a className="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="javascript:;" target="_blank">
-                     <img src="" className="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
+                     <img src="/assets/logos/blackscholarslogo.png" className="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
                     <span className="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Black Scholars Portal</span>
                     </a>
                 </div>

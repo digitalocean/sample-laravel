@@ -1,50 +1,54 @@
 import React, { useEffect } from "react";
-import {Helmet} from "react-helmet";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  import { Line } from 'react-chartjs-2';
 
 export default function Yearlychart() {
-    useEffect(() => {
-        const chart = new Chart(document.getElementById("myChart"), {
-            type: "line",
-            data: {
-                labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029"],
-                datasets: [
-                    {
-                        label: "16 Mar 2018",
-                        borderColor: "#4A5568",
-                        data: [600, 400, 620, 300, 200, 600, 230, 300, 200, 200, 100, 1200],
-                        fill: false,
-                        pointBackgroundColor: "#4A5568",
-                        borderWidth: "3",
-                        pointBorderWidth: "4",
-                        pointHoverRadius: "6",
-                        pointHoverBorderWidth: "8",
-                        pointHoverBorderColor: "rgb(74,85,104,0.2)",
-                    },
-                ],
+
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Title,
+        Tooltip,
+        Legend
+    );
+
+    const options = {
+        responsive: true,
+        plugins: {
+          title: {
+            display: false,
+            text: 'Chart.js Line Chart',
+          },
+        },
+      };
+
+    const labels = ["2021", "2022", "2023", "2024", "2025", "2026", "2027"];
+        const data = {
+            labels: labels,
+            datasets: [
+            {
+                label: "",
+                backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                borderColor: "hsl(252, 82.9%, 67.8%)",
+                data: [0, 20000, 50000, 100000, 150000, 200000, 450000],
             },
-            options: {
-                legend: {
-                    position: false,
-                },
-                scales: {
-                    yAxes: [
-                        {
-                            gridLines: {
-                                display: false,
-                            },
-                            display: false,
-                        },
-                    ],
-                },
-            },
-        });
-    });
+            ],
+        };
+
+
     return (
         <>
-            <Helmet>
-                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-                <script defer src="https://cdn.tuk.dev/dev/light-dark-switch.js"></script>
-            </Helmet>
             <div className="flex items-center justify-center py-8 px-4">
                 <div className="w-full">
                     <div className="flex flex-col justify-between h-full">
@@ -62,7 +66,8 @@ export default function Yearlychart() {
                             </div>
                         </div>
                         <div className="mt-6">
-                            <canvas id="myChart" width={1025} height={400} />
+                            {/* <canvas class="p-10" id="chartLine" width={1025} height={400}></canvas> */}
+                            <Line options={options} data={data} />
                         </div>
                     </div>
                 </div>
