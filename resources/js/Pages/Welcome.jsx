@@ -10,7 +10,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     {auth.user ? (
                         <Link
                             href={route('dashboard')}
-                            className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            className="font-semibold text-gray-800 hover:text-gray-900 dark:text-gray-900 dark:hover:text-red-800 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                         >
                             Dashboard
                         </Link>
@@ -18,7 +18,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <>
                             <Link
                                 href={route('login')}
-                                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                className="font-semibold text-gray-800 hover:text-gray-900 dark:text-gray-900 dark:hover:text-red-800 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                             >
                                 Log in
                             </Link>
@@ -35,10 +35,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                             <a
                                 href={route('login')}
-                                className="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                                className="scale-100 p-6 bg-white dark:bg-red-800/80 dark:bg-gradient-to-bl from-red-500/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-2xl shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
                             >
                                 <div>
-                                    <div className="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
+                                    <div className="h-16 w-16 bg-red-50 dark:bg-white flex items-center justify-center rounded-full">
                                         <UserIcon className='w-7 h-7 stroke-red-500' />
                                     </div>
 
@@ -46,7 +46,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         Partner Users
                                     </h2>
 
-                                    <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                    <p className="mt-4 text-gray-500 dark:text-white text-lg leading-relaxed">
                                        The Black Scholars thanks you Partners for your continued support of our students. By loginning into this application you will be able to view your scholarships and applicats that have applied for your scholarship.
                                     </p>
                                 </div>
@@ -56,7 +56,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     strokeWidth="1.5"
-                                    className="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6"
+                                    className="self-center shrink-0 stroke-red-500 dark:stroke-white w-6 h-6 mx-6"
                                 >
                                     <path
                                         strokeLinecap="round"
@@ -68,10 +68,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                             <a
                                 href={route('login')}
-                                className="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                                className="scale-100 p-6 bg-white dark:bg-red-800/80 dark:bg-gradient-to-bl from-red-500/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-2xl shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
                             >
                                 <div>
-                                    <div className="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
+                                    <div className="h-16 w-16 bg-red-50 dark:bg-white flex items-center justify-center rounded-full">
                                      <UsersIcon className='w-7 h-7 stroke-red-500' />
                                     </div>
 
@@ -79,7 +79,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         Black Scholars Team
                                     </h2>
 
-                                    <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                    <p className="mt-4 text-gray-500 dark:text-white text-lg leading-relaxed">
                                         The Black Scholars Program is an ambitious, rigorous, and competitive academic program, 
                                         that seeks to educate the whole undergraduate student and develop their potential to fashion a more humane and just world.
                                         We the admins of this program must promote and adhere to our valus set forth.
@@ -91,7 +91,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     strokeWidth="1.5"
-                                    className="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6"
+                                    className="self-center shrink-0 stroke-red-500 dark:stroke-white w-6 h-6 mx-6"
                                 >
                                     <path
                                         strokeLinecap="round"

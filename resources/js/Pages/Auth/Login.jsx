@@ -33,19 +33,19 @@ export default function Login({ status, canResetPassword }) {
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
             <main className="mt-0 transition-all duration-200 ease-soft-in-out">
                 <section className="mb-6">
-                    <div className="relative flex items-start pt-12 pb-56 m-4 overflow-hidden bg-center bg-cover min-h-50-screen rounded-xl bg-black">
+                    <div className="relative flex items-start pt-28 pb-64 m-4 overflow-hidden bg-center bg-cover min-h-100 rounded-xl bg-black">
                         <span className="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-br from-red-800 to-red-600 opacity-80"></span>
                         <div className="container z-10">
                             <div className="flex flex-wrap justify-center -mx-3">
-                            <div className="w-full max-w-full px-3 mx-auto mt-0 text-center lg:flex-0 shrink-0 lg:w-5/12">
+                            <div className="w-full max-w-full px-3 mx-auto mt-0 mb-8 text-center lg:flex-0 shrink-0 lg:w-5/12">
                                 <h1 className="mt-16 mb-2 text-white">Welcome!</h1>
-                                <p className="text-white">to the Black Scholars Sholarship Portal for team members and Partners. If you would like to setup a Scholarship fund with the Black Scholars please email us @ </p>
+                                <p className="text-white">to the Black Scholars Sholarship Portal for team members and Partners. If you would like to setup a Scholarship fund with the Black Scholars please email us OurBlackScholars@ulr.org </p>
                             </div>
                             </div>
                         </div>
                     </div>
                     <div className="container">
-                        <div className="flex flex-wrap -mx-3 -mt-48 md:-mt-56 lg:-mt-48">
+                        <div className="flex flex-wrap -mx-3 -mt-42 md:-mt-56 lg:-mt-42">
                             <div className="w-full max-w-full px-3 mx-auto mt-0 md:flex-0 shrink-0 md:w-7/12 lg:w-5/12 xl:w-4/12">
                                 <div className="relative z-0 flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
                                     <div className="p-6 mb-0 text-center bg-white border-b-0 rounded-t-2xl">

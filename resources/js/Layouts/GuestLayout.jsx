@@ -1,12 +1,12 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
+import React from 'react';
 import { Link } from '@inertiajs/react';
 
 export default function Guest({ children }) {
     return (
-        <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-             <nav className="absolute top-0 z-30 flex flex-wrap items-center justify-between w-full px-4 py-2 mt-6 mb-4 shadow-none lg:flex-nowrap lg:justify-start">
+        <div className="min-h-screen flex flex-col sm:justify-center items-center sm:pt-0 bg-white">
+             <nav className="absolute bg-black/60 rounded-2xl top-0 z-30 flex flex-wrap items-center justify-between w-2/3 px-4 py-2 mt-6 mb-4 shadow-none lg:flex-nowrap lg:justify-start">
                 <div className="container flex items-center justify-between py-0 flex-wrap-inherit">
-                    <a className="py-2.375 text-sm mr-4 ml-4 whitespace-nowrap font-bold text-white lg:ml-0" href="../pages/dashboard.html"> Black Scholars </a>
+                    <a className="py-2.375 text-sm mr-4 ml-4 whitespace-nowrap font-bold text-white lg:ml-0" href="https://www.urbanleagueroc.org/black-scholars-2023"> Black Scholars </a>
                     <button navbar-trigger className="px-3 py-1 ml-2 leading-none transition-all bg-transparent border border-transparent border-solid rounded-lg shadow-none cursor-pointer text-lg ease-soft-in-out lg:hidden" type="button" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="inline-block mt-2 align-middle bg-center bg-no-repeat bg-cover w-6 h-6 bg-none">
                         <span bar1 className="w-5.5 rounded-xs duration-350 relative my-0 mx-auto block h-px bg-white transition-all"></span>
