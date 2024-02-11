@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('scholarship_applications', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->foreignId('scholarship_id');
             $table->foreignId('application_id');
         });

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
         });
         Schema::create('requirement_scholarships', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->foreignId('requirement_id');
             $table->foreignId('scholarship_id');
         });
@@ -27,6 +28,7 @@ return new class extends Migration
         });
 
         Schema::create('selectioncriteria_scholarships', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->foreignId('selectioncriteria_id');
             $table->foreignId('scholarship_id');
         });
@@ -37,6 +39,7 @@ return new class extends Migration
         });
 
         Schema::create('scholarshipuse_scholarships', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->foreignId('scholarshipuse_id');
             $table->foreignId('scholarship_id');
         });
