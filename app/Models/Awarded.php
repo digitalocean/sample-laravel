@@ -9,7 +9,7 @@ class Awarded extends Model
 {
     use HasFactory;
 
-    protected $collection = 'awardeds';
+    protected $table = 'awardeds';
 
     protected $fillable = [
         'application_id',

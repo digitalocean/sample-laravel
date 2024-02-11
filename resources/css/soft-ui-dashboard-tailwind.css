@@ -60,7 +60,7 @@ html {
   -o-tab-size: 4;
      tab-size: 4;
   /* 3 */
-  font-family: Open Sans;
+  font-family: Lato;
   /* 4 */
 }
 
@@ -2459,7 +2459,7 @@ h6 {
 }
 
 .font-sans {
-  font-family: Open Sans;
+  font-family: Lato;
 }
 
 .text-base {

@@ -729,9 +729,9 @@ export default {
           DEFAULT: "1",
         },
         fontFamily: {
-          sans: ["Open Sans"],
+          sans: ["Lato"],
           serif: ['SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace', "serif"],
-          body: ["Roboto", "sans-serif"],
+          body: ["Lato", "Poppins"],
           awesome: ["FontAwesome"],
         },
         fontSize: ({ theme }) => ({

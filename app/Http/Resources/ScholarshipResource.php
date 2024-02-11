@@ -23,7 +23,7 @@ class ScholarshipResource extends JsonResource
             'award_payments' => $this->award_payments,
             'award_based_on' => $this->award_based_on,
             'renewability' => $this->renewability,
-            'uses' => $this->uses, 
+            'uses' => $this->uses,
             'deadline' => $this->deadline,
             'fund_amount' => $this->fund_amount,
         ];

@@ -8,11 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use App\Models\Scholarship;
-use App\Models\Partner;
 use App\Models\Application;
+use App\Models\Selectioncriteria;
+use App\Models\Requirementcriteria;
+use App\Models\Scholarshipuse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
@@ -33,14 +36,21 @@ class ScholarshipController extends Controller {
         //retrieve scholarship information
         $scholarshipInfo = Scholarship::where('id', $a)->get(); //dd($scholarshipInfo);
         // Get selected by scholarship id for page
-        $selected = Application::where('scholarship_id', $a)->get();
+        $selected = Application::has('scholarships')->get(); 
         $otherscholarships = Scholarship::where('id', $scholarshipInfo[0]->partner_id)->get();
+        $criteria = Selectioncriteria::has('scholarships')->get();
+        $requirements = Requirementcriteria::has('scholarships')->get();
+        $scholarshipuses = Scholarshipuse::has('scholarships')->get();
+
         session([ 'partner_id' => $scholarshipInfo[0]->partner_id]);
         session([ 'scholarshipid' => $scholarshipInfo[0]->id]);  
         return Inertia::render('Scholarships/show', [
             'scholarship' => $scholarshipInfo,
             'applications' => $selected,
-            'otherscholarship' => $otherscholarships
+            'otherscholarship' => $otherscholarships,
+            'requirements' => $requirements,
+            'scholarshipuses' => $scholarshipuses,
+            'criteria' => $criteria,
         ]);
     }
 
@@ -53,26 +63,56 @@ class ScholarshipController extends Controller {
 
     #[OpenApi\Operation(tags: ['scholarship'], method: 'PATCH')]
     public function store(Request $request): RedirectResponse {
-        $a = $request->all();
+        $a = $request->all();  //dd($a[2]);
         $partner_id = session('partner_id');
-        $number1 = implode($a[0]['fund_amount']);
-        $number2 = implode($a[0]['award_payments']);
-
+    
         $b = Scholarship::create([
             'partner_id' => $partner_id,
             'name' => $a[0]['name'],
             'deadline' => $a[0]['deadline'],
             'description' => $a[0]['description'],
-            'award_payments' => $number2,
+            'award_payments' => $a[0]['award_payments'],
             'additional_information' => $a[0]['additional_information'],
             'review_applicants' => 'NO',
-            'selection_criteria' => $a[1],
-            'requirement_criteria' => $a[2],
-            'award_based_on' => $a[3],
-            'renewability' => $a[4],
-            'uses' => $a[5],
-            'fund_amount' => $number1,
+            'fund_amount' => $a[0]['fund_amount'],
         ]);
+        // 'selection_criteria' => $a[1],
+        // 'requirement_criteria' => $a[2],
+        // 'award_based_on' => $a[3],
+        // 'renewability' => $a[4],
+        // 'uses' => $a[5],
+        //dd(Selectioncriteria::find($a[1][0]["id"]));
+        // $a = Selectioncriteria::find($a[1][0]["id"]); 
+        $scholarshipInfo = Scholarship::find($b);
+        if ($a[1] != null) { 
+            foreach ( $a[1] as $a ){
+                $c = Selectioncriteria::find($a["id"]);
+                DB::table('selectioncriteria_scholarships')->insert([
+                    ['selectioncriteria_id' => $c->id, 'scholarship_id' => $scholarshipInfo[0]['id']],
+                ]);
+            }   
+        }
+
+        $a = $request->all();
+        if ($a[2] != null) { 
+            foreach ( $a[2] as $a ){
+                $c = Requirementcriteria::where('name', $a)->get();
+                DB::table('requirement_scholarships')->insert([
+                    ['requirement_id' => $c[0]['id'], 'scholarship_id' => $scholarshipInfo[0]['id']],
+                ]);
+            }   
+        }
+
+        $a = $request->all();
+        if ($a[5] != null) { 
+            foreach ( $a[5] as $a ){
+                $c = Scholarshipuse::where('name', $a)->get();
+                DB::table('scholarshipuse_scholarships')->insert([
+                    ['scholarshipuse_id' => $c[0]['id'], 'scholarship_id' => $scholarshipInfo[0]['id']],
+                ]);
+            }   
+        }
+
         return to_route('partner.show', $partner_id);
     }
 
@@ -88,13 +128,41 @@ class ScholarshipController extends Controller {
         if (Arr::exists($b, 'additional_information')) {  $scholarshipInfo->additional_information = $a[0]['additional_information']; }
         if (Arr::exists($b, 'fund_amount')) {  $scholarshipInfo->fund_amount = $a[0]['fund_amount']; }
 
-        if ($a[1] != null) { $scholarshipInfo->selection_criteria = $a[1]; }
-        if ($a[2] != null) { $scholarshipInfo->requirement_criteria = $a[2]; }
-        if ($a[3] != null) { $scholarshipInfo->award_based_on = $a[3]; }
-        if ($a[4] != null) { $scholarshipInfo->renewability = $a[4]; }
-        if ($a[5] != null) { $scholarshipInfo->uses = $a[5]; }
+        if ($a[1] != null) { 
+            foreach ( $a[1] as $a ){
+                $c = Selectioncriteria::find($a["id"]);
+                DB::table('selectioncriteria_scholarships')->updateOrInsert([
+                    ['selectioncriteria_id' => $c->id, 'scholarship_id' => $scholarshipInfo[0]['id']],
+                ]);
+            }
+         }
+
+        if ($a[2] != null) { 
+            foreach ( $a[2] as $a ){
+                $c = Requirementcriteria::find($a["id"]);
+                DB::table('requirement_scholarships')->updateOrInsert([
+                    ['selectioncriteria_id' => $c->id, 'scholarship_id' => $scholarshipInfo[0]['id']],
+                ]);
+            } 
+        }
+   
+        if ($a[5] != null) {
+            foreach ( $a[5] as $a ){
+                $c = Scholarshipuse::find($a["id"]);
+                DB::table('scholarshipuses_scholarships')->updateOrInsert([
+                    ['selectioncriteria_id' => $c->id, 'scholarship_id' => $scholarshipInfo[0]['id']],
+                ]);
+            }   
+        }
 
         $scholarshipInfo->save();
+        $partner_id = session('partner_id');
+        return to_route('partner.show', $partner_id);
+    }
+
+    public function destroy($id){
+        $a = $id; 
+        Scholarship::destroy($a);
         $partner_id = session('partner_id');
         return to_route('partner.show', $partner_id);
     }

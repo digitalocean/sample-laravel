@@ -34,7 +34,6 @@ const isValidNewOption = (selectedRenew) => selectedRenew.length < 3;
     <Select
       placeholder="Scholarship renew options"
       components={{ rewewMax }}
-      isMulti
       value={renew.filter(obj => selectedRenew.includes(obj.value))} 
       isValidNewOption={isValidNewOption}
       name="renew"

@@ -31,7 +31,8 @@ class PartnerController extends Controller {
         $scholarshipassociated = Scholarship::where('partner_id', $a)->get();
         $associatedUser = User::where('partner_id', $a)->get();
         //dd($scholarshipassociated);
-        session([ 'partner_id' => $a ]); 
+        session([ 'partner_id' => $a ]);
+         
         return Inertia::render('Partners/show',[
             'viewpartner' => $viewpartner,
             'scholarshipassociated' => $scholarshipassociated,

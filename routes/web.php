@@ -32,38 +32,52 @@ Route::get('/', function () {
     ]);
 });
 
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified' ])->group(function () {
     
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard', 'index')->name('dashboard');
     });
 
+});
+
+Route::middleware(['auth', 'verified', 'permission:create|edit'])->group(function () { 
     // Partnersphp artisan
     Route::controller(PartnerController::class)->group(function () {
-        Route::get('partners', 'index')->name('partner.list');
         Route::get('partner/show{id}', 'show')->name('partner.show');
         Route::post('partner/create', 'store')->name('partner.create');
     });
 
     Route::controller(ApplicationController::class)->group(function () {
-        Route::get('application', 'index')->name('application.list');
         Route::get('application/show{id}', 'show')->name('application.view');
         Route::get('scholoarship/applications{id}', 'scholarshipapplications')->name('scholarship.applications.view');
     });
 
     Route::controller(ScholarshipController::class)->group(function () {
-        Route::get('scholarship', 'index')->name('scholarship.list');
         Route::get('scholarship/show{id}', 'show')->name('scholarship.show');
         Route::post('scholarship/update', 'update')->name('scholarship.update');
-        // Route::post('partner/scholarship/create', 'store')->name('scholarship.create');
+        Route::post('partner/scholarship/create', 'store')->name('scholarship.create');
+        Route::get('partner/scholarship/delete{id}', 'destroy')->name('scholarship.delete');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
+    
+    // Partnersphp artisan
+    Route::controller(PartnerController::class)->group(function () {
+        Route::get('partners', 'index')->name('partner.list');
+    });
+
+    Route::controller(ApplicationController::class)->group(function () {
+        Route::get('application', 'index')->name('application.list');
+    });
+
+    Route::controller(ScholarshipController::class)->group(function () {
+        Route::get('scholarship', 'index')->name('scholarship.list');
+    });
+
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // user adjustments

@@ -53,8 +53,8 @@ class UserController extends Controller
         ]);
         $user = User::find($b->id);
         $role = $user->assignRole($a[0]['role']);
+        
         return redirect()->route('user.index');
-
     }
 
 

@@ -4,7 +4,7 @@ import CreateScholarship from "./createScholarship";
 import EditScholarship from "./editScholarship";
 import { data } from "autoprefixer";
 
-export default function Show({auth, scholarship, applications, otherscholarship}) {
+export default function Show({auth, scholarship, applications, otherscholarship, requirements, scholarshipuses, criteria, role}) {
   //const {applications} = usePage().props;
 
   function classNames(...classes) {
@@ -15,7 +15,12 @@ export default function Show({auth, scholarship, applications, otherscholarship}
     <Authenticated
       user={auth.user}
       header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Scholarships Information </h2>}
-      breadcrumb={<span><Link href={route('scholarship.list')}>Scholarship list</Link></span>} >
+      breadcrumb={<span> 
+        {role === 'admin' 
+          ?<Link href={route('scholarship.list')}>Scholarship list</Link> 
+          : <span>Scholarship list</span>  
+        } </span> }
+    > 
       
       <Head title="Scholarships" />
 
@@ -45,7 +50,7 @@ export default function Show({auth, scholarship, applications, otherscholarship}
             </div>
             <div key={id}className="flex-none w-auto max-w-full px-3 my-auto">
               <div className="h-full">
-                <h5 className="mb-1">{name} - <span className="text-sm text-red-800"><EditScholarship data={scholarship}/></span></h5>
+                <h5 className="mb-1">{name} - <span className="text-sm text-red-800"><EditScholarship data={scholarship}/> </span></h5>
               </div>
             </div>
             <div className="w-full max-w-full px-3 mx-auto mt-4 sm:my-auto sm:mr-0 md:w-1/2 md:flex-none lg:w-4/12">
@@ -70,7 +75,7 @@ export default function Show({auth, scholarship, applications, otherscholarship}
                     </a>
                   </li> */}
                   <li className="z-30 flex-auto text-center">
-                    <a className="z-30 block w-full px-0 py-1 mb-0 transition-colors border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700" nav-link href="javascript:;" role="tab" aria-selected="false">
+                    <p className="z-30 block w-full px-0 py-1 mb-0 transition-colors border-0 rounded-lg ease-soft-in-out bg-inherit text-slate-700" nav-link href="javascript:;" role="tab" aria-selected="false">
                       <svg className="text-slate-700" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>settings</title>
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -91,7 +96,7 @@ export default function Show({auth, scholarship, applications, otherscholarship}
                           : <span className="text-4xl text-black ml-5">{fund_amount.toFixed(2)}</span>
                         }
                       </span>
-                    </a>
+                    </p>
                   </li>
                 </ul>
               </div>
@@ -131,22 +136,52 @@ export default function Show({auth, scholarship, applications, otherscholarship}
           </div>
           <div className="w-full max-w-full px-3 lg-max:mt-6 xl:w-4/12">
             <div className="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-              <div className="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+              <div className="px-4 pt-4 mb-0 bg-white border-b-0 rounded-t-2xl">
                 <div className="flex flex-wrap -mx-3">
                   <div className="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
                     <h6 className="mb-0">Criteria</h6>
                   </div>
                 </div>
               </div>
-              <div className="flex-auto p-4">
-                <p className="leading-normal text-sm">{selection_criteria}</p>
-                <hr className="h-px my-6 bg-transparent bg-gradient-to-r from-transparent via-white to-transparent" />
-                <ul className="flex flex-col pl-0 mb-0 rounded-lg">
+              <div className="flex-auto px-4">
+                <ul className="flex flex-col pb-2 pl-0 mb-0">
+                  {criteria?.map(({id, name, }) => (
+                        <>
+                            
+                            <li className="text-slate-700">{name}</li>
+                    
+                        </>
+                    ))}
+                </ul>
+
+                <ul className="flex flex-col pl-0 mb-0">
                   <li className="relative block px-4 py-2 pt-0 pl-0 leading-normal bg-white border-0 rounded-t-lg text-sm text-inherit"><strong className="text-slate-700">Award based on:</strong> &nbsp; {award_based_on}</li>
-                  <li className="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong className="text-slate-700">Uses:</strong> &nbsp; {uses}</li>
-                  <li className="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong className="text-slate-700">Rquirement:</strong> &nbsp; {requirement_criteria}</li>
-                  <li className="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong className="text-slate-700">Location:</strong> &nbsp; USA</li>
-                  <li className="relative block px-4 py-2 pb-0 pl-0 bg-white border-0 border-t-0 rounded-b-lg text-inherit">
+                  <li className="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong className="text-slate-700">Uses:</strong> 
+                    <ul>
+                      {scholarshipuses?.map(({id, name, }) => (
+                        <>
+                            
+                            <li className="text-slate-700">{name}</li>
+                    
+                        </>
+                      ))}
+                    </ul>
+                  </li>
+                  
+                  <li className="relative block px-4 py-2 pl-0 leading-normal bg-white border-0 border-t-0 text-sm text-inherit"><strong className="text-slate-700">Rquirements:</strong>
+                    <ul>
+                      {requirements?.map(({id, name, }) => (
+                        <>
+                            
+                            <li className="text-slate-700">{name}</li>
+                    
+                        </>
+                      ))}
+                    </ul>
+                  </li>
+                  
+                 
+                  {/* <li className="relative block px-4 py-2 pb-0 pl-0 bg-white border-0 border-t-0 rounded-b-lg text-inherit">
                     <strong className="leading-normal text-sm text-slate-700">Social:</strong> &nbsp;
                     <a className="inline-block py-0 pl-1 pr-2 mb-0 font-bold text-center text-blue-800 align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in bg-none" href="javascript:;">
                       <i className="fab fa-facebook fa-lg"></i>
@@ -157,7 +192,7 @@ export default function Show({auth, scholarship, applications, otherscholarship}
                     <a className="inline-block py-0 pl-1 pr-2 mb-0 font-bold text-center align-middle transition-all bg-transparent border-0 rounded-lg shadow-none cursor-pointer leading-pro text-xs ease-soft-in bg-none text-sky-900" href="javascript:;">
                       <i className="fab fa-instagram fa-lg"></i>
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>

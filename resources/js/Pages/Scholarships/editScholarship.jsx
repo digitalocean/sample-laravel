@@ -1,6 +1,6 @@
 import React from 'react';
 import { Fragment, useRef, useState } from 'react';
-import { router } from '@inertiajs/react'
+import { router, Link } from '@inertiajs/react'
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon  } from '@heroicons/react/24/outline';
 import SelectionCriteria from '@/Pages/Partners/./partials/selection_criteria';
@@ -51,9 +51,12 @@ export default function EditScholarship(props) {
 
   return (
     <>
-        <a onClick={openModal}>  
-        edit scholarship
-        </a>
+        <Link
+          onClick={openModal}
+          className="inline-block w-48 px-2 py-3 my-4 ml-2 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-blue-900 to-blue-500 hover:shadow-soft-2xl hover:scale-102"
+        >
+          Edit scholarship
+        </Link>
       
 
       <Transition appear show={isOpen} as={Fragment}>

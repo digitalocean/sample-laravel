@@ -211,7 +211,7 @@ export default function Show({auth}) {
                       scope="col"
                       className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                     >
-                      Renewable
+                      Scholarship Name
                     </th>
                     <th
                       scope="col"
@@ -259,7 +259,7 @@ export default function Show({auth}) {
                         <div className="font-medium text-gray-900">
                           {deadline} - <span className='text-black'>{name}</span>
                         </div>
-                        <div className="mt-1 flex flex-col text-gray-700 sm:block lg:hidden">
+                        {/* <div className="mt-1 flex flex-col text-gray-700 sm:block lg:hidden">
                         <span>
                             {name}
                           </span>
@@ -268,14 +268,14 @@ export default function Show({auth}) {
                           </span>
                           <span className="hidden sm:inline">·</span>
                           <span>{selection_criteria}</span>
-                        </div>
+                        </div> */}
                       </td>
                       <td
                         className={classNames('border-t border-gray-200',
                           'hidden px-3 py-3.5 text-sm text-gray-700 lg:table-cell'
                         )}
                       >
-                        {renewability}
+                        {name}
                       </td>
                       <td
                         className={classNames('border-t border-gray-200',
@@ -294,7 +294,7 @@ export default function Show({auth}) {
                       </td>
                       <td
                         className={classNames('border-t border-gray-200',
-                          'px-3 py-3.5 text-sm text-gray-700'
+                          'px-3 py-3.5 text-center text-sm text-gray-700'
                         )}
                       >
                         <div className="sm:hidden">${fund_amount}</div>
@@ -307,9 +307,15 @@ export default function Show({auth}) {
                       >
                         <Link
                           href={route('scholarship.show', id)}
-                          className="inline-block w-full px-6 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
+                          className="inline-block w-1/3 px-4 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
                         >
                           View
+                        </Link>
+                        <Link
+                          href={route('scholarship.delete', id)}
+                          className="inline-block w-1/3 px-2 py-3 my-4 ml-2 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-blue-900 to-blue-500 hover:shadow-soft-2xl hover:scale-102"
+                        >
+                          Delete
                         </Link>
                       </td>
                     </tr>

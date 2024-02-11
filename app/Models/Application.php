@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Application extends Model {
     use HasFactory;
 
-    protected $collection = 'applications';
+    protected $table = 'applications';
 
    /**
      * The attributes that are mass assignable.
@@ -63,8 +64,8 @@ class Application extends Model {
         
     ]; 
 
-    public function scholarships(): HasMany {
-        return $this->HasMany(Scholarship::class);
+    public function scholarships(): BelongsToMany {
+        return $this->belongsToMany(Scholarship::class, 'scholarship_applications');
     }
 
 }

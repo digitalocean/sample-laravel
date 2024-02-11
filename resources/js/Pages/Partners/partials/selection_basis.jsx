@@ -35,7 +35,6 @@ export default function BasisSelect({selectBasis, setSelectBasis}) {
     <Select
       placeholder="Scholarship basis"
       components={{ basisMax }}
-      isMulti
       value={basis.filter(obj => selectBasis.includes(obj.value))} 
       isValidNewOption={isValidNewOption}
       name="basis"

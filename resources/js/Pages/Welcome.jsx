@@ -13,7 +13,8 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             className="font-semibold text-gray-800 hover:text-gray-900 dark:text-gray-900 dark:hover:text-red-800 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                         >
                             Dashboard
-                        </Link>
+                        </Link> 
+                       
                     ) : (
                         <>
                             <Link
@@ -22,8 +23,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             >
                                 Log in
                             </Link>
+                            
                         </>
                     )}
+            
                 </div>
 
                 <div className="max-w-7xl mx-auto p-6 lg:p-8">
@@ -46,7 +49,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         Partner Users
                                     </h2>
 
-                                    <p className="mt-4 text-gray-500 dark:text-white text-lg leading-relaxed">
+                                    <p className="mt-4 text-gray-800 dark:text-white text-lg leading-relaxed">
                                        The Black Scholars thanks you Partners for your continued support of our students. By loginning into this application you will be able to view your scholarships and applicats that have applied for your scholarship.
                                     </p>
                                 </div>
@@ -79,7 +82,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         Black Scholars Team
                                     </h2>
 
-                                    <p className="mt-4 text-gray-500 dark:text-white text-lg leading-relaxed">
+                                    <p className="mt-4 text-gray-800 dark:text-white text-lg leading-relaxed">
                                         The Black Scholars Program is an ambitious, rigorous, and competitive academic program, 
                                         that seeks to educate the whole undergraduate student and develop their potential to fashion a more humane and just world.
                                         We the admins of this program must promote and adhere to our valus set forth.

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { usePage } from '@inertiajs/react'
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
@@ -7,73 +8,95 @@ import { BriefcaseIcon } from "@heroicons/react/24/solid";
 import { BuildingOfficeIcon, SquaresPlusIcon, AcademicCapIcon, BanknotesIcon } from "@heroicons/react/24/solid";
 
 export default function Authenticated({ user, header, breadcrumb, children }) {
+    const { role } = usePage().props;
+    console.log(role);
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
         <div className="m-0 font-sans antialiased font-normal text-base leading-default bg-gray-50 text-slate-500">
             <aside className="max-w-62.5 ease-nav-brand z-990 fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent">
-                <div className="h-19.5">
+                <div className="h-24">
                     <i className="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"></i>
-                    <a className="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="javascript:;" target="_blank">
-                     <img src="/assets/logos/blackscholarslogo.png" className="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
-                    <span className="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Black Scholars Portal</span>
+                    <a className="block px-8 py-2 m-0 h-20 text-sm whitespace-nowrap text-slate-700" href="javascript:;" target="_blank">
+                     <img src="/assets/logos/blackscholarslogo.png" className="inline w-full aspect-auto max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
                     </a>
                 </div>
 
                 <hr className="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
-
+               
                 <div className="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full">
                     <ul className="flex flex-col pl-0 mb-0">
-                    <li className="mt-0.5 w-full">
-                        <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('dashboard')}>
-                        <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
-                            <BriefcaseIcon className='w-16 h-16' />
-                        </div>
-                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Dashboard</span>
-                        </a>
-                    </li>
+                    {role === 'admin'
+                        ? <li className="mt-0.5 w-full">
+                                <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('dashboard')}>
+                                <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                                    <BriefcaseIcon className='w-16 h-16' />
+                                </div>
+                                <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Dashboard</span>
+                                </a>
+                            </li>
+                        : <li className="mt-0.5 w-full">
+                                <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('partner.show', user.partner_id)}>
+                                <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                                    <BriefcaseIcon className='w-16 h-16' />
+                                </div>
+                                <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Partner Dashboard</span>
+                                </a>
+                            </li>
+                    }
+                   
 
-                    <li className="mt-0.5 w-full">
-                        <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('scholarship.list')}>
-                        <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
-                            <BanknotesIcon className='w-16 h-16' />
-                        </div>
-                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Scholarships</span>
-                        </a>
-                    </li>
+                    {role === 'admin'
+                        ?<li className="mt-0.5 w-full">
+                                <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('scholarship.list')}>
+                                <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                                    <BanknotesIcon className='w-16 h-16' />
+                                </div>
+                                <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Scholarships</span>
+                                </a>
+                            </li>
+                        : <p></p>
+                    }
 
-                    <li className="mt-0.5 w-full">
-                        <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('application.list')}>
-                        <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center fill-current stroke-0 text-center xl:p-2.5">
-                            <AcademicCapIcon className='w-16 h-16' />
-                        </div>
-                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Applications</span>
-                        </a>
-                    </li>
+                    {role == 'admin'
+                        ? <li className="mt-0.5 w-full">
+                                <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('application.list')}>
+                                <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                                    <AcademicCapIcon className='w-16 h-16' />
+                                </div>
+                                <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Applications</span>
+                                </a>
+                            </li>
+                        : <p></p>
+                    }       
 
-                    <li className="mt-0.5 w-full">
-                        <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('partner.list')}>
-                        <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
-                            <BuildingOfficeIcon className='w-16 h-16' />
-                        </div>
-                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Partners</span>
-                        </a>
-                    </li>
-
+                    {role == 'admin'
+                        ? <li className="mt-0.5 w-full">
+                                <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('partner.list')}>
+                                <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                                    <BuildingOfficeIcon className='w-16 h-16' />
+                                </div>
+                                <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Partners</span>
+                                </a>
+                            </li>
+                        : <p></p>
+                    }
                     <li className="w-full mt-4">
                         <h6 className="pl-6 ml-2 font-bold leading-tight uppercase text-xs opacity-60">Account pages</h6>
                     </li>
-
-                    <li className="mt-0.5 w-full">
-                        <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('user.index')}>
-                        <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
-                            <SquaresPlusIcon className='w-16 h-16' />
-                        </div>
-                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Users</span>
-                        </a>
-                    </li>
-
-                    <li className="mt-0.5 w-full">
+                    {role == 'admin'
+                        ? <li className="mt-0.5 w-full">
+                                <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('user.index')}>
+                                <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                                    <SquaresPlusIcon className='w-16 h-16' />
+                                </div>
+                                <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Users</span>
+                                </a>
+                            </li>
+                        : <p></p>
+                    }
+                    
+                     <li className="mt-0.5 w-full">
                         <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href={route('profile.edit')}>
                         <div className="shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                             <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -180,7 +203,7 @@ export default function Authenticated({ user, header, breadcrumb, children }) {
                             </div>
                             <ul className="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
 
-                                <li className="relative flex items-center ml-2 pr-2">
+                                {/* <li className="relative flex items-center ml-2 pr-2">
                                     <Dropdown>
                                         <Dropdown.Trigger>
                                             <span className="inline-flex rounded-md">
@@ -206,36 +229,38 @@ export default function Authenticated({ user, header, breadcrumb, children }) {
                                         </Dropdown.Trigger>
 
                                         <Dropdown.Content>
+                                            
                                             <Dropdown.Link href="#">Profile</Dropdown.Link>
                                             <Dropdown.Link href="#">
                                                 <div className="flex py-1">
                                                     <div className="inline-flex items-center justify-center my-auto mr-4 text-white transition-all duration-200 ease-nav-brand text-sm bg-gradient-to-tl from-slate-600 to-slate-300 h-9 w-9 rounded-xl">
-                                                    <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                        <title>credit-card</title>
-                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                                                            <g transform="translate(1716.000000, 291.000000)">
-                                                            <g transform="translate(453.000000, 454.000000)">
-                                                                <path className="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                                                                <path className="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                                                        <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                            <title>credit-card</title>
+                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                                                <g transform="translate(1716.000000, 291.000000)">
+                                                                <g transform="translate(453.000000, 454.000000)">
+                                                                    <path className="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
+                                                                    <path className="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
+                                                                </g>
+                                                                </g>
                                                             </g>
                                                             </g>
-                                                        </g>
-                                                        </g>
-                                                    </svg>
+                                                        </svg>
                                                     </div>
                                                     <div className="flex flex-col justify-center">
-                                                    <h6 className="mb-1 font-normal leading-normal text-sm">Payment successfully completed</h6>
-                                                    <p className="mb-0 leading-tight text-xs text-slate-400">
-                                                        <i className="mr-1 fa fa-clock"></i>
-                                                        2 days
-                                                    </p>
+                                                        <h6 className="mb-1 font-normal leading-normal text-sm">Payment successfully completed</h6>
+                                                        <p className="mb-0 leading-tight text-xs text-slate-400">
+                                                            <i className="mr-1 fa fa-clock"></i>
+                                                            2 days
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </Dropdown.Link>
+                                        
                                         </Dropdown.Content>
                                     </Dropdown>
-                                </li>
+                                </li> */}
 
                                 {/* <li className="flex items-center">
                                     <a href={route('logout')} className="block px-0 py-2 font-semibold transition-all ease-nav-brand text-sm text-slate-500">

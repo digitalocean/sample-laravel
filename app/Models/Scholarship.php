@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Scholarship extends Model
 {
     use HasFactory;
 
-    protected $collection = 'scholarships';
+    protected $table = 'scholarships';
 
     /**
      * The attributes that are mass assignable.
@@ -37,7 +38,20 @@ class Scholarship extends Model
         return $this->belongsTo(Partner::class);
     }
 
-    public function applications(): BelongsTo {
-        return $this->belongsTo(Application::class);
+    public function applications(): BelongsToMany {
+        return $this->belongsToMany(Application::class, 'scholarship_applications');
     }
+
+    public function requirements(): BelongsToMany {
+        return $this->belongsToMany(Requirementcriteria::class, 'requirement_scholarships');
+    }
+
+    public function selectioncriterias(): BelongsToMany {
+        return $this->belongsToMany(Selectioncriteria::class, 'selectioncriteria_scholarships',  'selectioncriteria_id', 'scholarship_id');
+    }
+
+    public function scholarshipuses(): BelongsToMany {
+        return $this->belongsToMany(Scholarshipuse::class, 'scholarshipuse_scholarships', 'scholarshipuse_id', 'scholarship_id');
+    }
+
 }

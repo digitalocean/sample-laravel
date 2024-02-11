@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::controller(ScholarshipController::class)->group(function () {
-    Route::post('partner/scholarship/create', 'store')->name('scholarship.create');
-});
+// Route::controller(ScholarshipController::class)->group(function () {
+//     Route::post('partner/scholarship/create', 'store')->name('scholarship.create');
+// });

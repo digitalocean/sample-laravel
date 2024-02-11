@@ -11,7 +11,7 @@ class Partner extends Model
 {
     use HasFactory;
 
-    protected $collection = 'partners';
+    protected $table = 'partners';
 
     /**
      * The attributes that are mass assignable.
