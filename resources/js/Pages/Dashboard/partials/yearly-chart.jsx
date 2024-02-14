@@ -39,7 +39,7 @@ export default function Yearlychart() {
             datasets: [
             {
                 label: "",
-                backgroundColor: "hsl(252, 82.9%, 67.8%)",
+                // backgroundColor: "hsl(252, 82.9%, 67.8%)",
                 borderColor: "hsl(252, 82.9%, 67.8%)",
                 data: [0, 20000, 50000, 100000, 150000, 200000, 450000],
             },
@@ -55,17 +55,17 @@ export default function Yearlychart() {
                         <div>
                             <div className="flex items-end mt-2">
                                 <h3 className="text-red-800 leading-5 text-lg md:text-2xl">$65,875</h3>
-                                <div className="flex items-center md:ml-4 ml-1">
+                                {/* <div className="flex items-center md:ml-4 ml-1">
                                     <p className="text-indigo-500 text-xs md:text-base">17%</p>
                                     <svg xmlns="http://www.w3.org/2000/svg" width={12} height={12} viewBox="0 0 12 12" fill="none">
                                         <path d="M6 2.5V9.5" stroke="#4338CA" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
                                         <path d="M8 4.5L6 2.5" stroke="#4338CA" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
                                         <path d="M4 4.5L6 2.5" stroke="#4338CA" strokeWidth="0.75" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
-                        <div className="mt-6">
+                        <div className="mt-2">
                             {/* <canvas class="p-10" id="chartLine" width={1025} height={400}></canvas> */}
                             <Line options={options} data={data} />
                         </div>

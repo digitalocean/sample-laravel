@@ -87,6 +87,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/users/delete{id}', [UserController::class, 'destroy'])->name('user.delete');
 
     Route::post('csv/import', [ImportController::class, 'importscholarship'])->name('csv.import');
+    Route::post('csv/import/application', [ImportController::class, 'importApplications'])->name('csv.import.application');
     Route::resource('roles', RoleController::class);
 });
 

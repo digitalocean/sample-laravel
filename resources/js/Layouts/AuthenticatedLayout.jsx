@@ -14,7 +14,7 @@ export default function Authenticated({ user, header, breadcrumb, children }) {
 
     return (
         <div className="m-0 font-sans antialiased font-normal text-base leading-default bg-gray-50 text-slate-500">
-            <aside className="max-w-62.5 ease-nav-brand z-990 fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent">
+            <aside className="max-w-62.5 ease-nav-brand z-990 fixed inset-y-0 my-4 ml-4 block w-full -translate-x-full flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 antialiased shadow-none transition-transform duration-200 xl:left-0 xl:translate-x-0">
                 <div className="h-24">
                     <i className="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden"></i>
                     <a className="block px-8 py-2 m-0 text-sm whitespace-nowrap text-slate-700" href="javascript:;" target="_blank">
