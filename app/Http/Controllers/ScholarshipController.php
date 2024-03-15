@@ -22,6 +22,7 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class ScholarshipController extends Controller {
     // Full list of scholships genereated by URl and Outside sources
     // URL administration only
+   
     public function index(){
         $allScholaships = Scholarship::all();
         return Inertia::render('Scholarships/index', [
@@ -43,7 +44,7 @@ class ScholarshipController extends Controller {
         $scholarshipuses = Scholarshipuse::has('scholarships')->get();
 
         session([ 'partner_id' => $scholarshipInfo[0]->partner_id]);
-        session([ 'scholarshipid' => $scholarshipInfo[0]->id]);  
+        session([ 'scholarshipid' => $scholarshipInfo[0]->id]); 
         return Inertia::render('Scholarships/show', [
             'scholarship' => $scholarshipInfo,
             'applications' => $selected,
@@ -115,6 +116,16 @@ class ScholarshipController extends Controller {
 
         return to_route('partner.show', $partner_id);
     }
+
+    public function edit(){
+        $scholarship_id = session('scholarshipid');
+        $scholarshipInfo = Scholarship::where('id', $scholarship_id)->get();
+        return Inertia::render('Scholarships/editScholarship', [
+            'data' => $scholarshipInfo,
+        ]);
+
+    }
+
 
     public function update(Request $request) {
         $a = $request->all();  //dd($a);

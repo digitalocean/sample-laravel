@@ -54,8 +54,9 @@ Route::middleware(['auth', 'verified', 'permission:create|edit'])->group(functio
 
     Route::controller(ScholarshipController::class)->group(function () {
         Route::get('scholarship/show{id}', 'show')->name('scholarship.show');
-        Route::post('scholarship/update', 'update')->name('scholarship.update');
         Route::post('partner/scholarship/create', 'store')->name('scholarship.create');
+        Route::get('scholarship/edit', 'edit')->name('scholarship.edit');
+        Route::post('scholarship/update', 'update')->name('scholarship.update');
         Route::get('partner/scholarship/delete{id}', 'destroy')->name('scholarship.delete');
     });
 

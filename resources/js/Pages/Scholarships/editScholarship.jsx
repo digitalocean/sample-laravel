@@ -1,7 +1,7 @@
 import React from 'react';
-import { Fragment, useRef, useState } from 'react';
-import { router, Link } from '@inertiajs/react'
-import { Dialog, Transition } from '@headlessui/react';
+import { useRef, useState } from 'react';
+import {Head, router, Link } from '@inertiajs/react'
+import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { CheckIcon  } from '@heroicons/react/24/outline';
 import SelectionCriteria from '@/Pages/Partners/./partials/selection_criteria';
 import SelectionRequirements from '@/Pages/Partners/./partials/selection_requirements';
@@ -9,10 +9,11 @@ import UsesSelect from '@/Pages/Partners/./partials/selection_uses';
 import RenewSelect from '@/Pages/Partners/./partials/selection_renewable';
 import BasisSelect from '@/Pages/Partners/./partials/selection_basis';
 import { PlusIcon } from '@heroicons/react/24/solid';
+import { Dialog, Transition } from '@headlessui/react';
 
 
-export default function EditScholarship(props) {
-  const {data} = props;
+export default function EditScholarship({auth, data, role}) {
+  
   const [data1, setData] = useState({});
   
   let [isOpen, setIsOpen] = useState(false)
@@ -50,42 +51,20 @@ export default function EditScholarship(props) {
   }
 
   return (
-    <>
-        <Link
-          onClick={openModal}
-          className="inline-block w-48 px-2 py-3 my-4 ml-2 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-blue-900 to-blue-500 hover:shadow-soft-2xl hover:scale-102"
-        >
-          Edit scholarship
-        </Link>
-      
-
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setIsOpen}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 z-100 w-screen overflow-y-auto">
-            <div className="flex min-h-full items-end justify-center p-4 text-left sm:items-center sm:p-0">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enterTo="opacity-100 translate-y-0 sm:scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:p-6">
-                  <div>
+    <Authenticated
+    user={auth.user}
+    header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Scholarships Information </h2>}
+    breadcrumb={<span> 
+      {role === 'admin' 
+        ?<Link href={route('scholarship.list')}>Scholarship list</Link> 
+        : <span>Scholarship list</span>  
+      } </span> }
+  > 
+    
+    <Head title="Scholarships" />
+       
+    <div className="w-full px-6 py-6 mx-auto my-10">
+      <div className="relative flex flex-col flex-auto min-w-0 p-4 mx-6 -mt-16 overflow-hidden break-words border-0 shadow-blur rounded-2xl bg-white/100 bg-clip-border backdrop-blur-2xl backdrop-saturate-200">
                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                       <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
                     </div>
@@ -105,9 +84,7 @@ export default function EditScholarship(props) {
                       <>
 
                     <div className="mt-3 text-center sm:mt-5">
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                        Edit Scholarship
-                      </Dialog.Title>
+                      <h3 className="text-base font-semibold leading-6 text-gray-900">Edit Scholarship</h3>
                       <div className="mt-2">
                       
                   
@@ -325,13 +302,7 @@ export default function EditScholarship(props) {
                     </>
                     ))}
                   </div>
-                  
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-    </>
+      </div>
+    </Authenticated>
   )
 }

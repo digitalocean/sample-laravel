@@ -1,8 +1,6 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 import CreateScholarship from "./createScholarship";
-import EditScholarship from "./editScholarship";
-import { data } from "autoprefixer";
 
 export default function Show({auth, scholarship, applications, otherscholarship, requirements, scholarshipuses, criteria, role}) {
   //const {applications} = usePage().props;
@@ -50,7 +48,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
             </div>
             <div key={id}className="flex-none w-auto max-w-full px-3 my-auto">
               <div className="h-full">
-                <h5 className="mb-1 z-100">{name} - <span className="text-sm text-red-800"><EditScholarship data={scholarship}/> </span></h5>
+                <h5 className="mb-1">{name} </h5>
               </div>
             </div>
             <div className="w-full max-w-full px-3 mx-auto mt-4 sm:my-auto sm:mr-0 md:w-1/2 md:flex-none lg:w-4/12">
@@ -220,6 +218,17 @@ export default function Show({auth, scholarship, applications, otherscholarship,
             </div>
           </div> */}
           
+        </div>
+      </div>
+
+      <div className="w-full p-2 mx-auto mb-2"> 
+        <div className="sm:col-span-3 mx-4">
+          <a
+            href={route('scholarship.edit')}
+            className="inline-block w-1/5 px-3 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-700 to-red-500 hover:shadow-soft-2xl hover:scale-102"
+          >
+            Edit
+          </a>
         </div>
       </div>
       </>
