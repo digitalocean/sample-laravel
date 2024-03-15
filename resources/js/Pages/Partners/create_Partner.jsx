@@ -199,7 +199,7 @@ export default function CreatePartner() {
                                 </div>
                               </div>
                               <div className="sm:col-span-2">
-                                <label htmlFor="email" className="block text-sm text-left font-medium leading-6 text-gray-900">
+                                <label htmlFor="city" className="block text-sm text-left font-medium leading-6 text-gray-900">
                                   City
                                 </label>
                                 <div className="mt-2">
