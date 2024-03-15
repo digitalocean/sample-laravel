@@ -50,7 +50,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
             </div>
             <div key={id}className="flex-none w-auto max-w-full px-3 my-auto">
               <div className="h-full">
-                <h5 className="mb-1">{name} - <span className="text-sm text-red-800"><EditScholarship data={scholarship}/> </span></h5>
+                <h5 className="mb-1 z-100">{name} - <span className="text-sm text-red-800"><EditScholarship data={scholarship}/> </span></h5>
               </div>
             </div>
             <div className="w-full max-w-full px-3 mx-auto mt-4 sm:my-auto sm:mr-0 md:w-1/2 md:flex-none lg:w-4/12">
