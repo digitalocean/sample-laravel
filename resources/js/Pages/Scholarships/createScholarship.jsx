@@ -230,19 +230,19 @@ export default function CreateScholarship() {
                               </div>
 
                               <div className="sm:col-span-3">
-                                <label htmlFor="country" className="block text-base text-left font-medium leading-6 text-gray-900">
+                                <label htmlFor="basisAward" className="block text-base text-left font-medium leading-6 text-gray-900">
                                 Possible basis for the Award
                                 </label>
                                 <BasisSelect selectBasis={selectBasis} setSelectBasis={setSelectBasis}/>
                               </div>
                               <div className="sm:col-span-3">
-                                <label htmlFor="country" className="block text-base text-left font-medium leading-6 text-gray-900">
+                                <label htmlFor="renewable" className="block text-base text-left font-medium leading-6 text-gray-900">
                                 Frequency or Renew-ability of the Award
                                 </label>
                                 <RenewSelect selectedRenew={selectedRenew} setSelectedRenew={setSelectedRenew}/>
                               </div>
                               <div className="sm:col-span-3">
-                                <label htmlFor="country" className="block text-base text-left font-medium leading-6 text-gray-900">
+                                <label htmlFor="uses" className="block text-base text-left font-medium leading-6 text-gray-900">
                                 Possible allowable uses of Award by student
                                 </label>
                                 <UsesSelect  selectedUses={selectedUses} setSelectedUses={setSelectedUses}/>

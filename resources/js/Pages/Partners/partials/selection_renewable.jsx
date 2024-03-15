@@ -13,7 +13,7 @@ const rewewMax = props => {
   const optionSelectedLength = props.getValue().length || 0;
   return (
     <components.rewewMax {...props}>
-      {optionSelectedLength < 2 ? (
+      {optionSelectedLength < 1 ? (
         props.children
       ) : (
         <div style={{ margin: 15 }}>Max limit achieved</div>
@@ -23,7 +23,7 @@ const rewewMax = props => {
 };
 
 export default function BasisSelect({selectedRenew, setSelectedRenew}) {
-const isValidNewOption = (selectedRenew) => selectedRenew.length < 3;
+const isValidNewOption = (selectedRenew) => selectedRenew.length < 1;
 
   const handleChange = (e) => {
     setSelectedRenew(Array.isArray(e) ? e.map(x => x.value) : []);

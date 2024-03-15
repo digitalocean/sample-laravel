@@ -13,7 +13,7 @@ const basisMax = props => {
   const optionSelectedLength = props.getValue().length || 0;
   return (
     <components.basisMax {...props}>
-      {optionSelectedLength < 2 ? (
+      {optionSelectedLength < 1 ? (
         props.children
       ) : (
         <div style={{ margin: 15 }}>Max limit achieved</div>
@@ -24,7 +24,7 @@ const basisMax = props => {
 
 
 export default function BasisSelect({selectBasis, setSelectBasis}) {
-  const isValidNewOption = (selectBasis) => selectBasis.length < 3;
+  const isValidNewOption = (selectBasis) => selectBasis.length < 1;
 
   const handleChange = (e) => {
     setSelectBasis(Array.isArray(e) ? e.map(x => x.value) : []);
