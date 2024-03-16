@@ -134,8 +134,9 @@ class ScholarshipController extends Controller {
         $scholarshipid = session('scholarshipid');
         $scholarshipInfo = Scholarship::find($scholarshipid);
         if (Arr::exists($b, 'name') ) { $scholarshipInfo->name = $a[0]['name']; }
+        if (Arr::exists($b, 'description')) {  $scholarshipInfo->description = $a[0]['description']; }        
         if (Arr::exists($b, 'deadline')) {  $scholarshipInfo->deadline = $a[0]['deadline']; }
-        if (Arr::exists($b, 'award_payments')) {  $scholarshipInfo->description = $a[0]['award_payments']; }
+        if (Arr::exists($b, 'award_payments')) {  $scholarshipInfo->award_payments = $a[0]['award_payments']; }
         if (Arr::exists($b, 'additional_information')) {  $scholarshipInfo->additional_information = $a[0]['additional_information']; }
         if (Arr::exists($b, 'fund_amount')) {  $scholarshipInfo->fund_amount = $a[0]['fund_amount']; }
 

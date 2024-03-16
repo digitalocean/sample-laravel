@@ -225,7 +225,8 @@ export default function Show({auth, scholarship, applications, otherscholarship,
         <div className="sm:col-span-3 mx-4">
           <a
             href={route('scholarship.edit')}
-            className="inline-block w-1/5 px-3 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-700 to-red-500 hover:shadow-soft-2xl hover:scale-102"
+            type="button"
+            className="inline-block w-1/5 px-3 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
           >
             Edit
           </a>

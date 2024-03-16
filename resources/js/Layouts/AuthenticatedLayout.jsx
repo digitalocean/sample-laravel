@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { usePage } from '@inertiajs/react'
-import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { BriefcaseIcon } from "@heroicons/react/24/solid";
 import { BuildingOfficeIcon, SquaresPlusIcon, AcademicCapIcon, BanknotesIcon } from "@heroicons/react/24/solid";
