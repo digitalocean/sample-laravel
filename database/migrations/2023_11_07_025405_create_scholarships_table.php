@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->foreignIdFor(Partner::class);
             $table->date('deadline');
+            $table->string('name', 500);
             $table->longText('description');
             $table->integer('award_payments');
             $table->longText('additional_information');

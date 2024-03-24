@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ApplicationCollection;
 use App\Models\Application;
+use App\Models\Scholarship;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,9 +29,9 @@ class ApplicationController extends Controller {
 
     // application list by scholarshipId
     public function scholarshipapplications($id){
-        $a = $id;
-        $selected = Application::where('scholarshipid', $a)->get();
-        //dd($selected);
+        $a = $id; //dd($a);
+        $selected = Scholarship::find($a)->applications()->orderBy('name')->get();
+        
         return Inertia::render('Applications/scholarshiplist', [
             'applications' => new ApplicationCollection($selected),
         ]);
