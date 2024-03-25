@@ -25,7 +25,8 @@ class ScholarshipCollection extends ResourceCollection
             'renewability',
             'uses',
             'deadline',
-            'fund_amount'
+            'fund_amount',
+            'total'
         );
     }
 }

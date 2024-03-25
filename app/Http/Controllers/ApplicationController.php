@@ -7,6 +7,7 @@ use App\Models\Application;
 use App\Models\Scholarship;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 
 class ApplicationController extends Controller {
@@ -31,7 +32,7 @@ class ApplicationController extends Controller {
     public function scholarshipapplications($id){
         $a = $id; //dd($a);
         $selected = Scholarship::find($a)->applications()->orderBy('name')->get();
-        
+        //dd($update);
         return Inertia::render('Applications/scholarshiplist', [
             'applications' => new ApplicationCollection($selected),
         ]);

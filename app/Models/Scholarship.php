@@ -31,7 +31,8 @@ class Scholarship extends Model
         'award_based_on',
         'renewability',
         'uses',
-        'fund_amount'        
+        'fund_amount',
+        'total'        
     ];
 
     public function partners(): BelongsTo {

@@ -26,6 +26,7 @@ class ScholarshipResource extends JsonResource
             'uses' => $this->uses,
             'deadline' => $this->deadline,
             'fund_amount' => $this->fund_amount,
+            'total' => $this->total,
         ];
     }
 }

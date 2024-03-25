@@ -138,8 +138,11 @@ class ImportController extends Controller {
                         ['scholarship_id' => $sch[0]['id'], 'application_id' => $app->id],
                     ]);
                 }
+
             }
         }
+
+
 
         return redirect()->back()->with('success', 'CSV file imported successfully.');
     }

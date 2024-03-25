@@ -77,6 +77,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
     Route::controller(ScholarshipController::class)->group(function () {
         Route::get('scholarship', 'index')->name('scholarship.list');
+        Route::get('scholarship/refresh', 'scholarshipRefresh')->name('scholarship.refresh');
     });
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

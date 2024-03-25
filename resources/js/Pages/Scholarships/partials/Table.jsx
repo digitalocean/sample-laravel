@@ -38,27 +38,9 @@ export default function ScholarshipTable() {
       header: 'Extra Infomation',
       size: 400,
     }),
-    columnHelper.accessor('selection_criteria', {
-      header: 'Selection Criteria',
-      size: 300,
-    }),
-    columnHelper.accessor('review_applicants', {
-      header: 'Review Applicants',
-      size: 50,
-    }),
     columnHelper.accessor('award_payments', {
-      header: 'Award Payment size',
+      header: 'Award size',
       size: 50,
-    }),
-    columnHelper.accessor('award_based_on', {
-      header: 'Award Based On',
-    }),
-    columnHelper.accessor('renewability', {
-      header: 'Renewable',
-      size: 50,
-    }),
-    columnHelper.accessor('uses', {
-      header: 'Scholarship uses',
     }),
     columnHelper.accessor('deadline', {
       header: 'Deadline',
@@ -66,7 +48,12 @@ export default function ScholarshipTable() {
     columnHelper.accessor('fund_amount', {
       header: 'Fund amount',
     }),
+    columnHelper.accessor('total', {
+      header: 'Total Applications',
+      size: 50,
+    })
   ];
+
 
   const csvConfig = mkConfig({
     fieldSeparator: ',',

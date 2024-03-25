@@ -120,6 +120,16 @@ export default function Scholarship({auth}) {
         </div>
         <div className="py-6">
           {/* <Table data={data}/> */}
+          <p className='text-sm text-grey-500'>
+          <a
+            href={route('scholarship.refresh')}
+            type="button"
+            className="inline-block w-48 px-3 py-3 my-4 mr-2 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
+          >
+            Update Now
+          </a>
+          Application totals update nightly
+          </p>
           <Table allScholaships={allScholaships} />
         </div>
         

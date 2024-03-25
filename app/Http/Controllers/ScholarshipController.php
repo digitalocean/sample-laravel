@@ -24,20 +24,46 @@ class ScholarshipController extends Controller {
     // URL administration only
    
     public function index(){
-        $allScholaships = Scholarship::all();
+        $allScholaships = Scholarship::get();
+
         return Inertia::render('Scholarships/index', [
             'allScholaships' => new ScholarshipCollection($allScholaships),
             // dd(new ScholarshipCollection($allScholaships)),
         ])->with('success', 'You are viewing all scholarships currently available');
     }
 
+    public function scholarshipRefresh(){
+        $s = Scholarship::all(); 
+        // $update = Scholarship::find($s->id)->applications()->count(); //dd($update);
+        // $count = $update->count();
+        // $update->total = $count;
+        // $update->save();
+        foreach($s as $sch) {
+            $scholarship = $sch;
+            $u= Scholarship::find($sch->id)->applications()->count();
+            //$a = DB::table('scholarships')->where('id', $id->id)->update(['total' => $u]);
+            $scholarship->total = $u;
+            $scholarship->save();
+        }
+        
+        return redirect('scholarship');
+    }
+
+
+
     //Show individual scholarship information 
     public function show($id) {
         $a = $id;
         //retrieve scholarship information
-        $scholarshipInfo = Scholarship::where('id', $a)->get(); //dd($scholarshipInfo);
+        $scholarshipInfo = Scholarship::where('id', $a)->get();
         // Get selected by scholarship id for page
-        $selected = Application::has('scholarships')->get(); 
+        $selected = Scholarship::find($a)->applications()->orderBy('name')->get();
+        /// Update count of scholarships
+        $count = $scholarshipInfo->count();
+        $update = Scholarship::find($a);
+        $update->total = $count;
+        $update->save();
+        /// Update count of scholarships
         $otherscholarships = Scholarship::where('id', $scholarshipInfo[0]->partner_id)->get();
         $criteria = Selectioncriteria::has('scholarships')->get();
         $requirements = Requirementcriteria::has('scholarships')->get();
