@@ -25,9 +25,11 @@ class ScholarshipController extends Controller {
    
     public function index(){
         $allScholaships = Scholarship::get();
+        $totalApplications = DB::table('scholarship_applications')->get()->count();
 
         return Inertia::render('Scholarships/index', [
             'allScholaships' => new ScholarshipCollection($allScholaships),
+            'totalApplications' => $totalApplications,
             // dd(new ScholarshipCollection($allScholaships)),
         ])->with('success', 'You are viewing all scholarships currently available');
     }

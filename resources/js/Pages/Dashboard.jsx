@@ -6,7 +6,7 @@ import Yearlychart from './Dashboard/partials/yearly-chart';
 import { ImportApplications } from './Dashboard/partials/importApplications_form';
 
 export default function Dashboard({ auth }) {
-    const {scholarships} = usePage().props;
+    const {scholarships, totalApplications} = usePage().props;
     const {applications} = usePage().props;
     const {partners} = usePage().props;
 
@@ -53,9 +53,9 @@ export default function Dashboard({ auth }) {
                             <div className="flex flex-row -mx-3">
                             <div className="flex-none w-2/3 max-w-full px-3">
                                 <div>
-                                <p className="mb-0 font-sans font-semibold leading-normal text-sm">Total Applications</p>
+                                <p className="mb-0 font-sans font-semibold leading-normal text-sm">Total Applicants / Applications</p>
                                 <h5 className="mb-0 font-bold">
-                                {applications.length}
+                                {applications.length} / {totalApplications}
                                     {/* <span className="leading-normal text-sm font-weight-bolder text-lime-500">+3%</span> */}
                                 </h5>
                                 </div>
@@ -135,7 +135,7 @@ export default function Dashboard({ auth }) {
                             </div>
                             <div className="max-w-full px-3 mt-12 ml-auto text-center lg:mt-0 lg:w-5/12 lg:flex-none">
                                 <div className="h-full bg-gradient-to-tl from-red-900 to-red-500 rounded-xl">
-                                <img src="assets/img/shapes/waves-white.svg" className="absolute top-0 hidden w-1/2 h-full lg:block" alt="waves" />
+                                <img src="assets/site_images/10865.jpeg" className="top-0 hidden w-full h-full lg:block" alt="partner image" />
                                 <div className="relative flex items-center justify-center h-full">
                                     
                                 </div>

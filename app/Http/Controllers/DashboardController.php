@@ -8,6 +8,7 @@ use App\Models\Scholarship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {   
@@ -18,11 +19,13 @@ class DashboardController extends Controller
         if ($role == 'admin') {
             $scholarships = Scholarship::get();
             $applications = Application::get();
+            $totalApplications = DB::table('scholarship_applications')->get()->count();
             $partners = Partner::get();
             return Inertia::render('Dashboard', [
                 'scholarships' => $scholarships,
                 'applications' => $applications,
                 'partners' => $partners,
+                'totalApplications' => $totalApplications,
             ]);
             
         }

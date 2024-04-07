@@ -5,7 +5,7 @@ import Table from "./partials/Table";
 import { PresentationChartBarIcon, CurrencyDollarIcon } from '@heroicons/react/24/solid';
 
 export default function Scholarship({auth}) {
-  const {allScholaships} = usePage().props;
+  const {allScholaships, totalApplications} = usePage().props;
   const {data} = allScholaships;
 
   const totalScholarshipamount = data.reduce((a, c) => a + c.fund_amount, 0);
@@ -52,9 +52,9 @@ export default function Scholarship({auth}) {
                   <div className="flex flex-row -mx-3">
                   <div className="flex-none w-2/3 max-w-full px-3">
                       <div>
-                      <p className="mb-0 font-sans font-semibold leading-normal text-base">Total Scholarships</p>
+                      <p className="mb-0 font-sans font-semibold leading-normal text-base">Total Scholarships / Applications</p>
                       <h5 className="mb-0 font-bold">
-                      {data.length}
+                      {data.length} / {totalApplications}
                       </h5>
                       </div>
                   </div>
