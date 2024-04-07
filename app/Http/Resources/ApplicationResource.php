@@ -25,7 +25,7 @@ class ApplicationResource extends JsonResource
             'parent_job' => $this->parent_job,
             'parent_phone' => $this->parent_phone,
             'parent_email' => $this->parent_email,
-            'application_essay' => $this->application_essay,
+            'applicant_essay' => $this->applicant_essay,
             'community_service' => $this->community_service,
             'school' => $this->school,
             'graduation_year' => $this->graduation_year,

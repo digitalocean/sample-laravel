@@ -28,7 +28,7 @@ class ApplicationCollection extends ResourceCollection
             'applicant_essay',
             'community_service',
             'school',
-            'application_essay',
+            'applicant_essay',
             'graduation_year',
             'gpa',
             'sat_Scheduled',
