@@ -12,7 +12,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/framework": "^10.10",
-        "laravel/sanctum": "^3.2",
+        "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "tightenco/ziggy": "^2.0",
         "vyuldashev/laravel-openapi": "^1.12"
