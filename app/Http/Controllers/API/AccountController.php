@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\APi;
+namespace App\Http\Controllers\API;
 
 //use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\API\BaseController as BaseController;

@@ -36,7 +36,7 @@ class UserAuthController extends BaseController {
         $Acct = Account::create($user);
         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
         $success['name'] =  $user->name;
-        $success['name'] =  $Acct->id;
+        $success['accountname'] =  $Acct->id;
    
         return $this->sendResponse($success, 'User register successfully.');
     }
