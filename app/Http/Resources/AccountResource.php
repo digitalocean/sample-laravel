@@ -15,7 +15,7 @@ class Account extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'ulid' => $this->ulid,
+            'id' => $this->id,
             'name' => $this->name,
             'CompanyName' => $this->CompanyName,
             'CompanyAddress' => $this->CompanyAddress,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\User;
 use App\Http\Controllers\API\BaseController as BaseController;
+use App\Models\Account;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +33,10 @@ class UserAuthController extends BaseController {
         // $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+        $Acct = Account::create($user);
         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
         $success['name'] =  $user->name;
+        $success['name'] =  $Acct->id;
    
         return $this->sendResponse($success, 'User register successfully.');
     }
