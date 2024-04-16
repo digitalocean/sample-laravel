@@ -42,5 +42,5 @@ Route::controller(UserAuthController::class)->group(function(){
 });
 
 Route::middleware('auth:sanctum')->group(function() {
-    Route::resource('products', AccountController::class);
+    Route::resource('accounts', AccountController::class);
 });
