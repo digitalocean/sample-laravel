@@ -26,7 +26,7 @@ return new class extends Migration
 
         Schema::create('kiosks', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignId('user_id')->constrained(
+            $table->foreignId('account_id')->constrained(
                 table: 'accounts', indexName: 'account_id'
             );
             $table->String('MachineID');
@@ -38,7 +38,7 @@ return new class extends Migration
 
         Schema::create('orders', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignId('user_id')->constrained(
+            $table->foreignId('kiosk_id')->constrained(
                 table: 'kiosks', indexName: 'kiosk_id'
             );
             $table->String('OrderNumber');
