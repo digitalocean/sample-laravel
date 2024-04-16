@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Account;
+use App\Models\Kisok;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('kiosks', function (Blueprint $table) {
             $table->ulid('id');
-            $table->unsignedBigInteger('Account_id');
-            $table->foreign('Account_id')->references('id')->on('accounts');
+            $table->foreignIdFor(Account::class);
             $table->String('MachineID');
             $table->String('TradeNO');
             $table->String('KioskName');
@@ -24,8 +25,7 @@ return new class extends Migration
 
         Schema::create('orders', function (Blueprint $table) {
             $table->ulid('id');
-            $table->unsignedBigInteger('Kiosk_id');
-            $table->foreign('Kiosk_id')->references('id')->on('Kiosks');
+            $table->foreignIdFor(Kisok::class);
             $table->String('OrderNumber');
             $table->String('MealName');
             $table->String('Category');

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\User;
 
 return new class extends Migration
 {
@@ -14,11 +15,11 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->ulid('id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignIdFor(User::class);
             $table->String('Name');
-            $table->String('CompanyName');
-            $table->String('CompanyAddress');
-            $table->String('WalletAmount');
+            $table->String('CompanyName')->nullable();
+            $table->String('CompanyAddress')->nullable();
+            $table->String('WalletAmount')->nullable();
             $table->timestamps();
         });
     }

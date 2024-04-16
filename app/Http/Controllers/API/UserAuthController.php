@@ -7,7 +7,9 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Account;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserAuthController extends BaseController {
     /**
@@ -15,28 +17,33 @@ class UserAuthController extends BaseController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request): Response  {
-
-        $input = $request->all();
-
-        $validator = Validator($input, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'c_password' => 'required|same:password',
+    public function register(Request $request)  {
+        
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-   
-        if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());       
-        }
+        
+        // if($request->validate->fails()){
+        //     return $this->sendError('Validation Error.', $request->validate->errors());       
+        // }
    
         // $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
-        $Acct = Account::create($user);
-        $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $token = $user->createToken('api_token')->plainTextToken;
+        
+        $Acct = Account::create([
+            'Name' => $request->name,
+            'user_id' => $user->id,
+        ]);
+        $success['token'] =  $token;
         $success['name'] =  $user->name;
-        $success['name'] =  $Acct->id;
    
         return $this->sendResponse($success, 'User register successfully.');
     }
@@ -46,22 +53,22 @@ class UserAuthController extends BaseController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request): Response
-    {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
-            $user = Auth::user(); 
-            $success['token'] =  $user->token_name->plainTextToken; 
-            $success['name'] =  $user->name;
-   
-            return $this->sendResponse($success, 'User login successfully.');
-        } 
-        else{ 
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
-        } 
+    public function login(Request $request) {
+
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'message' => 'Invalid login details'
+            ], 401);
+        }
+        $user = User::where('email', $request['email'])->firstOrFail();
+        $token = $user->createToken('api_token')->plainTextToken;
+        $success['token'] =  $token; 
+        $success['name'] =  $user->name;
+        return $this->sendResponse($success, 'User login successfully.');
     }
 
     public function logout(){
-        auth()->user()->plainTextToken->delete();
+        auth()->user()->api_token->delete();
     
         return response()->json([
           "message"=>"logged out"
