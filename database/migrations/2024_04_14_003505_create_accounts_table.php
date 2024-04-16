@@ -13,9 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('accounts', function (Blueprint $table) {
-            $table->ulid('id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreignIdFor(User::class);
+            $table->ulid('id')->primary();
+            $table->foreignId('user_id')->constrained(
+                table: 'users', indexName: 'user_id'
+            );
             $table->String('Name');
             $table->String('CompanyName')->nullable();
             $table->String('CompanyAddress')->nullable();
