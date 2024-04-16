@@ -14,8 +14,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kiosks', function (Blueprint $table) {
-            $table->ulid('id');
-            $table->foreignIdFor(Account::class);
+            $table->ulid('id')->primary();
+            $table->foreignId('user_id')->constrained(
+                table: 'accounts', indexName: 'account_id'
+            );
             $table->String('MachineID');
             $table->String('TradeNO');
             $table->String('KioskName');
@@ -24,8 +26,10 @@ return new class extends Migration
         });
 
         Schema::create('orders', function (Blueprint $table) {
-            $table->ulid('id');
-            $table->foreignIdFor(Kisok::class);
+            $table->ulid('id')->primary();
+            $table->foreignId('user_id')->constrained(
+                table: 'kiosks', indexName: 'kiosk_id'
+            );
             $table->String('OrderNumber');
             $table->String('MealName');
             $table->String('Category');
