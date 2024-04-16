@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\api\UserAuthController;
+use App\Http\Controllers\API\UserAuthController;
 use App\Http\Controllers\API\AccountController;
 
 /*
