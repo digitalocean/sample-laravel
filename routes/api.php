@@ -41,6 +41,13 @@ Route::controller(UserAuthController::class)->group(function(){
     Route::post('logout', 'logout');
 });
 
-Route::middleware('auth:sanctum')->group(function() {
+Route::middleware('auth:sanctum', 'abilities:refresh-token')->group(function () {
+    Route::get('/refresh-token', [UserAuthController::class, 'refreshToken']);
+});
+
+Route::middleware('auth:sanctum', 'abilities:api-access')->group(function() {
     Route::resource('accounts', AccountController::class);
 });
+
+
+

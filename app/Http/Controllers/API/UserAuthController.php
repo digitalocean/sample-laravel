@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class UserAuthController extends BaseController {
     /**
@@ -25,9 +26,6 @@ class UserAuthController extends BaseController {
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
         
-        // if($request->validate->fails()){
-        //     return $this->sendError('Validation Error.', $request->validate->errors());       
-        // }
    
         // $input = $request->all();
         $user = User::create([
@@ -36,7 +34,8 @@ class UserAuthController extends BaseController {
             'password' => Hash::make($request->password),
         ]);
 
-        $token = $user->createToken('api_token')->plainTextToken;
+        $token = $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
+        $refreshToken = $user->createToken('refresh_token', ['api:token-refresh'], Carbon::now()->addMinutes(config('sanctum.rt_expiration')))->plainTextToken;
         
         $Acct = Account::create([
             'Name' => $request->name,
@@ -44,6 +43,7 @@ class UserAuthController extends BaseController {
         ]);
         $success['token'] =  $token;
         $success['name'] =  $user->name;
+        $success['refresh_token'] = $refreshToken;
    
         return $this->sendResponse($success, 'User register successfully.');
     }
@@ -73,5 +73,13 @@ class UserAuthController extends BaseController {
         return response()->json([
           "message"=>"logged out"
         ]);
+    }
+
+    public function refreshToken(Request $request) {
+            $token = $request->user()->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
+            $refreshToken = $request->user->createToken('refresh_token', ['api:token-refresh'], Carbon::now()->addMinutes(config('sanctum.rt_expiration')))->plainTextToken;
+            $success['token'] =  $token;
+            $success['refresh_token'] = $refreshToken;
+            return $this->sendResponse($success, 'User token refreshed.');
     }
 }
