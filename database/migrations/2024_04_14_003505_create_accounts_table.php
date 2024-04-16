@@ -14,9 +14,7 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignId('user_id')->constrained(
-                table: 'users', indexName: 'user_id'
-            );
+            $table->foreignId('user_id');
             $table->String('Name');
             $table->String('CompanyName')->nullable();
             $table->String('CompanyAddress')->nullable();
@@ -26,9 +24,7 @@ return new class extends Migration
 
         Schema::create('kiosks', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignId('account_id')->constrained(
-                table: 'accounts', indexName: 'account_id'
-            );
+            $table->foreignUlid('account_id');
             $table->String('MachineID');
             $table->String('TradeNO');
             $table->String('KioskName');
@@ -38,9 +34,7 @@ return new class extends Migration
 
         Schema::create('orders', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignId('kiosk_id')->constrained(
-                table: 'kiosks', indexName: 'kiosk_id'
-            );
+            $table->foreignUlid('kiosk_id');
             $table->String('OrderNumber');
             $table->String('MealName');
             $table->String('Category');
