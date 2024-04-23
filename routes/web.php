@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\ScholarController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,7 +41,13 @@ Route::middleware(['auth', 'verified' ])->group(function () {
 
 });
 
-Route::middleware(['auth', 'verified', 'permission:create|edit'])->group(function () { 
+Route::middleware(['auth', 'verified', 'role:scholar'])->group(function (){
+    Route::controller(ScholarController::class)->group(function () {
+        Route::get('scholar/dashboard', 'index')->name('scholar.dashboard');
+    });
+});
+
+Route::middleware(['auth', 'verified', 'role:admin|partners'])->group(function () { 
     // Partnersphp artisan
     Route::controller(PartnerController::class)->group(function () {
         Route::get('partner/show{id}', 'show')->name('partner.show');

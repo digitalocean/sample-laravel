@@ -5,17 +5,21 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ApplicationCollection extends ResourceCollection
+class ScholarCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request)
+    public function toArray(Request $request): array
     {
         return $this->collection->map->only(
             'id',
+            'parent_name',
+            'parent_email',
+            'parente_name2',
+            'parent_email2',
             //'awarded',
             'name',
             'email',
@@ -32,7 +36,7 @@ class ApplicationCollection extends ResourceCollection
             'graduation_year',
             'gpa',
             'sat_scheduled',
-            'sat_Score',
+            'sat_score',
             'act_scheduled',
             'act_score',
             'ap_test_name',

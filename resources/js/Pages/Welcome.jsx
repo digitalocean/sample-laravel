@@ -104,6 +104,41 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                 </svg>
                             </a>
 
+                            <a
+                                href={route('register.blackscholar')}
+                                className="scale-100 p-6 bg-white dark:bg-red-800/80 dark:bg-gradient-to-bl from-red-500/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-2xl shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                            >
+                                <div>
+                                    <div className="h-16 w-16 bg-red-50 dark:bg-white flex items-center justify-center rounded-full">
+                                     <UsersIcon className='w-7 h-7 stroke-red-500' />
+                                    </div>
+
+                                    <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
+                                        Early Recognition Process
+                                    </h2>
+
+                                    <p className="mt-4 text-gray-800 dark:text-white text-lg leading-relaxed">
+                                        The Black Scholars Program is an ambitious, rigorous, and competitive academic program, 
+                                        that seeks to educate the whole undergraduate student and develop their potential to fashion a more humane and just world.
+                                        We the admins of this program must promote and adhere to our valus set forth.
+                                    </p>
+                                </div>
+
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    className="self-center shrink-0 stroke-red-500 dark:stroke-white w-6 h-6 mx-6"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                                    />
+                                </svg>
+                            </a>
+
                             {/* <div className="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
                                 <div>
                                     <div className="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
