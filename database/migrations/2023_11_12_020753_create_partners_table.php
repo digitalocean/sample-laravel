@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('email', 80);
             $table->string('phone', 12);
             $table->string('address', 150);
+            $table->string('city', 150);
+            $table->string('state', 150);
+            $table->string('zip', 150);
             $table->boolean('consent');
             $table->timestamps();
         });

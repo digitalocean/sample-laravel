@@ -237,7 +237,6 @@ button,
 [type='submit'] {
   -webkit-appearance: button;
   /* 1 */
-  background-color: transparent;
   /* 2 */
   background-image: none;
   /* 2 */
@@ -2601,6 +2600,11 @@ h6 {
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgb(234 6 6 / var(--tw-text-opacity));
+}
+
+.text-red-800 {
+  --tw-text-opacity: 1;
+  color: rgb(185 13 0 / var(--tw-text-opacity));
 }
 
 .text-lime-500 {
