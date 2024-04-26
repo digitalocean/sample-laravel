@@ -45,7 +45,7 @@ class UserAuthController extends BaseController {
         $success['name'] =  $user->name;
         $success['refresh_token'] = $refreshToken;
    
-        return $this->sendResponse($success, 'User register successfully.');
+        return $this->sendResponse($success, 'User registered successfully.');
     }
    
     /**

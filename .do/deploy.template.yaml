@@ -1,5 +1,5 @@
 spec:
-  name: sample-laravel
+  name: Home-chow
   services:
   - environment_slug: php
     git:
@@ -8,5 +8,5 @@ spec:
     envs:
     - key: APP_KEY
       value: "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8="
-    name: sample-laravel
+    name: Home-chow
     run_command: heroku-php-apache2 public/
