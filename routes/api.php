@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\UserAuthController;
 use App\Http\Controllers\API\AccountController;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,7 @@ use App\Http\Controllers\API\AccountController;
  
 //     return $user->createToken($request->device_name)->plainTextToken;
 // });
+Route::post('/mobile-payment-intent', [PaymentController::class, 'makePaymentIntent']);
 
 Route::controller(UserAuthController::class)->group(function(){
     Route::post('register', 'register');
@@ -46,8 +48,5 @@ Route::middleware('auth:sanctum', 'abilities:refresh-token')->group(function () 
 });
 
 Route::middleware('auth:sanctum', 'abilities:api-access')->group(function() {
-    Route::resource('accounts', AccountController::class);
+    Route::resource('accounts', AccountController::class);  
 });
-
-
-
