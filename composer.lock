@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3992c747236ff3e6583fa05b4f1f53b9",
+    "content-hash": "af27d14de86e6734fcbcb4b0689d5a1a",
     "packages": [
         {
             "name": "brick/math",
@@ -915,6 +915,66 @@
                 }
             ],
             "time": "2023-10-12T05:21:21+00:00"
+        },
+        {
+            "name": "goldspecdigital/oooas",
+            "version": "v2.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/goldspecdigital/oooas.git",
+                "reference": "072f8d9f6e75f68df28b148103b38fdf843467b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/goldspecdigital/oooas/zipball/072f8d9f6e75f68df28b148103b38fdf843467b2",
+                "reference": "072f8d9f6e75f68df28b148103b38fdf843467b2",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3",
+                "justinrainbow/json-schema": "^5.2",
+                "phpunit/phpunit": ">=7.3"
+            },
+            "suggest": {
+                "justinrainbow/json-schema": "Required to perform validation (^5.2)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GoldSpecDigital\\ObjectOrientedOAS\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Inamdar",
+                    "email": "matt@goldspecdigital.com"
+                },
+                {
+                    "name": "Vladimir Yuldashev",
+                    "email": "vladimir.yuldashev@gmail.com"
+                }
+            ],
+            "description": "An object oriented approach to generating OpenAPI specs, implemented in PHP.",
+            "homepage": "https://github.com/goldspecdigital/oooas",
+            "keywords": [
+                "oas",
+                "openapi",
+                "php",
+                "swagger"
+            ],
+            "support": {
+                "issues": "https://github.com/goldspecdigital/oooas/issues",
+                "source": "https://github.com/goldspecdigital/oooas/tree/v2.10.0"
+            },
+            "time": "2022-07-20T09:57:04+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2739,6 +2799,181 @@
             "time": "2023-02-08T01:06:31+00:00"
         },
         {
+            "name": "phpdocumentor/reflection-common",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
+                "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/1d01c49d4ed62f25aa84a747ad35d5a16924662b",
+                "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-2.x": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "phpDocumentor\\Reflection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jaap van Otterdijk",
+                    "email": "opensource@ijaap.nl"
+                }
+            ],
+            "description": "Common reflection classes used by phpdocumentor to reflect the code structure",
+            "homepage": "http://www.phpdoc.org",
+            "keywords": [
+                "FQSEN",
+                "phpDocumentor",
+                "phpdoc",
+                "reflection",
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/phpDocumentor/ReflectionCommon/issues",
+                "source": "https://github.com/phpDocumentor/ReflectionCommon/tree/2.x"
+            },
+            "time": "2020-06-27T09:03:43+00:00"
+        },
+        {
+            "name": "phpdocumentor/reflection-docblock",
+            "version": "5.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
+                "reference": "298d2febfe79d03fe714eb871d5538da55205b1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/298d2febfe79d03fe714eb871d5538da55205b1a",
+                "reference": "298d2febfe79d03fe714eb871d5538da55205b1a",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/deprecations": "^1.1",
+                "ext-filter": "*",
+                "php": "^7.4 || ^8.0",
+                "phpdocumentor/reflection-common": "^2.2",
+                "phpdocumentor/type-resolver": "^1.7",
+                "phpstan/phpdoc-parser": "^1.7",
+                "webmozart/assert": "^1.9.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.3.5",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-mockery": "^1.1",
+                "phpstan/phpstan-webmozart-assert": "^1.2",
+                "phpunit/phpunit": "^9.5",
+                "vimeo/psalm": "^5.13"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "phpDocumentor\\Reflection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike van Riel",
+                    "email": "me@mikevanriel.com"
+                },
+                {
+                    "name": "Jaap van Otterdijk",
+                    "email": "opensource@ijaap.nl"
+                }
+            ],
+            "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
+            "support": {
+                "issues": "https://github.com/phpDocumentor/ReflectionDocBlock/issues",
+                "source": "https://github.com/phpDocumentor/ReflectionDocBlock/tree/5.4.0"
+            },
+            "time": "2024-04-09T21:13:58+00:00"
+        },
+        {
+            "name": "phpdocumentor/type-resolver",
+            "version": "1.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpDocumentor/TypeResolver.git",
+                "reference": "153ae662783729388a584b4361f2545e4d841e3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/153ae662783729388a584b4361f2545e4d841e3c",
+                "reference": "153ae662783729388a584b4361f2545e4d841e3c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/deprecations": "^1.0",
+                "php": "^7.3 || ^8.0",
+                "phpdocumentor/reflection-common": "^2.0",
+                "phpstan/phpdoc-parser": "^1.13"
+            },
+            "require-dev": {
+                "ext-tokenizer": "*",
+                "phpbench/phpbench": "^1.2",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.8",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpunit/phpunit": "^9.5",
+                "rector/rector": "^0.13.9",
+                "vimeo/psalm": "^4.25"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "phpDocumentor\\Reflection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike van Riel",
+                    "email": "me@mikevanriel.com"
+                }
+            ],
+            "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
+            "support": {
+                "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
+                "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.8.2"
+            },
+            "time": "2024-02-23T11:10:43+00:00"
+        },
+        {
             "name": "phpoption/phpoption",
             "version": "1.9.2",
             "source": {
@@ -2812,6 +3047,53 @@
                 }
             ],
             "time": "2023-11-12T21:59:55+00:00"
+        },
+        {
+            "name": "phpstan/phpdoc-parser",
+            "version": "1.28.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpdoc-parser.git",
+                "reference": "cd06d6b1a1b3c75b0b83f97577869fd85a3cd4fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/cd06d6b1a1b3c75b0b83f97577869fd85a3cd4fb",
+                "reference": "cd06d6b1a1b3c75b0b83f97577869fd85a3cd4fb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^2.0",
+                "nikic/php-parser": "^4.15",
+                "php-parallel-lint/php-parallel-lint": "^1.2",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^1.5",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/process": "^5.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\PhpDocParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPDoc parser with support for nullable, intersection and generic types",
+            "support": {
+                "issues": "https://github.com/phpstan/phpdoc-parser/issues",
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.28.0"
+            },
+            "time": "2024-04-03T18:51:33+00:00"
         },
         {
             "name": "psr/cache",
@@ -3580,16 +3862,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v14.3.0",
+            "version": "v14.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "4825e7f03f9f83e091928c8f08f96bc87fdd2c7d"
+                "reference": "044f9dd190967b8fb7e55fd0ea25f11c625c00a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/4825e7f03f9f83e091928c8f08f96bc87fdd2c7d",
-                "reference": "4825e7f03f9f83e091928c8f08f96bc87fdd2c7d",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/044f9dd190967b8fb7e55fd0ea25f11c625c00a4",
+                "reference": "044f9dd190967b8fb7e55fd0ea25f11c625c00a4",
                 "shasum": ""
             },
             "require": {
@@ -3633,9 +3915,9 @@
             ],
             "support": {
                 "issues": "https://github.com/stripe/stripe-php/issues",
-                "source": "https://github.com/stripe/stripe-php/tree/v14.3.0"
+                "source": "https://github.com/stripe/stripe-php/tree/v14.4.0"
             },
-            "time": "2024-04-18T21:25:27+00:00"
+            "time": "2024-04-25T20:38:24+00:00"
         },
         {
             "name": "symfony/console",
@@ -5869,6 +6151,74 @@
             "time": "2024-03-19T11:56:30+00:00"
         },
         {
+            "name": "tightenco/ziggy",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tighten/ziggy.git",
+                "reference": "f2ce6091078109f434e295a17adfac7378257ace"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tighten/ziggy/zipball/f2ce6091078109f434e295a17adfac7378257ace",
+                "reference": "f2ce6091078109f434e295a17adfac7378257ace",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": ">=9.0",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0 || ^8.0 || ^9.0",
+                "phpunit/phpunit": "^9.5 || ^10.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Tighten\\Ziggy\\ZiggyServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Tighten\\Ziggy\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Coulbourne",
+                    "email": "daniel@tighten.co"
+                },
+                {
+                    "name": "Jake Bathman",
+                    "email": "jake@tighten.co"
+                },
+                {
+                    "name": "Jacob Baker-Kretzmar",
+                    "email": "jacob@tighten.co"
+                }
+            ],
+            "description": "Use your Laravel named routes in JavaScript.",
+            "homepage": "https://github.com/tighten/ziggy",
+            "keywords": [
+                "Ziggy",
+                "javascript",
+                "laravel",
+                "routes"
+            ],
+            "support": {
+                "issues": "https://github.com/tighten/ziggy/issues",
+                "source": "https://github.com/tighten/ziggy/tree/v2.1.0"
+            },
+            "time": "2024-03-26T16:04:23+00:00"
+        },
+        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "v2.2.7",
             "source": {
@@ -6080,6 +6430,71 @@
             "time": "2022-03-08T17:03:00+00:00"
         },
         {
+            "name": "vyuldashev/laravel-openapi",
+            "version": "v1.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vyuldashev/laravel-openapi.git",
+                "reference": "b47b9496f6a23b0b3e18dba7701cb7fbf260a76c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vyuldashev/laravel-openapi/zipball/b47b9496f6a23b0b3e18dba7701cb7fbf260a76c",
+                "reference": "b47b9496f6a23b0b3e18dba7701cb7fbf260a76c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.6|^3.0",
+                "ext-json": "*",
+                "goldspecdigital/oooas": "^2.7.1",
+                "laravel/framework": "5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
+                "php": "^8.0",
+                "phpdocumentor/reflection-docblock": "^5.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.3|^6.0|^7.0",
+                "phpunit/phpunit": "^9.5.13"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Vyuldashev\\LaravelOpenApi\\OpenApiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vyuldashev\\LaravelOpenApi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vladimir Yuldashev",
+                    "email": "misterio92@gmail.com"
+                }
+            ],
+            "description": "Generate OpenAPI Specification for Laravel Applications",
+            "keywords": [
+                "api",
+                "docs",
+                "documentation",
+                "laravel",
+                "openapi",
+                "rest",
+                "swagger"
+            ],
+            "support": {
+                "issues": "https://github.com/vyuldashev/laravel-openapi/issues",
+                "source": "https://github.com/vyuldashev/laravel-openapi/tree/v1.12.0"
+            },
+            "time": "2023-05-04T10:01:53+00:00"
+        },
+        {
             "name": "webmozart/assert",
             "version": "1.11.0",
             "source": {
@@ -6139,6 +6554,90 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "barryvdh/laravel-debugbar",
+            "version": "v3.13.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-debugbar.git",
+                "reference": "00201bcd1eaf9b1d3debddcdc13c219e4835fb61"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/00201bcd1eaf9b1d3debddcdc13c219e4835fb61",
+                "reference": "00201bcd1eaf9b1d3debddcdc13c219e4835fb61",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": "^9|^10|^11",
+                "illuminate/session": "^9|^10|^11",
+                "illuminate/support": "^9|^10|^11",
+                "maximebf/debugbar": "~1.22.0",
+                "php": "^8.0",
+                "symfony/finder": "^6|^7"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench-dusk": "^5|^6|^7|^8|^9",
+                "phpunit/phpunit": "^9.6|^10.5",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.13-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\Debugbar\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Debugbar": "Barryvdh\\Debugbar\\Facades\\Debugbar"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Barryvdh\\Debugbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "PHP Debugbar integration for Laravel",
+            "keywords": [
+                "debug",
+                "debugbar",
+                "laravel",
+                "profiler",
+                "webprofiler"
+            ],
+            "support": {
+                "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.13.4"
+            },
+            "funding": [
+                {
+                    "url": "https://fruitcake.nl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-04-10T09:15:45+00:00"
+        },
         {
             "name": "fakerphp/faker",
             "version": "v1.23.1",
@@ -6514,6 +7013,74 @@
                 "source": "https://github.com/laravel/sail"
             },
             "time": "2024-03-20T20:09:31+00:00"
+        },
+        {
+            "name": "maximebf/debugbar",
+            "version": "v1.22.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maximebf/php-debugbar.git",
+                "reference": "7aa9a27a0b1158ed5ad4e7175e8d3aee9a818b96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/7aa9a27a0b1158ed5ad4e7175e8d3aee9a818b96",
+                "reference": "7aa9a27a0b1158ed5ad4e7175e8d3aee9a818b96",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8",
+                "psr/log": "^1|^2|^3",
+                "symfony/var-dumper": "^4|^5|^6|^7"
+            },
+            "require-dev": {
+                "dbrekelmans/bdi": "^1",
+                "phpunit/phpunit": "^8|^9",
+                "symfony/panther": "^1|^2.1",
+                "twig/twig": "^1.38|^2.7|^3.0"
+            },
+            "suggest": {
+                "kriswallsmith/assetic": "The best way to manage assets",
+                "monolog/monolog": "Log using Monolog",
+                "predis/predis": "Redis storage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.22-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DebugBar\\": "src/DebugBar/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Bouroumeau-Fuseau",
+                    "email": "maxime.bouroumeau@gmail.com",
+                    "homepage": "http://maximebf.com"
+                },
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Debug bar in the browser for php application",
+            "homepage": "https://github.com/maximebf/php-debugbar",
+            "keywords": [
+                "debug",
+                "debugbar"
+            ],
+            "support": {
+                "issues": "https://github.com/maximebf/php-debugbar/issues",
+                "source": "https://github.com/maximebf/php-debugbar/tree/v1.22.3"
+            },
+            "time": "2024-04-03T19:39:26+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -8640,7 +9207,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
