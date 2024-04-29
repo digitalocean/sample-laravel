@@ -90,7 +90,11 @@ export default function Register() {
                                         </div>
                                     </div> */}
                                     <div className="flex-auto p-6">
-                                    <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+                                    <Tab.Group 
+                                         onChange={(index) => {
+                                            console.log('Changed selected tab to:', index)
+                                          }}
+                                    >
                                         <div className='py-8'>
                                             <Tab.List>
                                                 <Tab as={Fragment}>
@@ -215,10 +219,14 @@ export default function Register() {
                                                         >
                                                             Already registered?
                                                         </Link>
-{/* 
-                                                        <PrimaryButton className="ml-4" disabled={processing}>
-                                                            Register
-                                                        </PrimaryButton> */}
+                                                        
+                                                        {/* <Tab.List>
+                                                            <Tab as={Fragment}>
+                                                                <PrimaryButton className="ml-4" disabled={processing}>
+                                                                    Next
+                                                                </PrimaryButton>
+                                                            </Tab>
+                                                        </Tab.List> */}
                                                     </div>
                                                 
                                             </Tab.Panel>
@@ -289,6 +297,19 @@ export default function Register() {
                                                         />
 
                                                         <InputError message={errors.parent_email2} className="mt-2" />
+                                                    </div>
+
+                                                    <div className="flex items-center justify-end mt-4">
+                                                        <Link
+                                                            href={route('login')}
+                                                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                        >
+                                                            Already registered?
+                                                        </Link>
+
+                                                        {/* <PrimaryButton className="ml-4" disabled={processing} selectedIndex={1} onChange={setSelectedIndex}>
+                                                            Next
+                                                        </PrimaryButton> */}
                                                     </div>
                                             </Tab.Panel>
 

@@ -12,21 +12,25 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ScholarController extends Controller {
 
     public function index() {
 
         $user = Auth::user(); 
+ 
         $a = DB::table('scholars')->where('user_id', $user->id)
             ->join('applications', 'scholars.application_id', 'applications.id')
             ->select('scholars.email', 'scholars.parent_name2', 'scholars.parent_email2', 'applications.*' )->get();
         //$scholar = ScholarResource::collection($a);
         $scholarships = Application::find($a[0]->id)->scholarships()->get();
-    //dd($scholarships);
+        
         return Inertia::render('Scholars/Dashboard',[
             'scholar' => $a,
             'scholarships' => $scholarships,
         ]);
+        
     }
 
     public function application() {

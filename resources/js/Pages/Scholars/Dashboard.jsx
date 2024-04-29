@@ -122,7 +122,7 @@ export default function Dashboard({ auth }) {
                                     <div className="sm:col-span-3">
                                         <h2 className="text-base font-semibold leading-1 text-gray-700">Paent email</h2>
                                         <p className="mt-1 text-sm leading-6 text-gray-600">
-                                            {email}
+                                            {parent_email}
                                         </p>
                                 
                                     </div>
@@ -167,7 +167,7 @@ export default function Dashboard({ auth }) {
                             </p>
                             </div>
                             
-                            <div className="md:col-span-2">
+                            <div className="md:col-span-2 h-sidenav">
                                 {submitted_on === 'null' 
                                     ? <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                                             <div className="col-span-3">
@@ -244,7 +244,7 @@ export default function Dashboard({ auth }) {
                         </p>
                         </div>
                         
-                        <div className="md:col-span-2 h-screen">
+                        <div className="md:col-span-2 h-sidenav">
                             {submitted_on === 'null' 
                                 ? <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                                         <div className="col-span-3">
@@ -325,7 +325,7 @@ export default function Dashboard({ auth }) {
                                 This is where you review your list of scholarships you applied to and the response.
                             </p>
                         </div>
-                        <div className='md:col-span-2 h-screen'>
+                        <div className='md:col-span-2 h-sidenav'>
                             <ul role="list" className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-2 xl:gap-x-8">
                             {scholarships.map(({id, name, deadline, award_payments, }) => (
                             <>

@@ -79,6 +79,8 @@ class RegisteredUserController extends Controller
             'password' => hash::make($request->password),
         ]);
 
+        $u = $user->id;
+
         $application = Application::create([
             'name' => $request->name,
             'school' => $request->school,
@@ -88,7 +90,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $scholars = Scholar::create([
-            'user_id' => $user->id,
+            'user_id' => $u,
             'application_id' => $application->id,
             'parent_name' => $request->parent_name,
             'parent_name2' => $request->parent_name2,
