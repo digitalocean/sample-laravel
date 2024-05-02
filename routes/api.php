@@ -36,6 +36,7 @@ use App\Http\Controllers\PaymentController;
 //     return $user->createToken($request->device_name)->plainTextToken;
 // });
 Route::post('/mobile-payment-intent', [PaymentController::class, 'makePaymentIntent']);
+Route::post('/member-payment', [PaymentController::class, 'memberPayment']);
 
 Route::controller(UserAuthController::class)->group(function(){
     Route::post('register', 'register');

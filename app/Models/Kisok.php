@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kisok extends Model
 {
@@ -23,5 +24,9 @@ class Kisok extends Model
 
     public function accounts(): BelongsTo {
         return $this->belongsTo(Account::class);
+    }
+
+    public function orders(): HasMany {
+        return $this->hasMany(Order::class);
     }
 }
