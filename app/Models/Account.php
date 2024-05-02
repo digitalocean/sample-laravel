@@ -20,7 +20,9 @@ class Account extends Model
         'Name',
         'CompanyName',
         'CompanyAddress',
-        'WalletAmount'
+        'WalletAmount',
+        'status',
+        'type',
     ];
 
     public function users(): BelongsTo {
