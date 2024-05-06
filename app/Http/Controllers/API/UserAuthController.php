@@ -35,9 +35,9 @@ class UserAuthController extends BaseController {
         ]);
 
         $token = $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
-        $refreshToken = $user->createToken('refresh_token', ['api:token-refresh'], Carbon::now()->addMinutes(config('sanctum.rt_expiration')))->plainTextToken;
+        $refreshToken = $user->createToken('refresh_token', ['token-refresh'], Carbon::now()->addMinutes(config('sanctum.rt_expiration')))->plainTextToken;
         
-        $Acct = Account::create([
+        Account::create([
             'Name' => $request->name,
             'user_id' => $user->id,
         ]);
@@ -61,10 +61,16 @@ class UserAuthController extends BaseController {
             ], 401);
         }
         $user = User::where('email', $request['email'])->firstOrFail();
-        $token = $user->createToken('api_token')->plainTextToken;
-        $success['token'] =  $token; 
-        $success['name'] =  $user->name;
-        return $this->sendResponse($success, 'User login successfully.');
+        $account = Account::where('user_id', $user->id)->firstOrFail();
+        $token = $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
+        $output = [
+            'id' => $account->id,
+            'Name' => $account->name,
+            'WalletAmount' => $account->WalletAmout,
+            'token' => $token,            
+        ];
+
+        return $this->sendResponse($output, 'User logined successfully.');
     }
 
     public function logout(){

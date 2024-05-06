@@ -16,6 +16,6 @@ class Order extends Model
     protected $guarded = [];
 
     public function kiosks(): BelongsTo {
-        return $this->belongsTo(Kisok::class);
+        return $this->belongsTo(Kiosk::class);
     }
 }

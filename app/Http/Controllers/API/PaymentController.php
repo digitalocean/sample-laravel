@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\User;
 use Exception;
 use Stripe\Stripe;
 use Error;
 
-class PaymentController extends Controller {
+class PaymentController extends BaseController {
 
     private function createPaymentMethod($token) {
         return \Stripe\PaymentMethod::create([

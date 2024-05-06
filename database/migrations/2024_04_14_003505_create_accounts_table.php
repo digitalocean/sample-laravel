@@ -19,6 +19,8 @@ return new class extends Migration
             $table->String('CompanyName')->nullable();
             $table->String('CompanyAddress')->nullable();
             $table->String('WalletAmount')->nullable();
+            $table->String('Status')->nullable();
+            $table->String('Type')->nullable();
             $table->timestamps();
         });
 
@@ -29,6 +31,7 @@ return new class extends Migration
             $table->String('TradeNO');
             $table->String('KioskName');
             $table->String('KioskAddress');
+            $table->String('DecimalLocation');
             $table->timestamps();
         });
 
@@ -41,11 +44,11 @@ return new class extends Migration
             $table->String('SessionCode');
             $table->String('SlotNO');
             $table->String('Amount');
-            $table->String('discount');
+            $table->String('Discount');
             $table->String('ProductID');
             $table->integer('Status');
             $table->timestamp('Time');
-            $table->String('qrCode');
+            $table->String('QrCode');
             $table->String('Code');
             $table->timestamps();
         });

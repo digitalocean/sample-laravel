@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\UserAuthController;
 use App\Http\Controllers\API\AccountController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\API\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,10 +44,12 @@ Route::controller(UserAuthController::class)->group(function(){
     Route::post('logout', 'logout');
 });
 
-Route::middleware('auth:sanctum', 'abilities:refresh-token')->group(function () {
+//test token yU0kPzuJYKWIyjQODg75F30iEJwAOs7FuC7gF67F8e6fe6f4
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/refresh-token', [UserAuthController::class, 'refreshToken']);
 });
-
-Route::middleware('auth:sanctum', 'abilities:api-access')->group(function() {
-    Route::resource('accounts', AccountController::class);  
+//01hx2g2p05zak03ce4p992c0gp
+Route::middleware('auth:sanctum')->group(function() {
+    Route::get('accounts', [AccountController::class, 'index']);
+    Route::get('accounts/{id}', [AccountController::class, 'franchiseAccount']);  
 });
