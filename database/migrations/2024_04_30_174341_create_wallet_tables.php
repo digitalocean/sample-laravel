@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWalletTables extends Migration
+return new  class extends Migration
 {
     /**
      * Run the migrations.
@@ -69,4 +69,4 @@ class CreateWalletTables extends Migration
         $walletTable = (new $walletModelClass())->getTable();
         Schema::dropIfExists($walletTable);
     }
-}
+};

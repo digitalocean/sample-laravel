@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Kisok extends Model
+class Kiosk extends Model
 {
     use HasFactory, HasUlids;
 
@@ -16,10 +17,14 @@ class Kisok extends Model
 
     protected $fillable = [
         'Account_id',
-        'MacnineID',
+        'MachineID',
         'TradeNO',
         'KioskName',
-        'KioskAddress'
+        'KioskAddress',
+        'DecimalLocation',
+        'Latitude',
+        'Longitude'
+
     ];
 
     public function accounts(): BelongsTo {
@@ -28,5 +33,9 @@ class Kisok extends Model
 
     public function orders(): HasMany {
         return $this->hasMany(Order::class);
+    }
+
+    public function meals(): BelongsToMany {
+        return $this->belongsToMany(Meal::class);
     }
 }
