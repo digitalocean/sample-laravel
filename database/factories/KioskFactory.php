@@ -18,7 +18,7 @@ class KioskFactory extends Factory
     public function definition(): array
     {
         return [
-            'Account_id' => '01hx59jkyms0kq0c4603ep2wgc',
+            'Account_id' => '01hx8bsgwwqrc3r80yqzas4dvn',
             'MachineID' => fake()->numerify('HC-######'),
             'TradeNO' => fake()->numerify('HCT-######'),
             'KioskName' => fake()->numerify('HC-####'),
