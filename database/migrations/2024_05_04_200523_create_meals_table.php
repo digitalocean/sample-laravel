@@ -24,6 +24,7 @@ return new class extends Migration
         });
 
         Schema::create('kiosk_meal', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->foreignUlid('kiosk_id');
             $table->foreignId('meal_id');
             $table->String('Total', 3)->default(10);
