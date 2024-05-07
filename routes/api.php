@@ -36,7 +36,6 @@ use App\Http\Controllers\API\PaymentController;
 //     return $user->createToken($request->device_name)->plainTextToken;
 // });
 Route::post('/mobile-payment-intent', [PaymentController::class, 'makePaymentIntent']);
-Route::post('/member-payment', [PaymentController::class, 'memberPayment']);
 
 Route::controller(UserAuthController::class)->group(function(){
     Route::post('register', 'register');
@@ -52,4 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('accounts', [AccountController::class, 'index']);
     Route::get('accounts/{id}', [AccountController::class, 'franchiseAccount']);  
+
+    // payment
+    Route::post('/member-payment', [PaymentController::class, 'memberPayment']);
 });

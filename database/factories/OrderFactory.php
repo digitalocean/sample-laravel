@@ -20,7 +20,7 @@ class OrderFactory extends Factory
         return [
             'kiosk_id' => Kiosk::factory(),
             'OrderNumber' => fake()->numerify('HC-#######'),
-            'MealName' => fake()->word(),
+            'MealName' => fake()->randomElement($array = array ('Beef Brisket','BBQ Pulled Pork Sandwich','Blackened Catfish','Mac & Cheese')),
             'Category' => fake()->randomElement($array = array ('american','Indian','Asian')),
             'SessionCode' => fake()->numerify('#######'),
             'SlotNO' => fake()->numerify('##'),
