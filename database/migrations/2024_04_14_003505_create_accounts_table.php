@@ -31,7 +31,8 @@ return new class extends Migration
             $table->String('TradeNO');
             $table->String('KioskName');
             $table->String('KioskAddress');
-            $table->String('DecimalLocation');
+            $table->String('Longitude');
+            $table->String('Latitude');
             $table->timestamps();
         });
 
