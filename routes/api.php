@@ -52,6 +52,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('accounts', [AccountController::class, 'index']);
     Route::get('accounts/{id}', [AccountController::class, 'franchiseAccount']);  
 
-    // payment
+    // member payment 
     Route::post('/member-payment', [PaymentController::class, 'memberPayment']);
+    // wallet process
+    Route::post('/wallet/addfunds', [PaymentController::class, 'userAddFunds']);
 });
