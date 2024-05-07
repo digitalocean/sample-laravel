@@ -12,19 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('meals', function (Blueprint $table) {
-            $table->ulid('id')->primary();
-            $table->String('Cusine', 100);
+            $table->bigIncrements('id');
+            $table->String('Cuisine', 100);
             $table->String('Calories', 5);
-            $table->String('Description', 250);
-            $table->String('Price', 10);
+            $table->String('Category', 25);
+            $table->String('Description', 500);
+            $table->String('Price', 6);
+            $table->String('NutritionalValue', 5);
+            $table->String('MealType', 10);
             $table->timestamps();
         });
 
-        Schema::create('kiosk_meals', function (Blueprint $table) {
-            $table->foreignUlid('kiosks_id');
-            $table->foreignUlid('meals_id');
-            $table->String('Total', 3);
-            $table->String('StockTotal', 3);
+        Schema::create('kiosk_meal', function (Blueprint $table) {
+            $table->foreignUlid('kiosk_id');
+            $table->foreignId('meal_id');
+            $table->String('Total', 3)->default(10);
+            $table->String('StockTotal', 3)->default(5);
         });
     }
 
@@ -34,5 +37,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('meals');
+        Schema::dropIfExists('kiosk_meal');
     }
 };
