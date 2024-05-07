@@ -44,4 +44,3 @@ class AccountController extends BaseController {
     }
 
 }
-

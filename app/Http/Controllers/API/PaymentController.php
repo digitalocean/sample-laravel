@@ -4,10 +4,12 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
+use App\Models\Account;
 use App\Models\User;
 use Exception;
 use Stripe\Stripe;
 use Error;
+use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 class PaymentController extends BaseController {
 
@@ -50,12 +52,17 @@ class PaymentController extends BaseController {
         }
     }
 
+    /**
+     * User Creates member and makes payment.
+     *
+     * User sends customer_id=>null, amount, 
+     */
     public function memberPayment(Request $request) {
 
         /* Instantiate a Stripe Gateway either like this */
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
         // Use an existing Customer ID if this is a returning customer.
-        if ($request->get('customer_id') == 'null') {
+        if ($request->get('customer_id') === 'null') {
             $cust = $stripe->customers->create();
             $customer = $cust->id;
         } else {
@@ -70,6 +77,8 @@ class PaymentController extends BaseController {
         
         $paymentIntent = $stripe->setupIntents->create([
             'customer' => $customer,
+            'amount' => $request->get('amount'),
+            'currency' => 'usd',
             'automatic_payment_methods' => [
                 'enabled' => true,
             ],
@@ -124,5 +133,27 @@ class PaymentController extends BaseController {
             echo json_encode(['error' => $e->getMessage()]);
         }
         // return response()->json(['client_secret' => $clientSecret]);
+    }
+
+     /**
+     * User adds funds to wallet.
+     *
+     * Customer (Franchise or member) makes payemnt to stripe to add funds (account: 1d, amount: 10)
+     */
+    #[OpenApi\Operation(tags: ['payments'])]
+    public function userAddFunds(Request $request) {
+        // after stripe complets app sends information to 
+        $account = Account::where('id', $request->get('account'))->get();
+        $user = User::find($account[0]->user_id);
+        $user->wallet->balance; // existing balnce
+        $user->wallet->deposit(100);
+        //$user->wallet->deposit(100, ['stripe_source' => $request->get('stripe_source'), 'description' => 'Deposit of 100 credits from Stripe Payment']);
+        //$user->wallet->withdraw(10, ['description' => 'Purchase of Item #1234']);
+
+        $output = [
+            'balance' => $user->wallet->balance,
+        ];
+
+        echo json_encode($output);
     }
 }
