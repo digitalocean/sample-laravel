@@ -8,6 +8,7 @@ use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Models\Kiosk;
 use App\Models\Order;
+use App\OpenApi\Parameters\Accounts\AccountUsersParameters;
 use Illuminate\Http\Request;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
@@ -15,7 +16,7 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class AccountController extends BaseController {
 
     /**
-     * Retrieves all Account users.
+     * Retrieves all Account Users.
      *
      * Returns Franchisee and Customer members and guest
      */
@@ -28,12 +29,13 @@ class AccountController extends BaseController {
      /**
      * Retrieves franchisee Account user.
      *
+     * Account will equal account id & 
      * Returns Franchisee account with Kiosk, Kiosk Orders, and available meals
      */
     #[OpenApi\Operation(tags: ['accounts'])]
-    public function franchiseAccount($id) {
-        $account = Account::where('id', $id)->firstOrFail();
-        $Kiosk = Kiosk::with('orders')->with('meals')->where('account_id', $id)->get();
+    public function franchiseAccount(Account $account) {
+        $useraccount = Account::where('id', $account)->firstOrFail();
+        $Kiosk = Kiosk::with('orders')->with('meals')->where('account_id', $useraccount)->get();
         $output = [
             'id' => $account->id,
             'Name' => $account->name,

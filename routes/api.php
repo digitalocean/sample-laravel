@@ -50,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
 //01hx2g2p05zak03ce4p992c0gp
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('accounts', [AccountController::class, 'index']);
-    Route::get('accounts/{id}', [AccountController::class, 'franchiseAccount']);  
+    Route::get('accounts/{account}', [AccountController::class, 'franchiseAccount']);  
 
     // member payment 
     Route::post('/member-payment', [PaymentController::class, 'memberPayment']);

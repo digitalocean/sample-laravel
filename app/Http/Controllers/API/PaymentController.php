@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Account;
 use App\Models\User;
-use Exception;
-use Stripe\Stripe;
 use Error;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
+use App\OpenApi\Parameters\Stripe\PaymentsParameters;
+use App\OpenApi\Parameters\Stripe\MemberParameters;
 
+#[OpenApi\PathItem]
 class PaymentController extends BaseController {
 
     private function createPaymentMethod($token) {
@@ -22,11 +23,17 @@ class PaymentController extends BaseController {
         ]);
     }
     
-    // Guest Created one-time payment
+    /**
+     * Intiates Stripe Payment Intent.
+     *
+     * Stripe Payment intent & Returns clientSecert
+     */
+    #[OpenApi\Operation(tags: ['Payment Transaction'])]
+    #[OpenApi\Parameters(factory: PaymentsParameters::class)]
     public function makePaymentIntent(Request $request) {
         /* Instantiate a Stripe Gateway either like this */
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
-    
+
         header('Content-Type: application/json');
 
         try {
@@ -53,10 +60,12 @@ class PaymentController extends BaseController {
     }
 
     /**
-     * User Creates member and makes payment.
+     * User Creates connect member account and makes payment.
      *
-     * User sends customer_id=>null, amount, 
+     * Returns clientSecert, empemeralKey, customer_id, 
      */
+    #[OpenApi\Operation(tags: ['Payment Transaction'])]
+    #[OpenApi\Parameters(factory: MemberParameters::class)]
     public function memberPayment(Request $request) {
 
         /* Instantiate a Stripe Gateway either like this */
@@ -140,7 +149,7 @@ class PaymentController extends BaseController {
      *
      * Customer (Franchise or member) makes payemnt to stripe to add funds (account: 1d, amount: 10)
      */
-    #[OpenApi\Operation(tags: ['payments'])]
+    #[OpenApi\Operation(tags: ['Wallet Transaction'])]
     public function userAddFunds(Request $request) {
         // after stripe complets app sends information to 
         $account = Account::where('id', $request->get('account'))->get();
