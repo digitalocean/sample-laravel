@@ -36,6 +36,6 @@ class Kiosk extends Model
     }
 
     public function meals(): BelongsToMany {
-        return $this->belongsToMany(Meal::class);
+        return $this->belongsToMany(Meal::class)->withPivot('Total', 'StockTotal');
     }
 }

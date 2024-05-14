@@ -8,6 +8,7 @@ use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use App\Models\Kiosk;
 use App\Models\Order;
+use App\OpenApi\Parameters\Accounts\AccountUsersParameters;
 use Illuminate\Http\Request;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
@@ -15,7 +16,7 @@ use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 class AccountController extends BaseController {
 
     /**
-     * Retrieves all Account users.
+     * Retrieves all Account Users.
      *
      * Returns Franchisee and Customer members and guest
      */
@@ -28,17 +29,45 @@ class AccountController extends BaseController {
      /**
      * Retrieves franchisee Account user.
      *
+     * Account will equal account id & 
      * Returns Franchisee account with Kiosk, Kiosk Orders, and available meals
      */
     #[OpenApi\Operation(tags: ['accounts'])]
-    public function franchiseAccount($id) {
-        $account = Account::where('id', $id)->firstOrFail();
-        $Kiosk = Kiosk::with('orders')->with('meals')->where('account_id', $id)->get();
+    public function franchiseAccount(Account $account) {
+        $useraccount = Account::where('id', $account)->firstOrFail();
+        $Kiosk = Kiosk::with('orders')->with('meals')->where('account_id', $useraccount)->get();
+        // to count and group ordres
+        $countMeals = Order::where('kiosk_id', $Kiosk->id)->countBy('MealName');
+        if($countMeals->empty){
+            $TransactionTotal = '0';
+            $TopSelling = '0';
+        } else {
+            $TransactionTotal = $Kiosk['orders']->count();
+            $TopSelling = $countMeals;
+        }
         $output = [
             'id' => $account->id,
             'Name' => $account->name,
             'WalletAmount' => $account->WalletAmout,
-            'kiosk' => $Kiosk
+            'kiosk' => $Kiosk,
+            'TopSelling' => $TopSelling,
+            'TransactionTotal' => $TransactionTotal,
+        ];
+        return $this->sendResponse($output, 'Franchisee Account retrieved successfully.');
+    }
+
+    /**
+     * Retrieves franchisee Kiosk Products.
+     *
+     * Account will equal account id & 
+     * Returns Franchisee Kiosk Products / Meals
+     */
+    #[OpenApi\Operation(tags: ['accounts'])]
+    public function franchiseeProducts(Account $account) {
+        $useraccount = Account::where('id', $account)->firstOrFail();
+        $Kiosk = Kiosk::with('meals')->where('account_id', $useraccount)->get();
+        $output = [
+            'Products' => $Kiosk,
         ];
         return $this->sendResponse($output, 'Franchisee Account retrieved successfully.');
     }

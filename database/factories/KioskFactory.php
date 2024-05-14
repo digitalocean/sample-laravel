@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Order;
+use App\Models\Account;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
@@ -18,13 +19,19 @@ class KioskFactory extends Factory
     public function definition(): array
     {
         return [
-            'Account_id' => '01hx8bsgwwqrc3r80yqzas4dvn',
+            'Account_id' => Account::factory(),
             'MachineID' => fake()->numerify('HC-######'),
             'TradeNO' => fake()->numerify('HCT-######'),
-            'KioskName' => fake()->numerify('HC-####'),
+            'KioskNumber' => fake()->numerify('HC-####'),
             'KioskAddress' => fake()->streetAddress(),
+            'City' => fake()->city(),
+            'State' => fake()->stateAbbr(),
+            'Zip' => fake()->postcode(),
             'Latitude' => fake()->latitude($min = -90, $max = 90),
             'Longitude' => fake()->longitude($min = -180, $max = 180),
+            'Status' => fake()->randomElement($array = array ('Inactive','Active', 'offLine')),
+            'TotalMeals' => fake()->numerify('##'),
+            'TotalSold' => fake()->numerify('##'),
         ];
     }
 }

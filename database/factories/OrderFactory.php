@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Kiosk;
+use App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,9 +30,12 @@ class OrderFactory extends Factory
             'ProductID' => fake()->numerify('HCP-######'),
             'Status' => '1',
             'Time' => fake()->dateTime($max = 'now'),
+            'Member' => fake()->randomElement($array = array ('Guest','Member')),
+            'Account_id' => Account::factory(),
+            'Quantity' => '1',
             'QrCode' => 'none',
             'Code' => fake()->numerify('#######'),
-           
+            'PaymentStatus' => fake()->randomElement($array = array ('Paid','Pending', 'Cancled')),
         ];
     }
 }

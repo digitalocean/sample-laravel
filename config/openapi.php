@@ -19,6 +19,12 @@ return [
                     'description' => null,
                     'variables' => [],
                 ],
+
+                [
+                    'url' => 'https://orca-app-hoihb.ondigitalocean.app/api/',
+                    'description' => "Live server temporary address" ,
+                    'variables' => [],
+                ],
             ],
 
             'tags' => [
@@ -26,6 +32,14 @@ return [
                 [
                    'name' => 'accounts',
                    'description' => 'Application accounts',
+                ],
+                [
+                    'name' => 'Payment Transaction',
+                    'description' => 'Application customer & franchisee payment processing',
+                ],
+                [
+                    'name' => 'Wallet Transaction',
+                    'description' => 'Application customer & franchisee wallet processing',
                 ],
 
             ],
