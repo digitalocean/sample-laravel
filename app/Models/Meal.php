@@ -15,7 +15,7 @@ class Meal extends Model
     protected $guarded = [];
 
     public function kiosks(): BelongsToMany {
-        return $this->belongsToMany(Kiosk::class, 'kiosk_meal', 'kiosks_id', 'meals_id');
+        return $this->belongsToMany(Kiosk::class, 'kiosk_meal', 'kiosks_id', 'meals_id')->withPivot('Total', 'StockTotal');
     }
 
 }

@@ -51,6 +51,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('accounts', [AccountController::class, 'index']);
     Route::get('accounts/{account}', [AccountController::class, 'franchiseAccount']);  
+    Route::get('accounts/products/{account}', [AccountController::class, 'franchiseeProducts']);  
+
 
     // member payment 
     Route::post('/member-payment', [PaymentController::class, 'memberPayment']);

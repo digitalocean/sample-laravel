@@ -15,10 +15,14 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignId('user_id');
-            $table->String('Name');
-            $table->String('CompanyName')->nullable();
+            $table->String('Name', 100);
+            $table->String('Phone', 20)->nullable();
+            $table->String('CompanyName', 100)->nullable();
             $table->String('CompanyAddress')->nullable();
-            $table->String('WalletAmount')->nullable();
+            $table->String('City')->nullable();
+            $table->String('State')->nullable();
+            $table->String('Zip')->nullable();
+            $table->String('WalletAmount', 10)->nullable();
             $table->String('Status')->nullable();
             $table->String('Type')->nullable();
             $table->timestamps();
@@ -29,10 +33,16 @@ return new class extends Migration
             $table->foreignUlid('account_id');
             $table->String('MachineID');
             $table->String('TradeNO');
-            $table->String('KioskName');
+            $table->String('KioskNumber');
             $table->String('KioskAddress');
+            $table->String('City', 150);
+            $table->String('State', 20);
+            $table->String('Zip', 10);
             $table->String('Longitude');
             $table->String('Latitude');
+            $table->String('Status', 10);
+            $table->String('TotalMeals', 5);
+            $table->String('TotalSold', 5);
             $table->timestamps();
         });
 
@@ -49,8 +59,12 @@ return new class extends Migration
             $table->String('ProductID');
             $table->integer('Status');
             $table->timestamp('Time');
+            $table->String('Member', 15)->nullable();
+            $table->String('Account_id')->nullable();
+            $table->String('Quantity');
             $table->String('QrCode');
             $table->String('Code');
+            $table->String('PaymentStatus', 15)->nullable();
             $table->timestamps();
         });
     }
