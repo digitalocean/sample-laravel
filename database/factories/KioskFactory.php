@@ -22,6 +22,7 @@ class KioskFactory extends Factory
             'Account_id' => Account::factory(),
             'MachineID' => fake()->numerify('HC-######'),
             'TradeNO' => fake()->numerify('HCT-######'),
+            'KioskType' => fake()->randomElement($array = array ('Small','Large')),
             'KioskNumber' => fake()->numerify('HC-####'),
             'KioskAddress' => fake()->streetAddress(),
             'City' => fake()->city(),

@@ -5,7 +5,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\UserAuthController;
 use App\Http\Controllers\API\AccountController;
+use App\Http\Controllers\API\KioskController;
+use App\Http\Controllers\Api\MealsController;
 use App\Http\Controllers\API\PaymentController;
+use App\Http\Controllers\API\OrdersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,9 +53,22 @@ Route::middleware('auth:sanctum')->group(function () {
 //01hx2g2p05zak03ce4p992c0gp
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('accounts', [AccountController::class, 'index']);
+    Route::post('create/franchisee', [AccountController::class, 'createFranchisee']);
     Route::get('accounts/{account}', [AccountController::class, 'franchiseAccount']);  
-    Route::get('accounts/products/{account}', [AccountController::class, 'franchiseeProducts']);  
+    Route::get('accounts/products/{account}', [AccountController::class, 'franchiseeProducts']);
+    Route::get('accounts/profile/{account}', [AccountController::class, 'franchiseeProfile']);  
 
+    // Kiosk Calls
+    Route::post('create/kiosk', [KioskController::class, 'createKiosk']);
+    Route::get('kiosks', [KioskController::class, 'index']);
+
+    // Order calls
+    Route::get('orders', [OrdersController::class, 'orders']);
+    Route::get('order/{order}', [OrdersController::class, 'orderNumber']);
+
+    // meal calls
+    Route::get('meals', [MealsController::class, 'meals']);
+    Route::post('create/meals', [MealsController::class, 'createMeals']);
 
     // member payment 
     Route::post('/member-payment', [PaymentController::class, 'memberPayment']);

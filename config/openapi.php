@@ -34,6 +34,18 @@ return [
                    'description' => 'Application accounts',
                 ],
                 [
+                    'name' => 'Kiosk',
+                    'description' => 'All kiosk registerd with Homechow',
+                ],
+                [
+                    'name' => 'Orders',
+                    'description' => 'Orders with Homechow',
+                ],
+                [
+                    'name' => 'Meals',
+                    'description' => 'Orders with Homechow',
+                ],
+                [
                     'name' => 'Payment Transaction',
                     'description' => 'Application customer & franchisee payment processing',
                 ],
@@ -41,6 +53,7 @@ return [
                     'name' => 'Wallet Transaction',
                     'description' => 'Application customer & franchisee wallet processing',
                 ],
+                
 
             ],
 
