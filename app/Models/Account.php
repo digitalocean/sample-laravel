@@ -18,10 +18,14 @@ class Account extends Model
     protected $fillable = [
         'user_id',
         'Name',
+        'Phone',
         'CompanyName',
         'CompanyAddress',
         'WalletAmount',
-        'status',
+        'City',
+        'State',
+        'Zip',
+        'Status',
         'type',
     ];
 

@@ -33,6 +33,7 @@ return new class extends Migration
             $table->foreignUlid('account_id');
             $table->String('MachineID');
             $table->String('TradeNO');
+            $table->String('KioskType');
             $table->String('KioskNumber');
             $table->String('KioskAddress');
             $table->String('City', 150);

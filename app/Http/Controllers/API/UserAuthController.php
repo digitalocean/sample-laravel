@@ -88,4 +88,5 @@ class UserAuthController extends BaseController {
             $success['refresh_token'] = $refreshToken;
             return $this->sendResponse($success, 'User token refreshed.');
     }
+
 }
