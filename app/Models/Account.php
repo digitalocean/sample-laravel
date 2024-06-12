@@ -34,6 +34,6 @@ class Account extends Model
     }
 
     public function kiosk(): HasMany {
-        return $this->hasMany(Kiosk::class, 'foreign_key');
+        return $this->hasMany(Kiosk::class, 'Account_id');
     }
 }

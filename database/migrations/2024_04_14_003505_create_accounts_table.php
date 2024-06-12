@@ -30,7 +30,7 @@ return new class extends Migration
 
         Schema::create('kiosks', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('account_id');
+            $table->foreignUlid('Account_id');
             $table->String('MachineID');
             $table->String('TradeNO');
             $table->String('KioskType');
