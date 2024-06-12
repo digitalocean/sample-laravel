@@ -78,6 +78,7 @@ class AccountController extends BaseController {
      * Account will equal account id & 
      * Returns Franchisee account with Kiosk, Kiosk Orders, and available meals
      */
+    // Kiosk::factory()->hasOrders(5)->hasMeals(6)->create();
    #[OpenApi\Operation(tags: ['accounts'])]
     public function franchiseAccount(Account $account) {
         $acct = $account;
@@ -112,7 +113,7 @@ class AccountController extends BaseController {
     public function franchiseeProducts(Account $account) {
         $acct = $account;
         $useraccount = Account::where('id', $account)->get();
-        $Kiosk = Kiosk::with('meals')->where('account_id', $acct)->get();
+        $Kiosk = Kiosk::with('meals')->where('account_id', $acct->id)->get();
         $output = [
             'Products' => $Kiosk,
         ];
@@ -128,10 +129,12 @@ class AccountController extends BaseController {
     #[OpenApi\Operation(tags: ['accounts'])]
     public function franchiseeProfile(Account $account) {
         $acct = $account;
-        $useraccount = Account::where('id', $acct)->with('kiosks')->get();
+        $useraccount = Account::where('id', $acct->id)->get();
+        $kiosk = Kiosk::where('Account_id', $acct->id)->get();
 
         $output = [
             'profile' => $useraccount,
+            'kiosk' => $kiosk,
         ];
         
         return $this->sendResponse($output, 'Franchisee Account retrieved successfully.');
