@@ -78,35 +78,25 @@ class AccountController extends BaseController {
      * Account will equal account id & 
      * Returns Franchisee account with Kiosk, Kiosk Orders, and available meals
      */
-    #[OpenApi\Operation(tags: ['accounts'])]
+   #[OpenApi\Operation(tags: ['accounts'])]
     public function franchiseAccount(Account $account) {
-        $useraccount = Account::where('id', $account)->firstOrFail();
-        $Kiosk = Kiosk::with('orders')->with('meals')->where('account_id', $useraccount)->get();
-
-        if($Kiosk == null) {
-            $output = [
-                'id' => $account->id,
-                'Name' => $account->name,
-                'WalletAmount' => $account->WalletAmout,
-            ];
-        } else {
-            $countMeals = Order::where('kiosk_id', $Kiosk->id)->countBy('MealName');
-            if($countMeals->empty){
+        $acct = $account;
+        $useraccount = Account::where('id', $acct->id)->get();
+        $ordersK = Kiosk::with('orders')->with('meals')->where('account_id', $account->id)->get();
+        $countMeals = Order::where('account_id', $acct->id)->get();
+            if($countMeals->isEmpty()){
                 $TransactionTotal = '0';
                 $TopSelling = '0';
             } else {
-                $TransactionTotal = $Kiosk['orders']->count();
-                $TopSelling = $countMeals;
+                $TransactionTotal = $countMeals->count();
+                $TopSelling = $countMeals->countBy('MealName');
             }
             $output = [
-                'id' => $account->id,
-                'Name' => $account->name,
-                'WalletAmount' => $account->WalletAmout,
-                'kiosk' => $Kiosk,
+                'account' => AccountResource::collection($useraccount),
+                'kiosk' => $ordersK,
                 'TopSelling' => $TopSelling,
                 'TransactionTotal' => $TransactionTotal,
             ];
-        }
         // to count and group ordres
         
         return $this->sendResponse($output, 'Franchisee Account retrieved successfully.');
@@ -120,8 +110,9 @@ class AccountController extends BaseController {
      */
     #[OpenApi\Operation(tags: ['accounts'])]
     public function franchiseeProducts(Account $account) {
-        $useraccount = Account::where('id', $account)->firstOrFail();
-        $Kiosk = Kiosk::with('meals')->where('account_id', $useraccount)->get();
+        $acct = $account;
+        $useraccount = Account::where('id', $account)->get();
+        $Kiosk = Kiosk::with('meals')->where('account_id', $acct)->get();
         $output = [
             'Products' => $Kiosk,
         ];
@@ -136,7 +127,8 @@ class AccountController extends BaseController {
      */
     #[OpenApi\Operation(tags: ['accounts'])]
     public function franchiseeProfile(Account $account) {
-        $useraccount = Account::where('id', $account)->with('kiosks')->firstOrFail();
+        $acct = $account;
+        $useraccount = Account::where('id', $acct)->with('kiosks')->get();
 
         $output = [
             'profile' => $useraccount,
