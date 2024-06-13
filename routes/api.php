@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\UserAuthController;
 use App\Http\Controllers\API\AccountController;
+use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\KioskController;
 use App\Http\Controllers\Api\MealsController;
 use App\Http\Controllers\API\PaymentController;
@@ -38,13 +39,17 @@ use App\Http\Controllers\API\OrdersController;
  
 //     return $user->createToken($request->device_name)->plainTextToken;
 // });
-Route::post('/mobile-payment-intent', [PaymentController::class, 'makePaymentIntent']);
+
 
 Route::controller(UserAuthController::class)->group(function(){
     Route::post('register', 'register');
     Route::post('login', 'login');
     Route::post('logout', 'logout');
 });
+
+Route::post('/mobile-payment-intent', [PaymentController::class, 'makePaymentIntent']);
+// Customer Service application
+Route::post('application', [CustomerController::class, 'franchiseeApplication']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/refresh-token', [UserAuthController::class, 'refreshToken']);
