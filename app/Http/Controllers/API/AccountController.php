@@ -11,6 +11,8 @@ use App\Models\User;
 use App\OpenApi\Parameters\Accounts\FranchiseeAccountParameters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
 #[OpenApi\PathItem]
@@ -116,6 +118,43 @@ class AccountController extends BaseController {
         $Kiosk = Kiosk::with('meals')->where('account_id', $acct->id)->get();
         $output = [
             'Products' => $Kiosk,
+        ];
+        return $this->sendResponse($output, 'Franchisee Account retrieved successfully.');
+    }
+
+    // kiosk total sales by day, 7day, month, all
+    public function kioskSales(Account $account) {
+        $acct = $account;
+        // all kiosk associated
+        $all = DB::table('kiosks')
+            ->join('orders', 'kiosks.id', '=', 'orders.kiosk_id')
+            ->select('kiosks.KioskNumber', 'kiosks.Account_id', 'orders.Account_id', 'orders.id', 'orders.OrderNumber', 'orders.MealName', 'orders.Category','orders.Amount', 'orders.ProductID', 'orders.Quantity', 'orders.created_at')
+            ->get();
+
+        $Kiosk = $all->groupBy('KioskNumber');
+
+        $TopSellingCategory = [];
+        foreach( $Kiosk as $i ){
+            $a = $i->groupBy('Category');
+            // $TopSellingCategory[] = $i->groupBy('Category');
+            $MealsRanking = $i->countBy('Category');
+            $TopSellingCategory[] = Arr::add(['Category' => $a, 'count' => null], 'count', $MealsRanking);
+        }
+        
+        $j = 
+
+        $SalesByDate = [];
+        foreach( $Kiosk as $i ){
+            $SalesByDate[] = $i->groupBy('created_at');//change is made here use array to store all values 
+        }
+      
+
+        $output = [
+            'kioskSales' => $Kiosk,
+            'TopSellingCategory' => $TopSellingCategory,
+            'SalesByDate' => $SalesByDate,
+            // 'MealsRanking' => $MealsRanking,
+
         ];
         return $this->sendResponse($output, 'Franchisee Account retrieved successfully.');
     }

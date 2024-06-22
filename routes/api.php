@@ -61,6 +61,9 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('accounts/products/{account}', [AccountController::class, 'franchiseeProducts']);
     Route::get('accounts/profile/{account}', [AccountController::class, 'franchiseeProfile']);  
 
+    //Kisok and meals driect Reports
+    Route::get('accounts/sales/{account}', [AccountController::class, 'kioskSales']);
+
     // Kiosk Calls
     Route::post('create/kiosk', [KioskController::class, 'createKiosk']);
     Route::get('kiosks', [KioskController::class, 'index']);
