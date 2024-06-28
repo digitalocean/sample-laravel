@@ -19,7 +19,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /var/www/html
 
 # Copy project files
-COPY . .
+ADD . .
 
 # Install project dependencies
 RUN composer install --optimize-autoloader --no-dev
