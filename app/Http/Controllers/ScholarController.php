@@ -25,7 +25,7 @@ class ScholarController extends Controller {
             ->select('scholars.email', 'scholars.parent_name2', 'scholars.parent_email2', 'applications.*' )->get();
         //$scholar = ScholarResource::collection($a);
         $scholarships = Application::find($a[0]->id)->scholarships()->get();
-        
+
         return Inertia::render('Scholars/Dashboard',[
             'scholar' => $a,
             'scholarships' => $scholarships,
@@ -33,7 +33,14 @@ class ScholarController extends Controller {
         
     }
 
-    public function application() {
+    public function scholarsApplication() {
+        $user = Auth::user();
+        
+        $preScholar = Scholar::where('user_id', $user->id)->get();
+        $application = Application::where('id', $preScholar[0]['application_id'])->get();
 
+        return Inertia::render('Applications/createApplication', [
+            'application' => $application,
+        ]);
     }
 }

@@ -36,8 +36,8 @@ export default function Dashboard({ auth }) {
         <StudentAuthLayout>
        
         <Tab.Group>
-            <header className="border-b border-white/5">
-            <Tab.List className="flex space-x-1 mt-2 mx-4">
+            <header className="border-b border-gray/5">
+            <Tab.List className="flex space-x-1 mt-4 mx-4 py-4">
                 
                 {secondaryNavigation.map((item) => (
                     <Tab 
@@ -62,13 +62,12 @@ export default function Dashboard({ auth }) {
 
             {/* Settings forms */}
             
-            <div className="divide-y-2 divide-red-700 h-100vh">
+            <div className="">
             <Tab.Panels>
             {scholar.map(({id, name, parent_name, parent_email, email, phone, school, gpa, graduation_year, submitted_on, college_major, college_choice, college_choice2}) => (
                  <>
                 <Tab.Panel>
-                    <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
-                            
+                    <div className="grid max-w-ful grid-cols-1 gap-x-12 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8 border-b-2 border-b-slate-200">
                             
                             <div key={id}>
                                 <h2 className="text-base font-semibold leading-7 text-gray-700">Profile Information</h2>
@@ -168,7 +167,7 @@ export default function Dashboard({ auth }) {
                             </div>
                             
                             <div className="md:col-span-2 h-sidenav">
-                                {submitted_on === 'null' 
+                                {scholarships === 'null' 
                                     ? <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
                                             <div className="col-span-3">
                                                 <h2 className="text-base font-semibold leading-1 text-gray-700">Application Submitted on</h2>
@@ -216,14 +215,14 @@ export default function Dashboard({ auth }) {
                                                 />
                                             </svg>
                                             <h3 className="mt-2 text-sm font-semibold text-gray-900">No commom Scholarship Application or Uploads</h3>
-                                            <p className="mt-1 text-sm text-gray-500">Get started by creating a new common scholarship application.</p>
+                                            <p className="mt-1 text-sm text-gray-600">Get started by creating a new common scholarship application.</p>
                                             <div className="mt-6">
                                                 <button
                                                 type="button"
                                                 className="inline-flex items-center rounded-md bg-red-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                                 >
                                                 <PlusIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
-                                                New Common Application
+                                                    New Common Application
                                                 </button>
                                             </div>
                                         </div>
@@ -295,6 +294,7 @@ export default function Dashboard({ auth }) {
                                         <h3 className="mt-2 text-sm font-semibold text-gray-900">No commom Scholarship Application or Uploads</h3>
                                         <p className="mt-1 text-sm text-gray-500">Get started by creating a new common scholarship application.</p>
                                         <div className="mt-6">
+                                        <a href={route('scholar.application')}>
                                             <button
                                             type="button"
                                             className="inline-flex items-center rounded-md bg-red-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -302,6 +302,7 @@ export default function Dashboard({ auth }) {
                                             <PlusIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
                                                 New Commom Application
                                             </button>
+                                        </a>
                                         </div>
                                     </div>
 

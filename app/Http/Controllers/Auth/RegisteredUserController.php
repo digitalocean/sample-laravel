@@ -90,7 +90,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $scholars = Scholar::create([
-            'user_id' => $u,
+            'user_id' => $u->id,
             'application_id' => $application->id,
             'parent_name' => $request->parent_name,
             'parent_name2' => $request->parent_name2,
