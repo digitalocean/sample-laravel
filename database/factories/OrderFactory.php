@@ -31,7 +31,7 @@ class OrderFactory extends Factory
             'Status' => '1',
             'Time' => fake()->dateTime($max = 'now'),
             'Member' => fake()->randomElement($array = array ('Guest','Member')),
-            'Account_id' => Account::factory(),
+            'Account_id' => '01j1t57bztgvxm6k78j7wncja5',
             'Quantity' => '1',
             'QrCode' => 'none',
             'Code' => fake()->numerify('#######'),
