@@ -29,7 +29,7 @@ class ApplicationController extends Controller {
     }
 
     // application list by scholarshipId
-    public function scholarshipapplications($id){
+    public function scholarshipapplications($id) {
         $a = $id; //dd($a);
         $selected = Scholarship::find($a)->applications()->orderBy('name')->get();
         //dd($update);

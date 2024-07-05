@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import { clamp } from '@mui/utils';
 
 const plugin = require("tailwindcss/plugin");
 

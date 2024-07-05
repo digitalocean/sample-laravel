@@ -43,4 +43,14 @@ class ScholarController extends Controller {
             'application' => $application,
         ]);
     }
+
+    public function scholarshipList() {
+        $user = Auth::user();
+        $scholarship = Scholarship::get();
+        // Get scholarships that have been applied to
+
+        return Inertia::render('Scholars/Scholarshiplist', [
+            'scholarship' => $scholarship,
+        ]);
+    }
 }

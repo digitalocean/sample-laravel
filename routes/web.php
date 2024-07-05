@@ -43,8 +43,9 @@ Route::middleware(['auth', 'verified' ])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:scholar'])->group(function (){
     Route::controller(ScholarController::class)->group(function () {
-        Route::get('scholar/dashboard', 'index')->name('scholar.dashboard');
+        Route::get('scholars/dashboard', 'index')->name('scholar.dashboard');
         Route::get('scholars/application', 'scholarsApplication')->name('scholar.application');
+        Route::get('scholars/list', 'scholarshipList')->name('scholar.list');
     });
 });
 

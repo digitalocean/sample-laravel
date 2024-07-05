@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
-
+use App\Models\Partner;
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -34,10 +34,14 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
         $role = $user->roles;
         $request->session()->regenerate();
-        $g = session(['role' => $role[0]['name']]); 
+        session(['role' => $role[0]['name']]); 
+        $a = $$user->id;
+        $partnerId = Partner::where('id', $a)->get();
 
         if ($role == 'admin') {
             return redirect()->intended(RouteServiceProvider::HOME);
+        } elseif  ($role == 'partner'){
+            return redirect('partner/show',$partnerId);
         } else {
             return redirect('scholar/dashboard');
         }

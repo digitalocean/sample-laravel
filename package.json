@@ -26,6 +26,7 @@
         "@mui/icons-material": "^5.14.18",
         "@mui/material": "^5.14.18",
         "@mui/x-date-pickers": "^6.18.1",
+        "@tailwindcss/line-clamp": "^0.4.4",
         "chart.js": "^4.4.0",
         "export-to-csv": "^1.2.1",
         "material-react-table": "^2.0.4",

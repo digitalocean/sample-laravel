@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import {
   ChartBarSquareIcon,
+  ClipboardDocumentIcon,
   Cog6ToothIcon,
   FolderIcon,
   GlobeAltIcon,
@@ -12,8 +13,9 @@ import {
 import { Bars3Icon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
 const navigation = [
-    { name: 'All Scholarships', href: '#', icon: FolderIcon, current: false },
-    { name: 'Settings', href: '#', icon: Cog6ToothIcon, current: true },
+    { name: 'Home', href:'dashboard', icon: FolderIcon, current: false },
+    { name: 'Application', href:'application', icon: ClipboardDocumentIcon, current: false },
+    { name: 'Available Scholarships', href:'list', icon: ClipboardDocumentIcon, current: false },
   ]
   const teams = [
     { id: 1, name: 'Planetaria', href: '#', initial: 'P', current: false },
