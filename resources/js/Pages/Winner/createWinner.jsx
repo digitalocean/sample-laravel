@@ -2,6 +2,7 @@ import { Fragment, useRef, useState } from 'react';
 import { router } from '@inertiajs/react'
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon  } from '@heroicons/react/24/outline';
+import distributionSelection from './distributionSelection';
 
 export default function CreateWinner() {
   const [data, setData] = useState({
@@ -131,10 +132,10 @@ export default function CreateWinner() {
                               </div>
 
                               <div className="sm:col-span-3">
-                                  <label htmlFor="country" className="block text-base text-left font-medium leading-6 text-gray-900">
+                                  <label htmlFor="frequnecy" className="block text-base text-left font-medium leading-6 text-gray-900">
                                       Selection Criteria
                                    </label>
-                                  <freqSelection />
+                                  <distributionSelection selectedFrequnecy={selectedFrequnecy} setSelectedFrequnecy={setSelectedFrequnecy}/>
                                  
                               </div>
 
