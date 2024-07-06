@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Scholarship extends Model
 {
@@ -53,6 +54,10 @@ class Scholarship extends Model
 
     public function scholarshipuses(): BelongsToMany {
         return $this->belongsToMany(Scholarshipuse::class, 'scholarshipuse_scholarships', 'scholarshipuse_id', 'scholarship_id');
+    }
+
+    public function winners(): HasMany {
+        return $this->hasMany(Winner::class);
     }
 
 }

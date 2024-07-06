@@ -41,11 +41,12 @@ Route::middleware(['auth', 'verified' ])->group(function () {
 
 });
 
-Route::middleware(['auth', 'verified', 'role:scholar'])->group(function (){
+Route::middleware(['auth', 'verified', 'role:scholar|admin'])->group(function (){
     Route::controller(ScholarController::class)->group(function () {
         Route::get('scholars/dashboard', 'index')->name('scholar.dashboard');
         Route::get('scholars/application', 'scholarsApplication')->name('scholar.application');
         Route::get('scholars/list', 'scholarshipList')->name('scholar.list');
+        Route::post('scholars/application/create', 'storeScholarship')->name('scholar.application.create');
     });
 });
 

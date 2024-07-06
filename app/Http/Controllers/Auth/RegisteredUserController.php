@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
             'partner_id' => "1"
         ]);
 
-        $user->assignRole('user');
+        $user->assignRole('partner');
 
         event(new Registered($user));
 

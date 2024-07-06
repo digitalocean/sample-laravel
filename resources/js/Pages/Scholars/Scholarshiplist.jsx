@@ -17,15 +17,15 @@ export default function({auth, scholarship}) {
                 {scholarship.map((i) => (
                     <li key={i.id} className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
                     <div className="flex w-full items-center justify-between space-x-6 p-6">
-                        <div className="flex-1">
+                        <div className="flex-1 truncate">
                             <div className="flex items-center space-x-3">
                                 <h3 className="truncate text-xl font-bold text-gray-900">{i.name}</h3>
-                                <span className="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                            </div>
+                            <p className="mt-1 truncate text-lg text-gray-800">{i.award_payments} per year - deadline <span className="inline-flex flex-shrink-0 items-center rounded-full bg-red-700 px-2 py-0.5 text-base font-medium text-white ring-1 ring-inset ring-green-600/20">
                                 {i.deadline}
                                 </span>
-                            </div>
-                            <p className="mt-1 truncate text-base text-gray-800">{i.award_payments} per year</p>
-                            <p className="mt-1 line-clamp-2 text-base text-gray-800">{i.description}</p>
+                            </p>
+                            <p className="mt-1 text-wrap line-clamp-2 text-base text-gray-800">{i.description}</p>
                         </div>
                     </div>
                     <div>

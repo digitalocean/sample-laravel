@@ -105,13 +105,6 @@ class ScholarshipController extends Controller {
             'review_applicants' => 'NO',
             'fund_amount' => $a[0]['fund_amount'],
         ]);
-        // 'selection_criteria' => $a[1],
-        // 'requirement_criteria' => $a[2],
-        // 'award_based_on' => $a[3],
-        // 'renewability' => $a[4],
-        // 'uses' => $a[5],
-        //dd(Selectioncriteria::find($a[1][0]["id"]));
-        // $a = Selectioncriteria::find($a[1][0]["id"]); 
         $scholarshipInfo = Scholarship::find($b);
         if ($a[1] != null) { 
             foreach ( $a[1] as $a ){
@@ -198,6 +191,10 @@ class ScholarshipController extends Controller {
         $scholarshipInfo->save();
         $partner_id = session('partner_id');
         return to_route('partner.show', $partner_id);
+    }
+
+    public function scholarshipWinners(){
+
     }
 
     public function destroy($id){

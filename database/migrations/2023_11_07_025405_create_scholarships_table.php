@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('requirement_criteria');
             $table->string('uses');
             $table->integer('fund_amount');
+            $table->integer('total');
             $table->timestamps();
         });
     }

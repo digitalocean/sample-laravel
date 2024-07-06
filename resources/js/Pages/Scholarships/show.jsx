@@ -1,6 +1,7 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 import CreateScholarship from "./createScholarship";
+import  CreateWinner from "./../Winner/createWinner";
 
 export default function Show({auth, scholarship, applications, otherscholarship, requirements, scholarshipuses, criteria, role}) {
   //const {applications} = usePage().props;
@@ -240,7 +241,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
           <div className="w-full max-w-full p-6 lg-max:mt-6 bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
             <div className="sm:flex sm:items-center">
               <div className="sm:flex-auto">
-                <h1 className="text-base font-semibold leading-6 text-gray-900">Applications</h1>
+                <h1 className="text-xl font-semibold leading-6 text-gray-900">Applications</h1>
                 <p className="mt-2 text-sm text-gray-700"></p>
               </div>
               {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -386,15 +387,17 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                       
                       <td
                         className={classNames('border-t border-gray-200',
-                          'relative py-3.5 pl-3 pr-4 text-center text-sm font-medium sm:pr-6'
+                          'relative py-3.5 pl-3 pr-4 text-center text-base font-medium sm:pr-6'
                         )}
                       >
                         <Link
                           href={route('application.view',id)}
-                          className="inline-block w-full px-6 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-700 to-pink-500 hover:shadow-soft-2xl hover:scale-102"
+                          className="inline-block w-1/3 px-6 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
                         >
                           Resume
                         </Link>
+
+                        <CreateWinner />
                       </td>
                     </tr>
                     </>
@@ -412,8 +415,8 @@ export default function Show({auth, scholarship, applications, otherscholarship,
           <div className="flex-none w-full max-w-full px-3 mt-6">
             <div className="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
               <div className="p-4 pb-0 mb-0 bg-white rounded-t-2xl">
-                <h6 className="mb-1">Other Scholarships</h6>
-                <p className="leading-normal text-sm">Addition scholarships provided:</p>
+                <h6 className="mb-1 text-xl">Other Scholarships</h6>
+                <p className="leading-normal text-base">Addition scholarships provided:</p>
               </div>
               <div className="flex-auto p-4">
                 <div className="flex flex-wrap -mx-3">

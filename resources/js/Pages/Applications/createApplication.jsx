@@ -41,7 +41,7 @@ export default function({auth, application}){
     const submit = (e) => {
         e.preventDefault();
 
-        post(route(''));
+        post(route('/application/create'));
     };
 
     return (
@@ -535,9 +535,6 @@ export default function({auth, application}){
                         </Disclosure>
                         
                         </div>
-                  
-                    
-                
             </div>
 
             {/* Forth Section */}
@@ -596,10 +593,11 @@ export default function({auth, application}){
           Cancel
         </button>
         <button
+          href={submit}
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
-          Save
+          Submit
         </button>
       </div>
     </form>

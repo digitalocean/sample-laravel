@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Partner;
+
+use function PHPUnit\Framework\isEmpty;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -35,13 +38,20 @@ class AuthenticatedSessionController extends Controller
         $role = $user->roles;
         $request->session()->regenerate();
         session(['role' => $role[0]['name']]); 
-        $a = $$user->id;
+        $a = $user->id;
         $partnerId = Partner::where('id', $a)->get();
+        if($partnerId->isEmpty()){
+            if ($role == 'admin') {
+                return redirect()->intended(RouteServiceProvider::HOME);
+            } else {
+                return redirect('login');
+            }
+        }
 
         if ($role == 'admin') {
             return redirect()->intended(RouteServiceProvider::HOME);
-        } elseif  ($role == 'partner'){
-            return redirect('partner/show',$partnerId);
+        } elseif  ($partnerId != 'null' ){
+            return redirect('partner/show',$partnerId->id);
         } else {
             return redirect('scholar/dashboard');
         }
