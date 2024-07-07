@@ -12,6 +12,7 @@ use App\Models\Application;
 use App\Models\Selectioncriteria;
 use App\Models\Requirementcriteria;
 use App\Models\Scholarshipuse;
+use App\Models\Winner;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Arr;
@@ -70,6 +71,7 @@ class ScholarshipController extends Controller {
         $criteria = Selectioncriteria::has('scholarships')->get();
         $requirements = Requirementcriteria::has('scholarships')->get();
         $scholarshipuses = Scholarshipuse::has('scholarships')->get();
+        $winners = Winner::where('scholarship_id', $a)->get();
 
         session([ 'partner_id' => $scholarshipInfo[0]->partner_id]);
         session([ 'scholarshipid' => $scholarshipInfo[0]->id]); 
@@ -80,6 +82,7 @@ class ScholarshipController extends Controller {
             'requirements' => $requirements,
             'scholarshipuses' => $scholarshipuses,
             'criteria' => $criteria,
+            'winners' => $winners,
         ]);
     }
 

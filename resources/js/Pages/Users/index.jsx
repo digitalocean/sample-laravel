@@ -53,8 +53,8 @@ export default function index({auth}) {
 
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-900">Users</h1>
-          <p className="mt-2 text-sm text-gray-700">
+          <h1 className="text-lg font-semibold leading-6 text-gray-900">Users</h1>
+          <p className="mt-2 text-base text-gray-700">
             A list of all the users in your account including their name, title, email and role.
           </p>
         </div>
@@ -78,14 +78,14 @@ export default function index({auth}) {
                 <tr>
                   <th
                     scope="col"
-                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8"
+                    className="py-3.5 pl-4 pr-3 text-left text-base font-semibold text-gray-900 sm:pl-6 lg:pl-8"
                   >
                     Name
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-3 py-3.5 text-left text-base font-semibold text-gray-900">
                     Organization
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  <th scope="col" className="px-3 py-3.5 text-left text-base font-semibold text-gray-900">
                     Email
                   </th>
                   {/* <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -102,10 +102,10 @@ export default function index({auth}) {
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                       {name}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-700">{organization_name}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-700">{email}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-base text-gray-700">{organization_name}</td>
+                    <td className="whitespace-nowrap px-3 py-4 text-base text-gray-700">{email}</td>
                     {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{data.role}</td> */}
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-base font-medium sm:pr-6 lg:pr-8">
                       <a href="#" className="text-indigo-600 hover:text-indigo-900 mr-2">
                         Edit<span className="sr-only">, {name}</span>
                       </a>

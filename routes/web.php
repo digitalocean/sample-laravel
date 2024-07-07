@@ -9,6 +9,7 @@ use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\ScholarController;
+use App\Http\Controllers\WinnerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -69,6 +70,14 @@ Route::middleware(['auth', 'verified', 'role:admin|partners'])->group(function (
         Route::post('scholarship/update', 'update')->name('scholarship.update');
         Route::get('partner/scholarship/delete{id}', 'destroy')->name('scholarship.delete');
     });
+
+    Route::controller(WinnerController::class)->group(function () {
+        Route::get('winners/list', 'index')->name('partner.show');
+        Route::post('create/winner', 'createWinner')->name('create.winner');
+        Route::post('update/winner{winner}', 'updateWinner')->name('update.winner');
+        Route::get('delete/winner{winner}', 'destroy')->name('delete.winner');
+    });
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

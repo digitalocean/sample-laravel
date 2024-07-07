@@ -1,13 +1,16 @@
 import { Fragment, useRef, useState } from 'react';
-import { router } from '@inertiajs/react'
+import { router, usePage, useForm } from '@inertiajs/react'
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon  } from '@heroicons/react/24/outline';
-import YearlySelection from './yearSelection';
+import YearlySelection from './updateyearSelection';
 
-export default function CreateWinner({scholarID}) {
-  
-  const [data, setData] = useState({
-    scholar_id: scholarID,
+export default function UpdateWinner({ winners, winnersID}) {
+
+  var i = winners;
+  var d = winnersID;
+  console.log(d);
+
+  const {data, setData} = useForm({
     award_payments:'',
     distributionDate:'',
   })
@@ -26,28 +29,19 @@ export default function CreateWinner({scholarID}) {
     setIsOpen(true)
   }
   
-  function handleChange(e) {
-    const key = e.target.id;
-    const value = e.target.value
-    setData(data => ({
-        ...data,
-        [key]: value,
-    }))
-  }
 
   function handleSubmit(e) {
     e.preventDefault()
-    router.post(route('create.winner'), [data, selectedFrequnecy]);
+    router.post(route('update.winner', [d]), [data]);
   }
 
   return (
     <>
         <button
-          type="button"
           onClick={openModal}
-          className="inline-block w-1/3 px-6 py-3 my-4 mx-2 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
+          className="text-indigo-700 hover:text-red-800"
         >
-          Award Scholarship
+          Update Scholarship
         </button>
       
 
@@ -104,12 +98,12 @@ export default function CreateWinner({scholarID}) {
                                   <input
                                     id="award_payments"
                                     name="award_payments"
-                                    value={data.award_amount}
+                                    value={data.award_payments}
                                     type="text"
                                     autoComplete="award_payments"
-                                    onChange={handleChange}
-                                    className="block w-full rounded-md border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    placeholder="ex: 2000"
+                                    onChange={e => setData('award_payments', e.target.value)}
+                                    className="block w-full rounded-md border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    placeholder={i.award_payments}
                                  />
                                 </div>
                               </div>
@@ -125,9 +119,10 @@ export default function CreateWinner({scholarID}) {
                                     value={data.distributionDate}
                                     id="distributionDate"
                                     autoComplete="distributionDate"
-                                    onChange={handleChange}
-                                    className="block w-full rounded-md border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                  />
+                                    onChange={e => setData('distributionDate', e.target.value)}
+                                    className="block w-full rounded-md border-0 py-2 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    placeholder={i.distributionDate}
+                                 />
                                 </div>
                               </div>
 

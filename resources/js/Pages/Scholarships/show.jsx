@@ -2,13 +2,15 @@ import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, usePage } from "@inertiajs/react";
 import CreateScholarship from "./createScholarship";
 import  CreateWinner from "./../Winner/createWinner";
+import UpdateWinner from "../Winner/updateWinner";
 
-export default function Show({auth, scholarship, applications, otherscholarship, requirements, scholarshipuses, criteria, role}) {
+export default function Show({auth, scholarship, applications, otherscholarship, requirements, scholarshipuses, criteria, role, winners}) {
   //const {applications} = usePage().props;
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
+  
 
   return (
     <Authenticated
@@ -229,12 +231,127 @@ export default function Show({auth, scholarship, applications, otherscholarship,
             type="button"
             className="inline-block w-1/5 px-3 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
           >
-            Edit
+            Edit Scholarship
           </a>
         </div>
       </div>
       </>
       ))}
+
+       {/* winners section */}
+       <div className="w-full p-6 mx-auto mb-10">
+        <div className="flex flex-wrap -mx-3 px-3">
+          <div className="w-full max-w-full p-6 lg-max:mt-6 bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
+            <div className="sm:flex sm:items-center">
+              <div className="sm:flex-auto">
+                <h1 className="text-xl font-semibold leading-6 text-gray-900">Applications</h1>
+                <p className="mt-2 text-sm text-gray-700"></p>
+              </div>
+            </div>
+            <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead>
+                  <tr>
+                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-base font-semibold text-gray-900 sm:pl-6">
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-base font-semibold text-gray-900 lg:table-cell"
+                    >
+                      Phone 
+                    </th>
+                    <th
+                      scope="col"
+                      className="sm:hidden px-3 py-3.5 text-left text-base font-semibold text-gray-900 lg:table-cell"
+                    >
+                      Email
+                    </th>
+                    <th
+                      scope="col"
+                      className="sm:hidden px-3 py-3.5 text-left text-base font-semibold text-gray-900 md:table-cell"
+                    >
+                      Distribution Date
+                    </th>
+
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                      <span className="sr-only">View</span>
+                      View
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                {winners?.map(({
+                  id,
+                  scholarship_id,
+                  studentName,
+                  studentEmail,
+                  distributionDate,
+                  frequnecy,
+                  contactNumber,
+                  }) => (
+                    <>
+                    <tr key={id}>
+                    <td
+                        className={classNames('border-t border-gray-200',
+                          'relative py-4 pl-4 pr-3 text-basesm:pl-6'
+                        )}
+                      >
+                        <div className="font-medium text-gray-900">
+                          {studentName}
+                        </div>
+                      </td>
+                      <td
+                        className={classNames('border-t border-gray-200',
+                          'px-3 py-3.5 text-basetext-gray-900 text-left'
+                        )}
+                      >
+                        <div className="hidden md:block">{contactNumber}</div>
+                        <div className="sm:hidden">{contactNumber}</div>
+                      </td>
+                      <td
+                        className={classNames('border-t border-gray-200',
+                          'px-3 py-3.5 text-basetext-gray-900 text-left'
+                        )}
+                      >
+                        <div className="hidden md:block">{studentEmail}</div>
+                        <div className="lg:hidden">{studentEmail}</div>
+                      </td>
+                      <td
+                        className={classNames('border-t border-gray-200',
+                          'px-3 py-3.5 text-basetext-gray-900 text-left'
+                        )}
+                      >
+                        <div className="hidden md:block">{distributionDate} - {frequnecy}</div>
+                        <div className="sm:hidden">{distributionDate} - {frequnecy}</div>
+                      </td>
+                      
+                      <td
+                        className={classNames('border-t border-gray-200',
+                          'relative py-3.5 pl-3 pr-4 text-right text-base font-medium sm:pr-6'
+                        )}
+                      >
+                        <UpdateWinner winners={winners} winnersID={id}/>
+
+                        <a
+                          href={route('delete.winner', {id})}
+                          type="button"
+                          className=" ml-4 font-bold text-indigo-700 hover:text-red-800"
+                        >
+                          delete winner
+                        </a>
+                      </td>
+                    </tr>
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       {/* Applications section */}
       <div className="w-full p-6 mx-auto mb-10">
         <div className="flex flex-wrap -mx-3 px-3">
@@ -244,14 +361,6 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                 <h1 className="text-xl font-semibold leading-6 text-gray-900">Applications</h1>
                 <p className="mt-2 text-sm text-gray-700"></p>
               </div>
-              {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                <button
-                  type="button"
-                  className="inline-block w-full px-6 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-700 to-pink-500 hover:shadow-soft-2xl hover:scale-102"
-                >
-                  Create Scholarship
-                </button>
-              </div> */}
             </div>
             <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-300">
@@ -285,7 +394,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                       College / Major
                     </th>
 
-                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6 text-right">
                       <span className="sr-only">View</span>
                       View
                     </th>
@@ -341,7 +450,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                     <tr key={id}>
                     <td
                         className={classNames('border-t border-gray-200',
-                          'relative py-4 pl-4 pr-3 text-sm sm:pl-6'
+                          'relative py-4 pl-4 pr-3 text-basesm:pl-6'
                         )}
                       >
                         <div className="font-medium text-gray-900">
@@ -354,7 +463,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                       </td>
                       <td
                         className={classNames('border-t border-gray-200',
-                          'px-3 py-3.5 text-sm text-gray-900 text-left'
+                          'px-3 py-3.5 text-basetext-gray-900 text-left'
                         )}
                       >
                         <div className="hidden md:block">{school}</div>
@@ -362,7 +471,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                       </td>
                       <td
                         className={classNames('border-t border-gray-200',
-                          'px-3 py-3.5 text-sm text-gray-900 text-left'
+                          'px-3 py-3.5 text-basetext-gray-900 text-left'
                         )}
                       >
                         <div className="hidden md:block">{sat_Score}</div>
@@ -370,7 +479,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                       </td>
                       <td
                         className={classNames('border-t border-gray-200',
-                          'px-3 py-3.5 text-sm text-gray-900 text-left'
+                          'px-3 py-3.5 text-basetext-gray-900 text-left'
                         )}
                       >
                         <div className="hidden md:block">{act_score}</div>
@@ -378,7 +487,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                       </td>
                       <td
                         className={classNames('border-t border-gray-200',
-                          'px-3 py-3.5 text-sm text-gray-900 text-left'
+                          'px-3 py-3.5 text-basetext-gray-900 text-left'
                         )}
                       >
                         <div className="sm:hidden">{college_choice}</div>
@@ -387,7 +496,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                       
                       <td
                         className={classNames('border-t border-gray-200',
-                          'relative py-3.5 pl-3 pr-4 text-center text-base font-medium sm:pr-6'
+                          'relative py-3.5 pl-3 pr-4 text-right text-base font-medium sm:pr-6'
                         )}
                       >
                         <Link
@@ -397,7 +506,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                           Resume
                         </Link>
 
-                        <CreateWinner />
+                        <CreateWinner scholarID={id}/>
                       </td>
                     </tr>
                     </>
@@ -441,11 +550,11 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                         </a>
                       </div>
                       <div className="flex-auto px-1 pt-6">
-                        <p className="relative z-10 mb-2 leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 text-sm bg-clip-text">Scholarship amount {fund_amount}</p>
+                        <p className="relative z-10 mb-2 leading-normal text-transparent bg-gradient-to-tl from-gray-900 to-slate-800 text-basebg-clip-text">Scholarship amount {fund_amount}</p>
                         <a href="javascript:;">
                           <h5>{name}</h5>
                         </a>
-                        <p className="mb-6 leading-normal text-sm truncate ...">{description}</p>
+                        <p className="mb-6 leading-normal text-basetruncate ...">{description}</p>
                         <div className="flex items-center justify-between">
                           <button type="button" className="inline-block px-8 py-2 mb-0 font-bold text-center uppercase align-middle transition-all bg-transparent border border-solid rounded-lg shadow-none cursor-pointer leading-pro ease-soft-in text-xs hover:scale-102 active:shadow-soft-xs tracking-tight-soft border-fuchsia-500 text-fuchsia-500 hover:border-fuchsia-500 hover:bg-transparent hover:text-fuchsia-500 hover:opacity-75 hover:shadow-none active:bg-fuchsia-500 active:text-white active:hover:bg-transparent active:hover:text-fuchsia-500">View Scholarship</button>
                         </div>
