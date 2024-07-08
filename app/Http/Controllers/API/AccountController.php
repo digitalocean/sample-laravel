@@ -163,20 +163,21 @@ class AccountController extends BaseController {
 
         $Kiosk = $all->groupBy('KioskNumber');
 
+
         $TopSellingCategory = [];
         foreach( $Kiosk as $i ){
-            $a = $i->groupBy('Category');
+            $a = $i->groupBy('KioskNumber');
             // $TopSellingCategory[] = $i->groupBy('Category');
             $MealsRanking = $i->countBy('Category');
-            $TopSellingCategory[] = Arr::add(['Category' => $a, 'count' => null], 'count', $MealsRanking);
+            $TopSellingCategory[] = Arr::add(['KioskNumber' => $a, 'count' => null], 'count', $MealsRanking);
         }
         
-        $j = 
-
+    
         $SalesByDate = [];
         foreach( $Kiosk as $i ){
             $SalesByDate[] = $i->groupBy('created_at');//change is made here use array to store all values 
         }
+
       
 
         $output = [
