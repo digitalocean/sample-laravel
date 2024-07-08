@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
         $role = $user->roles;
         $request->session()->regenerate();
         session(['role' => $role[0]['name']]); 
-        $a = $user->id;
+        $a = $user->partner_id;
         $partnerId = Partner::where('id', $a)->get();
         if($partnerId->isEmpty()){
             if ($role == 'admin') {
@@ -48,12 +48,12 @@ class AuthenticatedSessionController extends Controller
             }
         }
 
-        if ($role == 'admin') {
+        if ($role != 'admin') {
             return redirect()->intended(RouteServiceProvider::HOME);
-        } elseif  ($partnerId != 'null' ){
+        } elseif  ($role != 'partner'){
             return redirect('partner/show',$partnerId[0]['id']);
         } else {
-            return redirect('scholar/dashboard');
+            return redirect('scholars/dashboard');
         }
         
     }
