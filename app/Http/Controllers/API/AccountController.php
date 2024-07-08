@@ -63,6 +63,36 @@ class AccountController extends BaseController {
     }
 
     /**
+     * Update Franchisee Account.
+     *
+     * request needs (Name, email, phone, Address, city, zipCode, country)
+     * returns accountId for kiosk linking
+     */
+    #[OpenApi\Operation(tags: ['accounts'])]
+    #[OpenApi\Parameters(factory: FranchiseeAccountParameters::class)]
+    public function updateFranchisee(Request $request) {
+        
+        $request->validate([
+            'email' => 'required|string|lowercase|email|max:255',
+            'account' => 'required|string|max:255',
+        ]);
+        $id = $request->account;
+        $account = Account::find($id);
+        $account->Name = $request->name;
+        $account->pin = $request->pin;
+        $account->save();
+
+        $acctId = $account;
+        $output = [
+            'pin' => $acctId->pin,
+        ];
+
+        return $this->sendResponse($output, 'Pin updated successfully.'); 
+    }
+
+
+
+    /**
      * Retrieves all Account Users.
      *
      * Returns Franchisee and Customer members and guest grouped by Member Type
@@ -133,25 +163,26 @@ class AccountController extends BaseController {
 
         $Kiosk = $all->groupBy('KioskNumber');
 
+
         $TopSellingCategory = [];
         foreach( $Kiosk as $i ){
-            $a = $i->groupBy('Category');
+            $a = $i->groupBy('KioskNumber');
             // $TopSellingCategory[] = $i->groupBy('Category');
             $MealsRanking = $i->countBy('Category');
-            $TopSellingCategory[] = Arr::add(['Category' => $a, 'count' => null], 'count', $MealsRanking);
+            $TopSellingCategory[] = Arr::add(['KioskNumber' => $a, 'count' => null], 'count', $MealsRanking);
         }
         
-        $j = 
-
+    
         $SalesByDate = [];
         foreach( $Kiosk as $i ){
             $SalesByDate[] = $i->groupBy('created_at');//change is made here use array to store all values 
         }
+
       
 
         $output = [
-            'kioskSales' => $Kiosk,
-            'TopSellingCategory' => $TopSellingCategory,
+            'SalesByKiosk' => $Kiosk,
+            'TopSellingKioskCategory' => $TopSellingCategory,
             'SalesByDate' => $SalesByDate,
             // 'MealsRanking' => $MealsRanking,
 

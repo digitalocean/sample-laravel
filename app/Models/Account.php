@@ -27,6 +27,7 @@ class Account extends Model
         'Zip',
         'Status',
         'type',
+        'pin',
     ];
 
     public function users(): BelongsTo {

@@ -19,7 +19,7 @@ class KioskFactory extends Factory
     public function definition(): array
     {
         return [
-            'Account_id' => Account::factory(),
+            'Account_id' => '01j1t57bztgvxm6k78j7wncja5',
             'MachineID' => fake()->numerify('HC-######'),
             'TradeNO' => fake()->numerify('HCT-######'),
             'KioskType' => fake()->randomElement($array = array ('Small','Large')),

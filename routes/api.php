@@ -10,6 +10,8 @@ use App\Http\Controllers\API\KioskController;
 use App\Http\Controllers\Api\MealsController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\OrdersController;
+use App\Http\Controllers\API\DiscountController;
+use App\Http\Controllers\API\RestockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +59,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('accounts', [AccountController::class, 'index']);
     Route::post('create/franchisee', [AccountController::class, 'createFranchisee']);
-    Route::get('accounts/{account}', [AccountController::class, 'franchiseAccount']);  
+    Route::post('update/franchisee', [AccountController::class, 'updateFranchisee']);
+    Route::get('accounts/{account}', [AccountController::class, 'franchiseAccount']); 
     Route::get('accounts/products/{account}', [AccountController::class, 'franchiseeProducts']);
     Route::get('accounts/profile/{account}', [AccountController::class, 'franchiseeProfile']);  
 
@@ -75,6 +78,12 @@ Route::middleware('auth:sanctum')->group(function() {
     // meal calls
     Route::get('meals', [MealsController::class, 'meals']);
     Route::post('create/meals', [MealsController::class, 'createMeals']);
+
+    // Restock tranactions
+    Route::get('restock/tranactions/{kiosk}', [RestockController::class, 'restock']);
+
+    // Discount Franchisee request
+    Route::post('create/discount', [DiscountController::class, 'createDiscount']);
 
     // member payment 
     Route::post('/member-payment', [PaymentController::class, 'memberPayment']);

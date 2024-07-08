@@ -24,7 +24,6 @@ class Kiosk extends Model
         'DecimalLocation',
         'Latitude',
         'Longitude'
-
     ];
 
     public function accounts(): BelongsTo {
@@ -37,5 +36,13 @@ class Kiosk extends Model
 
     public function meals(): BelongsToMany {
         return $this->belongsToMany(Meal::class)->withPivot('Total', 'StockTotal');
+    }
+
+    public function restocks(): HasMany {
+        return $this->hasMany(Restock::class);
+    }
+
+    public function discounts(): HasMany {
+        return $this->hasMany(Discount::class);
     }
 }

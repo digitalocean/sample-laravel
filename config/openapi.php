@@ -9,7 +9,7 @@ return [
             'info' => [
                 'title' => config('app.name'),
                 'description' => null,
-                'version' => '1.0.0',
+                'version' => '1.0.1',
                 'contact' => [],
             ],
 
@@ -52,6 +52,11 @@ return [
                 [
                     'name' => 'Wallet Transaction',
                     'description' => 'Application customer & franchisee wallet processing',
+                ],
+
+                [
+                    'name' => 'Restock Transactions',
+                    'description' => 'Application restocking of kiosk transactions',
                 ],
                 
 
