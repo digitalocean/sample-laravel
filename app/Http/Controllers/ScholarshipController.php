@@ -13,6 +13,7 @@ use App\Models\Selectioncriteria;
 use App\Models\Requirementcriteria;
 use App\Models\Scholarshipuse;
 use App\Models\Winner;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Arr;
@@ -137,6 +138,13 @@ class ScholarshipController extends Controller {
                 ]);
             }   
         }
+        // update yearly totals
+        $date = new Carbon(); 
+        $currentScholarshipTotal = Scholarship::where('activeYear', $date->format('Y') )->sum('fund_amount');
+        DB::table('yearlytotal')->where('year', $date->format('Y'))->updateOrInsert([
+            'year' => $date->format('Y'),
+            'total' => $currentScholarshipTotal
+        ]);
 
         return to_route('partner.show', $partner_id);
     }
@@ -193,6 +201,12 @@ class ScholarshipController extends Controller {
 
         $scholarshipInfo->save();
         $partner_id = session('partner_id');
+        $date = new Carbon(); 
+        $currentScholarshipTotal = Scholarship::where('activeYear', $date->format('Y') )->sum('fund_amount');
+        DB::table('yearlytotal')->where('year', $date->format('Y'))->updateOrInsert([
+            'year' => $date->format('Y'),
+            'total' => $currentScholarshipTotal
+        ]);
         return to_route('partner.show', $partner_id);
     }
 

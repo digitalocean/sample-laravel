@@ -97,7 +97,7 @@ export default function Show({auth}) {
               <div className="flex max-w-full p-6 bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
                 <div className="sm:flex-auto">
                   <h1 className="text-base font-semibold leading-6 text-gray-900">Partner Personnel</h1>
-                  <p className="mt-2 text-sm text-gray-700">List of users associated with partner for contacting</p>
+                  <p className="mt-2 text-base text-gray-700">List of users associated with partner for contacting</p>
                     <ul role="list" className="divide-y divide-gray-100">
                       {associatedUser?.map((person) => (
                         <li key={person.email} className="flex justify-between gap-x-2 py-2">
@@ -154,7 +154,7 @@ export default function Show({auth}) {
                                         href="#"
                                         className={classNames(
                                           active ? 'bg-gray-50' : '',
-                                          'block px-3 py-1 text-sm leading-6 text-gray-900'
+                                          'block px-3 py-1 text-base leading-6 text-gray-900'
                                         )}
                                       >
                                         {/* add modal delete user and organization function */}
@@ -168,7 +168,7 @@ export default function Show({auth}) {
                                         href="#"
                                         className={classNames(
                                           active ? 'bg-gray-50' : '',
-                                          'block px-3 py-1 text-sm leading-6 text-gray-900'
+                                          'block px-3 py-1 text-base leading-6 text-gray-900'
                                         )}
                                       >
                                         Message<span className="sr-only">, {person.name}</span>
@@ -194,40 +194,34 @@ export default function Show({auth}) {
             <div className="sm:flex sm:items-center">
               <div className="sm:flex-auto">
                 <h1 className="text-base font-semibold leading-6 text-gray-900">Scholarship Funds</h1>
-                <p className="mt-2 text-sm text-gray-700"></p>
+                <p className="mt-2 text-base text-gray-700"></p>
               </div>
               <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                 <Create />
               </div>
             </div>
-            <div className="-mx-4 mt-4 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">
+            <div className="-mx-4 mt-4 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg overflow-hidden">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
-                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                      Deadline
+                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-base font-semibold text-gray-900 sm:pl-6">
+                      Deadline - Scholarship Name
                     </th>
                     <th
                       scope="col"
-                      className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
-                    >
-                      Scholarship Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                      className="hidden px-3 py-3.5 text-left text-base font-semibold text-gray-900 lg:table-cell"
                     >
                       Uses
                     </th>
                     <th
                       scope="col"
-                      className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                      className="px-3 py-3.5 text-left text-base font-semibold text-gray-900 sm:table-cell"
                     >
                       Award Amount
                     </th>
                     <th 
                       scope="col" 
-                      className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell">
+                      className="hidden px-3 py-3.5 text-left text-base font-semibold text-gray-900 lg:table-cell">
                       Total fund Amount
                     </th>
                     <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -250,73 +244,22 @@ export default function Show({auth}) {
                     uses,
                     fund_amount }) => (
                       <>
-                    <tr key={id}>
-                      <td
-                        className={classNames('border-t border-gray-200',
-                          'relative py-4 pl-4 pr-3 text-sm sm:pl-6'
-                        )}
-                      >
-                        <div className="font-medium text-gray-900">
-                          {deadline} - <span className='text-black'>{name}</span>
-                        </div>
-                        {/* <div className="mt-1 flex flex-col text-gray-700 sm:block lg:hidden">
-                        <span>
-                            {name}
-                          </span>
-                          <span>
-                            {description}
-                          </span>
-                          <span className="hidden sm:inline">·</span>
-                          <span>{selection_criteria}</span>
-                        </div> */}
+                    <tr key={id} className="px-4">
+                      <td className="relative py-4 px-3 mr-4 text-base font-medium text-gray-900">
+                      {deadline} - {name}
+                        <div className="absolute bottom-0 right-full h-px w-screen bg-gray-100" />
+                        <div className="absolute bottom-0 left-0 h-px w-screen bg-gray-100" />
                       </td>
-                      <td
-                        className={classNames('border-t border-gray-200',
-                          'hidden px-3 py-3.5 text-sm text-gray-700 lg:table-cell'
-                        )}
-                      >
-                        {name}
-                      </td>
-                      <td
-                        className={classNames('border-t border-gray-200',
-                          'hidden px-3 py-3.5 text-sm text-gray-700 lg:table-cell'
-                        )}
-                      >
-                        {award_based_on}
-                      </td>
-                      <td
-                        className={classNames('border-t border-gray-200',
-                          'px-3 py-3.5 text-sm text-gray-900 text-center'
-                        )}
-                      >
-                        <div className="sm:hidden">${award_payments}/yr</div>
-                        <div className="hidden sm:block">${award_payments}/year</div>
-                      </td>
-                      <td
-                        className={classNames('border-t border-gray-200',
-                          'px-3 py-3.5 text-center text-sm text-gray-700'
-                        )}
-                      >
-                        <div className="sm:hidden">${fund_amount}</div>
-                        <div className="hidden sm:block font-bold">${fund_amount}</div>
-                      </td>
-                      <td
-                        className={classNames('border-t border-gray-200',
-                          'relative py-3.5 pl-3 pr-4 text-center text-sm font-medium sm:pr-6'
-                        )}
-                      >
-                        <Link
-                          href={route('scholarship.show', id)}
-                          className="inline-block w-1/3 px-4 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
-                        >
-                          View
-                        </Link>
-                        <Link
-                          href={route('scholarship.delete', id)}
-                          className="inline-block w-1/3 px-2 py-3 my-4 ml-2 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-blue-900 to-blue-500 hover:shadow-soft-2xl hover:scale-102"
-                        >
-                          Delete
-                        </Link>
+                      <td className="hidden px-3 py-4 text-base text-gray-800 sm:table-cell">{award_based_on}</td>
+                      <td className="hidden px-3 py-4 text-base text-gray-800 md:table-cell">${fund_amount}</td>
+                      <td className="px-3 py-4 text-base text-left text-gray-800">${award_payments}/yr</td>
+                      <td className="relative py-4 pl-3 text-right text-sm font-medium">
+                        <a href={route('scholarship.show', id)} className="text-base text-indigo-600 hover:text-indigo-900">
+                          View<span className="sr-only">, {name}</span>
+                        </a>
+                        <a href={route('scholarship.delete', id)} className="px-4 text-red-900 hover:text-indigo-900 text-base">
+                          Delete<span className="sr-only">, {name}</span>
+                        </a>
                       </td>
                     </tr>
                     </>

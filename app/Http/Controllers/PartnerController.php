@@ -26,11 +26,10 @@ class PartnerController extends Controller {
     }
 
     public function show($id) {
-        $a = $id; //dd($a);
+        $a = $id; 
         $viewpartner = Partner::where('id', $a)->get();
         $scholarshipassociated = Scholarship::where('partner_id', $a)->get();
         $associatedUser = User::where('partner_id', $a)->get();
-        //dd($scholarshipassociated);
         session([ 'partner_id' => $a ]);
          
         return Inertia::render('Partners/show',[

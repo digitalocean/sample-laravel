@@ -6,7 +6,7 @@ import Yearlychart from './Dashboard/partials/yearly-chart';
 import { ImportApplications } from './Dashboard/partials/importApplications_form';
 
 export default function Dashboard({ auth }) {
-    const {scholarships, totalApplications} = usePage().props;
+    const {scholarships, totalApplications, yearUpdate} = usePage().props;
     const {applications} = usePage().props;
     const {partners} = usePage().props;
 
@@ -171,7 +171,7 @@ export default function Dashboard({ auth }) {
                                         <div className="flex flex-col h-full">
                                             <p className="pt-2 mb-1 font-semibold">Yearly Funds</p>
                                             <h5 className="font-bold">Black Scholars Year over Year funds</h5>
-                                            <Yearlychart />
+                                            <Yearlychart yearUpdate={yearUpdate}/>
                                         </div>
                                         
                                     </div>

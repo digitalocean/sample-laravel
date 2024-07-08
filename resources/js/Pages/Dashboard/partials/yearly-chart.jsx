@@ -13,8 +13,8 @@ import {
   import { Line } from 'react-chartjs-2';
 
 export default function Yearlychart() {
-    const {scholarships} = usePage().props;
-
+    const {scholarships, yearUpdate} = usePage().props;
+    console.log(yearUpdate);
     const currentTotal = scholarships.reduce((a, c) => a + c.fund_amount, 0);
 
     ChartJS.register(
@@ -37,18 +37,18 @@ export default function Yearlychart() {
         },
       };
 
-    const labels = ["2021", "2022", "2023", "2024", "2025", "2026", "2027"];
-        const data = {
-            labels: labels,
-            datasets: [
-            {
-                label: "",
-                // backgroundColor: "hsl(252, 82.9%, 67.8%)",
-                borderColor: "hsl(252, 82.9%, 67.8%)",
-                data: [0, 0, 0, currentTotal, 0, 0, 0],
-            },
-            ],
-        };
+    const labels = yearUpdate.map((yr) => yr.year);
+    const data = {
+        labels: labels,
+        datasets: [
+        {
+            label: "",
+            // backgroundColor: "hsl(252, 82.9%, 67.8%)",
+            borderColor: "hsl(252, 82.9%, 67.8%)",
+            data: yearUpdate.map((yr) => yr.total),
+        },
+        ],
+    };
 
 
     return (
