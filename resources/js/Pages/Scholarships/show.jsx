@@ -244,7 +244,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
           <div className="w-full max-w-full p-6 lg-max:mt-6 bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
             <div className="sm:flex sm:items-center">
               <div className="sm:flex-auto">
-                <h1 className="text-xl font-semibold leading-6 text-gray-900">Applications</h1>
+                <h1 className="text-xl font-semibold leading-6 text-gray-900">Winners Information </h1>
                 <p className="mt-2 text-sm text-gray-700"></p>
               </div>
             </div>
@@ -336,7 +336,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                         <a
                           href={route('delete.winner', {id})}
                           type="button"
-                          className=" ml-4 font-bold text-indigo-700 hover:text-red-800"
+                          className=" ml-4 font-bold text-red-800 hover:text-red-900"
                         >
                           delete winner
                         </a>
@@ -501,7 +501,7 @@ export default function Show({auth, scholarship, applications, otherscholarship,
                       >
                         <Link
                           href={route('application.view',id)}
-                          className="inline-block w-1/3 px-6 py-3 my-4 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
+                          className="inline-block w-1/3 px-6 py-3 my-4 font-bold text-center text-blue-900 uppercase align-middle transition-all ease-in text-base"
                         >
                           Resume
                         </Link>

@@ -45,9 +45,9 @@ export default function CreateWinner({scholarID}) {
         <button
           type="button"
           onClick={openModal}
-          className="inline-block w-1/3 px-6 py-3 my-4 mx-2 font-bold text-center text-white uppercase align-middle transition-all ease-in border-0 rounded-lg select-none shadow-soft-md bg-150 bg-x-25 leading-pro text-xs bg-gradient-to-tl from-red-900 to-red-500 hover:shadow-soft-2xl hover:scale-102"
+          className="inline-block w-1/3 px-6 py-3 my-4 mx-2 font-bold text-center text-red-900 uppercase align-middle transition-all ease-in"
         >
-          Award Scholarship
+          Award
         </button>
       
 
