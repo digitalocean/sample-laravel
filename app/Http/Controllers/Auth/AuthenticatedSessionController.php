@@ -51,7 +51,7 @@ class AuthenticatedSessionController extends Controller
         if ($role == 'admin') {
             return redirect()->intended(RouteServiceProvider::HOME);
         } elseif  ($partnerId != 'null' ){
-            return redirect('partner/show',$partnerId->id);
+            return redirect('partner/show',$partnerId[0]['id']);
         } else {
             return redirect('scholar/dashboard');
         }
