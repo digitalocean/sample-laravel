@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('applications', function (Blueprint $table) {
             $table->string('streetAddress', 250)->nullable();
             $table->string('city', 50)->nullable();
             $table->string('state', 50)->nullable();
