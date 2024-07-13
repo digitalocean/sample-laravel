@@ -84,7 +84,9 @@ export default function({auth, application}){
                         type="text"
                         name="name"
                         id="name"
+                        value={data.name}
                         autoComplete="name"
+                        onChange={(e) => setData('name', e.target.value)}
                         placeholder={name}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -115,8 +117,10 @@ export default function({auth, application}){
                         <input
                         type="text"
                         name="streetAddress"
+                        value={data.streetAddress}
                         id="streetAddress"
                         autoComplete="streetAddress"
+                        onChange={(e) => setData('streetAddress', e.target.value)}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
@@ -130,8 +134,10 @@ export default function({auth, application}){
                         <input
                         type="text"
                         name="city"
+                        value={data.city}
                         id="city"
                         autoComplete="address-level2"
+                        onChange={(e) => setData('city', e.target.value)}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
@@ -145,8 +151,10 @@ export default function({auth, application}){
                         <input
                         type="text"
                         name="state"
+                        value={data.state}
                         id="state"
                         autoComplete="address-level1"
+                        onChange={(e) => setData('state', e.target.value)}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
@@ -160,8 +168,10 @@ export default function({auth, application}){
                         <input
                         type="text"
                         name="zipCode"
+                        value={data.zipCode}
                         id="zipCode"
                         autoComplete="zipCode"
+                        onChange={(e) => setData('zipCode', e.target.value)}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
@@ -175,8 +185,10 @@ export default function({auth, application}){
                             <input
                             type="text"
                             name="siblings"
+                            value={data.siblings}
                             id="siblings"
                             autoComplete="siblings"
+                            onChange={(e) => setData('siblings', e.target.value)}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -190,7 +202,9 @@ export default function({auth, application}){
                             <input
                             type="text"
                             name="siblings_attending_college"
+                            value={data.siblings_attending_college}
                             id="siblings_attending_college"
+                            onChange={(e) => setData('siblings_attending_college', e.target.value)}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -231,7 +245,9 @@ export default function({auth, application}){
                                         type="text"
                                         name="college_choice"
                                         id="college_choice"
+                                        value={data.college_choice}
                                         autoComplete="given-name"
+                                        onChange={(e) => setData('college_choice', e.target.value)}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -245,7 +261,9 @@ export default function({auth, application}){
                                         <input
                                         type="text"
                                         name="college_major"
+                                        value={data.college_major}
                                         id="college_major"
+                                        onChange={(e) => setData('college_major', e.target.value)}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -255,15 +273,17 @@ export default function({auth, application}){
                                         Current Admission Status
                                     </label>
                                     <select
-                                        id="location"
-                                        name="location"
-                                        className="h-35 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        defaultValue="Canada"
+                                        id="college_status"
+                                        name="college_status"
+                                        value={data.college_status}
+                                        onChange={(e) => setData('college_status', e.target.value)}
+                                        className="mt-2 block w-full h-24 rounded-md border-0 py-4 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        defaultValue="pending"
                                     >
-                                        <option>Not Started</option>
-                                        <option>Pending</option>
-                                        <option>Accepted</option>
-                                        <option>Decline</option>
+                                        <option value='Not Started'>Not Started</option>
+                                        <option value='Pending'>Pending</option>
+                                        <option value='Accepted'>Accepted</option>
+                                        <option value='Decline'>Decline</option>
                                     </select>
                                 </div>
                         </div>
@@ -285,14 +305,16 @@ export default function({auth, application}){
                         <Disclosure.Panel className="px-4 pb-2 pt-4 text-sm text-slate-800">
                         <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                                 <div className="col-span-3">
-                                    <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="colege_choice2" className="block text-sm font-medium leading-6 text-gray-900">
                                         College Name
                                     </label>
                                     <div className="mt-2">
                                         <input
                                         type="text"
-                                        name="first-name"
-                                        id="first-name"
+                                        name="college_choice2"
+                                        id="colege_choice2"
+                                        value={data.college_choice2}
+                                        onChange={(e) => setData('college_choice2', e.target.value)}
                                         autoComplete="given-name"
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
@@ -300,33 +322,37 @@ export default function({auth, application}){
                                 </div>
 
                                 <div className="col-span-3">
-                                    <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="college_major2" className="block text-sm font-medium leading-6 text-gray-900">
                                         College Major
                                     </label>
                                     <div className="mt-2">
                                         <input
                                         type="text"
-                                        name="first-name"
-                                        id="first-name"
+                                        name="college_major2"
+                                        id="college_major2"
+                                        value={data.college_major2}
+                                        onChange={(e) => setData('college_major2', e.target.value)}
                                         autoComplete="given-name"
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
                                 <div className="col-span-6">
-                                    <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="college_status2" className="block text-sm font-medium leading-6 text-gray-900">
                                         Current Admission Status
                                     </label>
                                     <select
-                                        id="location"
-                                        name="location"
+                                        id="college_status2"
+                                        name="college_status2"
+                                        value={data.college_status2}
+                                        onChange={(e) => setData('college_status2', e.target.value)}
                                         className="h-35 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         defaultValue="Canada"
                                     >
-                                        <option>Not Started</option>
-                                        <option>Pending</option>
-                                        <option>Accepted</option>
-                                        <option>Decline</option>
+                                        <option value='Not Started'>Not Started</option>
+                                        <option value='Pending'>Pending</option>
+                                        <option value='Accepted'>Accepted</option>
+                                        <option value='Decline'>Decline</option>
                                     </select>
                                 </div>
                         </div>
@@ -349,48 +375,54 @@ export default function({auth, application}){
                         <Disclosure.Panel className="px-4 pb-2 pt-4 text-sm text-slate-800">
                         <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                                 <div className="col-span-3">
-                                    <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="college_choice3" className="block text-sm font-medium leading-6 text-gray-900">
                                         College Name
                                     </label>
                                     <div className="mt-2">
                                         <input
                                         type="text"
-                                        name="first-name"
-                                        id="first-name"
-                                        autoComplete="given-name"
+                                        name="college_choice3"
+                                        id="college_choice3"
+                                        value={data.college_choice3}
+                                        autoComplete="college_choice3"
+                                        onChange={(e) => setData('college_choice3', e.target.value)}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
 
                                 <div className="col-span-3">
-                                    <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="college_major3" className="block text-sm font-medium leading-6 text-gray-900">
                                         College Major
                                     </label>
                                     <div className="mt-2">
                                         <input
                                         type="text"
-                                        name="first-name"
-                                        id="first-name"
+                                        name="college_major3"
+                                        id="college_major3"
+                                        value={data.college_major3}
                                         autoComplete="given-name"
+                                        onChange={(e) => setData('college_major3', e.target.value)}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>
                                 <div className="col-span-6">
-                                    <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="college_status3" className="block text-sm font-medium leading-6 text-gray-900">
                                         Current Admission Status
                                     </label>
                                     <select
-                                        id="location"
-                                        name="location"
+                                        id="college_status3"
+                                        name="college_status3"
+                                        value={data.college_status3}
+                                        onChange={(e) => setData('college_status3', e.target.value)}
                                         className="h-35 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         defaultValue="Canada"
                                     >
-                                        <option>Not Started</option>
-                                        <option>Pending</option>
-                                        <option>Accepted</option>
-                                        <option>Decline</option>
+                                        <option value='Not Started'>Not Started</option>
+                                        <option value='Pending'>Pending</option>
+                                        <option value='Accepted'>Accepted</option>
+                                        <option value='Decline'>Decline</option>
                                     </select>
                                 </div>
                         </div>
@@ -409,7 +441,9 @@ export default function({auth, application}){
                             <input
                             type="text"
                             name="sat_score"
+                            value={data.sat_score}
                             id="sat_score"
+                            onChange={(e) => setData('sat_score', e.target.value)}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -421,9 +455,11 @@ export default function({auth, application}){
                         </label>
                         <div className="mt-2">
                             <input
-                            type="text"
+                            type="date"
                             name="sat_scheduled"
                             id="sat_scheduled"
+                            value={data.sat_scheduled}
+                            onChange={(e) => setData('sat_scheduled', e.target.value)}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -438,6 +474,8 @@ export default function({auth, application}){
                             type="text"
                             name="act_score"
                             id="act_score"
+                            value={data.act_score}
+                            onChange={(e) => setData('act_score', e.target.value)}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -449,9 +487,11 @@ export default function({auth, application}){
                         </label>
                         <div className="mt-2">
                             <input
-                            type="text"
+                            type="date"
                             name="act_scheduled"
                             id="act_scheduled"
+                            value={data.act_scheduled}
+                            onChange={(e) => setData('act_scheduled', e.target.value)}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -518,7 +558,7 @@ export default function({auth, application}){
                                     <select
                                         id="reference_relationsship"
                                         name="reference_relationsship"
-                                        className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="mt-2 block w-full h-25 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         defaultValue="Employer"
                                     >
                                         <option>Teacher\Counsoler</option>
@@ -549,15 +589,17 @@ export default function({auth, application}){
                     <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
 
                         <div className="col-span-full">
-                        <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+                        <label htmlFor="application_essay" className="block text-sm font-medium leading-6 text-gray-900">
                             Short Essay
                         </label>
                         <div className="mt-2">
                             <textarea
-                            id="about"
-                            name="about"
+                            id="application_essay"
+                            name="application_essay"
+                            value={data.application_essay}
+                            onChange={(e) => setData('application_essay', e.target.value)}
                             rows={10}
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             defaultValue={''}
                             />
                         </div>
@@ -565,19 +607,21 @@ export default function({auth, application}){
                         </div>
 
                         <div className="col-span-full">
-                        <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+                        <label htmlFor="community_service" className="block text-sm font-medium leading-6 text-gray-900">
                             Community Service List
                         </label>
                         <div className="mt-2">
                             <textarea
-                            id="about"
-                            name="about"
+                            id="community_service"
+                            name="community_service"
+                            value={data.community_service}
+                            onChange={(e) => setData('community_service', e.target.value)}
                             rows={10}
-                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             defaultValue={''}
                             />
                         </div>
-                            <p className="mt-3 text-sm leading-6 text-gray-600">List your communinity Service ex(Company name, Jobtile, date,</p>
+                            <p className="mt-3 text-sm leading-6 text-gray-600">List your communinity Service ex:Company name, Jobtile, date,</p>
                         </div>
 
                         
@@ -588,7 +632,7 @@ export default function({auth, application}){
         ))}
       </div>
 
-      <div className="mt-6 flex items-center justify-end gap-x-6">
+      <div className="mt-6 flex items-center justify-center gap-x-6">
         <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
           Cancel
         </button>

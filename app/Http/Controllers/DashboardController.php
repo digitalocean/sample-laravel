@@ -17,7 +17,7 @@ class DashboardController extends Controller
     public function index(){
         $user = Auth::user();
         $role = session()->get('role');        
-        if ($role == 'admin') {
+        if ($role === 'admin') {
             $scholarships = Scholarship::get();
             $applications = Application::get();
             $totalApplications = DB::table('scholarship_applications')->get()->count();
@@ -32,9 +32,13 @@ class DashboardController extends Controller
                 'yearUpdate' => $yearUpdate,
             ]);
             
-        }
-        $partnerId = $user->partner_id;
-        return redirect()->route('partner.show', ['id' => $partnerId]);
+        } 
+
+        if($role === 'partner') {
+            $partnerId = $user->partner_id;
+            return redirect()->route('partner.show', ['id' => $partnerId]);
+        } 
+        
         
     }
 }

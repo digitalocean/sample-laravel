@@ -39,22 +39,25 @@ Route::middleware(['auth', 'verified' ])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard', 'index')->name('dashboard');
     });
+    Route::controller(PartnerController::class)->group(function () {
+        Route::get('partner/show{id}', 'show')->name('partner.show');
+    });
 
 });
 
-Route::middleware(['auth', 'verified', 'role:scholar|admin'])->group(function (){
+Route::middleware(['auth', 'verified', 'role:scholar'])->group(function (){
     Route::controller(ScholarController::class)->group(function () {
         Route::get('scholars/dashboard', 'index')->name('scholar.dashboard');
         Route::get('scholars/application', 'scholarsApplication')->name('scholar.application');
         Route::get('scholars/list', 'scholarshipList')->name('scholar.list');
         Route::post('scholars/application/create', 'storeScholarship')->name('scholar.application.create');
+        Route::get('scholars/view{scholarship}', 'scholarshipView')->name('scholar.application.view');
     });
 });
 
-Route::middleware(['auth', 'verified', 'role:admin|partners'])->group(function () { 
+Route::middleware(['auth', 'verified', 'role:admin|partner'])->group(function () { 
     // Partnersphp artisan
     Route::controller(PartnerController::class)->group(function () {
-        Route::get('partner/show{id}', 'show')->name('partner.show');
         Route::post('partner/create', 'store')->name('partner.create');
     });
 
@@ -104,6 +107,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     // user adjustments
     Route::get('/users', [UserController::class, 'index'])->name('user.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
+    Route::get('/users/update{id}', [UserController::class, 'edit'])->name('user.update');
     Route::post('/users/store', [UserController::class, 'store'])->name('user.store');
     Route::get('/users/delete{id}', [UserController::class, 'destroy'])->name('user.delete');
 

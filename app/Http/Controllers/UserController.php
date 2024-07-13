@@ -9,15 +9,14 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Partner;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-
 class UserController extends Controller
 {
     //
     public function index() {
-
         $users = DB::table('users')
             ->join('partners', 'users.partner_id', '=', 'partners.id')
             ->select( 'users.id','users.name', 'users.email', 'partners.organization_name')
@@ -42,17 +41,24 @@ class UserController extends Controller
     }
 
     public function store(Request $request): RedirectResponse {
-        
-        $a = $request->all();
+        $user = Auth::user();
+        $a = $request->all(); //dd($a);
    
-        $b = User::create([
-            'name' => $a[0]['name'],
-            'email' => $a[0]['email'],
-            'password' => hash::make($a[0]['password']),
-            'partner_id' => $a[0]['partner_id'],
-        ]);
-        $user = User::find($b->id);
-        $role = $user->assignRole($a[0]['role']);
+        // $b = User::create([
+        //     'name' => $a[0]['name'],
+        //     'email' => $a[0]['email'],
+        //     'password' => hash::make($a[0]['password']),
+        //     'partner_id' => $a[0]['partner_id'],
+        // ]);
+        $b = DB::table('users')->where('id', $user->id)->updateOrInsert(
+            ['email' => $a[0]['email'], 'name' => $a[0]['name']],
+            [ 'partner_id' => $a[0]['partner_id'], 'password' => hash::make($a[0]['password']) ]
+        );
+
+        $user = User::find($user->id);
+        if($request->role !== 'null') {
+            $user->assignRole($request->role);
+        }
         
         return redirect()->route('user.index');
     }
@@ -60,10 +66,14 @@ class UserController extends Controller
 
     public function edit($id) {
         $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
-    
-        return view('users.edit',compact('user','roles','userRole'));
+        $roles = Role::get();
+        $partners = Partner::get(); //dd($partners);
+
+        return Inertia::render('Users/update', [
+            'roles' => $roles,
+            'partners' => $partners,
+            'userdata' => $user
+        ]);
     }
 
 

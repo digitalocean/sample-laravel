@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ScholarCollection;
 use App\Http\Resources\ScholarResource;
 use App\Models\Application;
+use App\Models\Requirementcriteria;
 use App\Models\Scholar;
 use App\Models\Scholarship;
+use App\Models\Scholarshipuse;
+use App\Models\Selectioncriteria;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -19,23 +22,31 @@ class ScholarController extends Controller {
     public function index() {
 
         $user = Auth::user(); 
- 
-        $a = DB::table('scholars')->where('user_id', $user->id)
+
+        $a = DB::table('scholars')->where('user_id', $user['id'])
             ->join('applications', 'scholars.application_id', 'applications.id')
             ->select('scholars.email', 'scholars.parent_name2', 'scholars.parent_email2', 'applications.*' )->get();
         //$scholar = ScholarResource::collection($a);
-        $scholarships = Application::find($a[0]->id)->scholarships()->get();
+        $b = $a[0]->id; 
+        // $scholarship = Application::find($b); //dd($scholarship);
+        $scholarship = DB::table('scholarship_applications')
+            ->where('application_id', $b)
+            ->join('scholarships','scholarship_applications.scholarship_id', 'scholarships.id')->get(); //dd($scholarship);
 
-        return Inertia::render('Scholars/Dashboard',[
-            'scholar' => $a,
-            'scholarships' => $scholarships,
-        ]);
+        
+
+
+            return Inertia::render('Scholars/Dashboard',[
+                'scholar' => $a,
+                'scholarships' => $scholarship,
+            ]);
+        
+        
         
     }
 
     public function scholarsApplication() {
         $user = Auth::user();
-        
         $preScholar = Scholar::where('user_id', $user->id)->get();
         $application = Application::where('id', $preScholar[0]['application_id'])->get();
 
@@ -51,7 +62,7 @@ class ScholarController extends Controller {
         $scholar = Scholar::where('user_id', $user->id)->get();
 
         // create or update application froms scholars id
-        $pplication = DB::table('applications')
+        $application = DB::table('applications')
               ->where('id', $scholar->application_id)
               ->updateOrInsert([
                     'submitted_on' => $request->submitted_on,
@@ -90,17 +101,38 @@ class ScholarController extends Controller {
                     'reference_email2' => $request->reference_email2,
                     'reference_relationship2' => $request->reference_relationship2,
               ]);
-
-        dd($pplication);
+            dd($application);
+            return to_route('scholar.list');
     }
 
     public function scholarshipList() {
-        $user = Auth::user();
         $scholarship = Scholarship::get();
-        // Get scholarships that have been applied to
-
+        $scholarshipSingle = Scholarship::where('id', '1')->get();
+        $criteria = Selectioncriteria::where('id', '1')->get(); 
+        $requirements = Requirementcriteria::where('id', '1')->get(); 
+        $scholarshipuses = Scholarshipuse::where('id', '1')->get();
         return Inertia::render('Scholars/Scholarshiplist', [
             'scholarship' => $scholarship,
+            'scholarshipInfo' => $scholarshipSingle,
+            'requirements' => $requirements,
+            'scholarshipuses' => $scholarshipuses,
+            'criteria' => $criteria,
+        ]);
+    }
+
+    public function scholarshipView(Scholarship $scholarship){
+        $scholarshipAll = Scholarship::get();
+        $scholarshipSingle = Scholarship::where('id', $scholarship->id)->get(); //dd($scholarshipSingle);
+        $criteria = Selectioncriteria::where('id', $scholarship->id)->get(); 
+        $requirements = Requirementcriteria::where('id', $scholarship->id)->get(); 
+        $scholarshipuses = Scholarshipuse::where('id', $scholarship->id)->get();
+
+        return Inertia::render('Scholars/Scholarshiplist', [
+            'scholarship' => $scholarshipAll,
+            'scholarshipInfo' => $scholarshipSingle,
+            'requirements' => $requirements,
+            'scholarshipuses' => $scholarshipuses,
+            'criteria' => $criteria,
         ]);
     }
 }

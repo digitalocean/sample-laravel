@@ -321,14 +321,14 @@ export default function Dashboard({ auth }) {
 
                     <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                         <div>
-                            <h2 className="text-base font-semibold leading-7 text-gray-700">ScholarShip Submission</h2>
-                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                            <h2 className="text-large font-semibold leading-7 text-gray-700">ScholarShip Submission</h2>
+                            <p className="mt-1 text-base leading-6 text-gray-600">
                                 This is where you review your list of scholarships you applied to and the response.
                             </p>
                         </div>
                         <div className='md:col-span-2 h-sidenav'>
                             <ul role="list" className="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-2 xl:gap-x-8">
-                            {scholarships.map(({id, name, deadline, award_payments, }) => (
+                            {scholarships?.map(({id, name, deadline, award_payments, }) => (
                             <>
                                 <li key={id} className="overflow-hidden rounded-xl border border-gray-200">
                                 <div className="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">

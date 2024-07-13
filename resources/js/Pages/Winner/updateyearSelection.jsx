@@ -33,6 +33,7 @@ export default function distributionSelection({selectedFrequnecy, setSelectedFre
   
       <Select
         placeholder="Scholarship Frequnecy"
+        isMulti
         components={{ usesMax }}
         value={uses.filter(obj => selectedFrequnecy.includes(obj.value))} 
         isValidNewOption={isValidNewOption}

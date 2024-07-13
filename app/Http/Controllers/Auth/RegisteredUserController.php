@@ -52,12 +52,12 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->assignRole('partner');
-
+        session(['role' => 'partner']);
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return to_route('partner.show',$user->partner_id);
     }
 
     /**
@@ -79,8 +79,6 @@ class RegisteredUserController extends Controller
             'password' => hash::make($request->password),
         ]);
 
-        $u = $user->id;
-
         $application = Application::create([
             'name' => $request->name,
             'school' => $request->school,
@@ -88,9 +86,10 @@ class RegisteredUserController extends Controller
             'parent_name' => $request->parent_name,
             'parent_email' => $request->email,
         ]);
+        $a = $user->id;
 
-        $scholars = Scholar::create([
-            'user_id' => $u->id,
+        $b = Scholar::create([
+            'user_id' => $a,
             'application_id' => $application->id,
             'parent_name' => $request->parent_name,
             'parent_name2' => $request->parent_name2,

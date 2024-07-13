@@ -19,6 +19,8 @@ class Scholar extends Model
       'parent_email',
       'parent_email2',
       'graduation_year',
+      'user_id',
+      'email',
     ];
 
     public function applications() : HasOne {

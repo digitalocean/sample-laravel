@@ -41,7 +41,7 @@ class Scholarship extends Model
     }
 
     public function applications(): BelongsToMany {
-        return $this->belongsToMany(Application::class, 'scholarship_applications');
+        return $this->belongsToMany(Application::class, 'scholarship_applications', 'scholarship_id', 'application_id');
     }
 
     public function requirements(): BelongsToMany {

@@ -47,7 +47,7 @@ export default function index({auth}) {
                       </div>
                   </div>
                 </div>
-                <div className="py-6">
+            <div className="py-6">
                   {/* <Table users={data} /> */}
   <div className="mt-10 p-4 sm:p-6 lg:p-8 bg-white shadow-soft-xl rounded-2xl">
 
@@ -106,7 +106,7 @@ export default function index({auth}) {
                     <td className="whitespace-nowrap px-3 py-4 text-base text-gray-700">{email}</td>
                     {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{data.role}</td> */}
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-base font-medium sm:pr-6 lg:pr-8">
-                      <a href="#" className="text-indigo-600 hover:text-indigo-900 mr-2">
+                      <a href={route('user.update', {id})} className="text-indigo-600 hover:text-indigo-900 mr-2">
                         Edit<span className="sr-only">, {name}</span>
                       </a>
                     

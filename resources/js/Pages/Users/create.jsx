@@ -9,6 +9,7 @@ import { useState } from "react";
 
 export default function create({auth}) {
   const {users, partners, roles} = usePage().props;
+  
   const [data, setData] = useState({
     name: '',
     email: '',
@@ -141,7 +142,7 @@ export default function create({auth}) {
                   name="partner_id"
                   autoComplete="partner_id"
                   onChange={handleChange}
-                  className="block w-full h-10 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="block w-full h-10 rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>Select Partner</option>
                   {partners.map(({id, contact_name, email, organization_name}) => (
@@ -161,7 +162,7 @@ export default function create({auth}) {
                   name="role"
                   autoComplete="role"
                   onChange={handleChange}
-                  className="block w-full h-10 rounded-md border-0 p-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  className="mt-2 block w-full h-10 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                   <option>Select Role</option>
                   {roles.map(({id, name}) => (
