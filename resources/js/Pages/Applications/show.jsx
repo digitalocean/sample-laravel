@@ -64,7 +64,15 @@ console.log(applicationdetail);
             <div className="w-full px-2 py-3 mx-auto">
                 <div className="overflow-hidden bg-white shadow sm:rounded-lg">
                 <div className="px-4 py-6 sm:px-6">
+                    <div className="flex justify-between">
                     <h3 className="text-base font-semibold leading-7 text-gray-900">Applicant Information</h3>
+                    <Link
+                        href={route('create.notes', {id})}
+                        className="rounded-md bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                        Create Note
+                    </Link>
+                    </div>
                     <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Personal details and application.</p>
                 </div>
                 

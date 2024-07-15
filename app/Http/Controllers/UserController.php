@@ -44,12 +44,6 @@ class UserController extends Controller
         $user = Auth::user();
         $a = $request->all(); //dd($a);
    
-        // $b = User::create([
-        //     'name' => $a[0]['name'],
-        //     'email' => $a[0]['email'],
-        //     'password' => hash::make($a[0]['password']),
-        //     'partner_id' => $a[0]['partner_id'],
-        // ]);
         $b = DB::table('users')->where('id', $user->id)->updateOrInsert(
             ['email' => $a[0]['email'], 'name' => $a[0]['name']],
             [ 'partner_id' => $a[0]['partner_id'], 'password' => hash::make($a[0]['password']) ]

@@ -26,4 +26,5 @@ class Scholar extends Model
     public function applications() : HasOne {
         return $this->hasOne(Application::class);
     }
+
 }

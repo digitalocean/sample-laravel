@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\ScholarController;
 use App\Http\Controllers\WinnerController;
 use Illuminate\Foundation\Application;
@@ -79,6 +80,11 @@ Route::middleware(['auth', 'verified', 'role:admin|partner'])->group(function ()
         Route::post('create/winner', 'createWinner')->name('create.winner');
         Route::post('update/winner{winner}', 'updateWinner')->name('update.winner');
         Route::get('delete/winner{winner}', 'destroy')->name('delete.winner');
+    });
+
+    Route::controller(NoteController::class)->group(function (){
+        Route::get('notes/create{id}', 'createNotes')->name('create.notes');
+        Route::post('note/student/create', 'storeNote')->name('notes.student.create');
     });
 
 

@@ -32,10 +32,6 @@ class ScholarController extends Controller {
         $scholarship = DB::table('scholarship_applications')
             ->where('application_id', $b)
             ->join('scholarships','scholarship_applications.scholarship_id', 'scholarships.id')->get(); //dd($scholarship);
-
-        
-
-
             return Inertia::render('Scholars/Dashboard',[
                 'scholar' => $a,
                 'scholarships' => $scholarship,

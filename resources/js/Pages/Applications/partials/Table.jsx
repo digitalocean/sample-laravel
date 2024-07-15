@@ -149,6 +149,20 @@ export default function ApplicationTable() {
                 View full application
           </Link>
      </MenuItem>,
+      <MenuItem
+          key={0}
+          onClick={() => {
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+        <ListItemIcon>
+          <AccountCircle />
+        </ListItemIcon>
+        <Link href={route('create.notes', row.original.id)}>
+            Notes 
+        </Link>
+    </MenuItem>,
     ],
   });
 
