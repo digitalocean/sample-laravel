@@ -34,10 +34,11 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse {
 
         $request->authenticate();
-        $user = Auth::user();
-        $role = $user->roles;  dd($role);
+         
         $request->session()->regenerate();
-        session(['role' => $role[0]['name']]); 
+        $user = Auth::user();
+        $role = $user->roles; 
+        session(['role' => $role[0]['name']]);
         $a = $user->partner_id;
         $partnerId = Partner::where('id', $a)->get();
         if ($partnerId->isNotEmpty()) {
