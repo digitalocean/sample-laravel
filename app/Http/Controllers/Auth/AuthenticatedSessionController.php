@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->authenticate();
         $user = Auth::user();
-        $role = $user->roles;  //dd($role);
+        $role = $user->roles;  dd($role);
         $request->session()->regenerate();
         session(['role' => $role[0]['name']]); 
         $a = $user->partner_id;

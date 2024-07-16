@@ -40,8 +40,7 @@ export default function({auth, application}){
 
     const submit = (e) => {
         e.preventDefault();
-
-        post(route('/application/create'));
+        post(route('scholar.application.create'));
     };
 
     return (
@@ -53,7 +52,7 @@ export default function({auth, application}){
             <Head title="Application" />
             <div className="w-full px-6 py-6 mx-auto">
                 <div className="flex flex-wrap -mx-1">
-                <form>
+    <form onSubmit={submit}>
       <div className="space-y-12">
       {application?.map(({id, name, email,
                         deadline,
@@ -84,7 +83,7 @@ export default function({auth, application}){
                         type="text"
                         name="name"
                         id="name"
-                        value={data.name}
+                        value={name}
                         autoComplete="name"
                         onChange={(e) => setData('name', e.target.value)}
                         placeholder={name}
@@ -101,7 +100,7 @@ export default function({auth, application}){
                         <input
                         id="email"
                         name="email"
-                        type="email"
+                        type="text"
                         autoComplete="email"
                         placeholder={email}
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -277,7 +276,7 @@ export default function({auth, application}){
                                         name="college_status"
                                         value={data.college_status}
                                         onChange={(e) => setData('college_status', e.target.value)}
-                                        className="mt-2 block w-full h-24 rounded-md border-0 py-4 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="mt-2 block w-full h-10 rounded-md border-0 py-4 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         defaultValue="pending"
                                     >
                                         <option value='Not Started'>Not Started</option>
@@ -346,7 +345,7 @@ export default function({auth, application}){
                                         name="college_status2"
                                         value={data.college_status2}
                                         onChange={(e) => setData('college_status2', e.target.value)}
-                                        className="h-35 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="h-10 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         defaultValue="Canada"
                                     >
                                         <option value='Not Started'>Not Started</option>
@@ -416,7 +415,7 @@ export default function({auth, application}){
                                         name="college_status3"
                                         value={data.college_status3}
                                         onChange={(e) => setData('college_status3', e.target.value)}
-                                        className="h-35 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="h-10 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         defaultValue="Canada"
                                     >
                                         <option value='Not Started'>Not Started</option>
@@ -558,7 +557,7 @@ export default function({auth, application}){
                                     <select
                                         id="reference_relationsship"
                                         name="reference_relationsship"
-                                        className="mt-2 block w-full h-25 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        className="mt-2 block w-full h-10 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         defaultValue="Employer"
                                     >
                                         <option>Teacher\Counsoler</option>

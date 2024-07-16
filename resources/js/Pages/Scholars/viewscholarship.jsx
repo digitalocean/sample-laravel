@@ -1,4 +1,4 @@
-import { usePage } from '@inertiajs/react';
+import { usePage, Link } from '@inertiajs/react';
 import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from "@heroicons/react/20/solid";
 
 export default function viewScholarship({ requirements, scholarshipuses, criteria }) {
@@ -12,7 +12,15 @@ export default function viewScholarship({ requirements, scholarshipuses, criteri
           {scholarshipInfo.map(({id, deadline, name, description, additional_information, activeYear}) => (
           <div className='mx-auto'>
             <div key={id}>
-              <p className="text-base font-light leading-7 text-red-800">Deadline - {deadline} </p>
+              <div className="flex justify-between mb-2">
+                <p className="text-base font-light leading-2 text-red-800">Deadline - {deadline} </p>
+                <Link
+                    href={route('scholar.apply', {id})}
+                    className="rounded-md bg-indigo-600 px-6 pt-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                    Apply
+                </Link>
+              </div>
               <h2 className="-mt-1 text-2xl font-bold tracking-tight text-black sm:text-4xl">{name}</h2>
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 {description}

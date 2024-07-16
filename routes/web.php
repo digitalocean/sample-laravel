@@ -40,6 +40,9 @@ Route::middleware(['auth', 'verified' ])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('dashboard', 'index')->name('dashboard');
     });
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    
     Route::controller(PartnerController::class)->group(function () {
         Route::get('partner/show{id}', 'show')->name('partner.show');
     });
@@ -53,6 +56,7 @@ Route::middleware(['auth', 'verified', 'role:scholar'])->group(function (){
         Route::get('scholars/list', 'scholarshipList')->name('scholar.list');
         Route::post('scholars/application/create', 'storeScholarship')->name('scholar.application.create');
         Route::get('scholars/view{scholarship}', 'scholarshipView')->name('scholar.application.view');
+        Route::get('scholars/apply{scholarship}', 'applyScholarship')->name('scholar.apply');
     });
 });
 
@@ -87,9 +91,6 @@ Route::middleware(['auth', 'verified', 'role:admin|partner'])->group(function ()
         Route::post('note/student/create', 'storeNote')->name('notes.student.create');
     });
 
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {

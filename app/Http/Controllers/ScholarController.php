@@ -10,6 +10,7 @@ use App\Models\Scholar;
 use App\Models\Scholarship;
 use App\Models\Scholarshipuse;
 use App\Models\Selectioncriteria;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -53,21 +54,26 @@ class ScholarController extends Controller {
 
     public function storeScholarship(Request $request) {
         $user = Auth::user();
-
+        //$a = $request->all(); dd($a);
         // Get Scholars data buy user_id
         $scholar = Scholar::where('user_id', $user->id)->get();
 
         // create or update application froms scholars id
         $application = DB::table('applications')
-              ->where('id', $scholar->application_id)
-              ->updateOrInsert([
+              ->where('id', $scholar[0]['application_id'])
+              ->updateOrInsert([ 'name' => $request->name ],
+                    [
                     'submitted_on' => $request->submitted_on,
-                    'name' => $request->name,
+                    'city' =>   $request->city,
+                    'streetAddress' => $request->streetAddress, 
+                    'state' => $request->state,
+                    'zip' => $request->zipCode,        
                     'email' => $request->email,
                     'phone' => $request->phone,
                     'parent_name' => $request->parent_name,
                     'application_essay' => $request->application_essay,
                     'community_service' => $request->community_service,
+                    'submitted_on' => Carbon::now(),
                     'school' => $request->school,
                     'graduation_year' => $request->graduation_year,
                     'gpa' => $request->gpa,
@@ -97,7 +103,7 @@ class ScholarController extends Controller {
                     'reference_email2' => $request->reference_email2,
                     'reference_relationship2' => $request->reference_relationship2,
               ]);
-            dd($application);
+           
             return to_route('scholar.list');
     }
 
@@ -130,5 +136,18 @@ class ScholarController extends Controller {
             'scholarshipuses' => $scholarshipuses,
             'criteria' => $criteria,
         ]);
+    }
+
+    public function applyScholarship(Scholarship $scholarship){
+
+        $user = Auth::user();
+        $scholar = Scholar::where('user_id', $user->id)->get();
+
+        DB::table('scholarship_applications')
+              ->updateOrInsert([
+                'scholarship_id' => $scholarship['id'],
+                'application_id' => $scholar[0]['application_id'],
+              ]);
+        return to_route('scholar.list');
     }
 }

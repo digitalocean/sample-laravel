@@ -136,7 +136,7 @@ export default function StudentAuthLayout({ user, header, breadcrumb, children }
                             ))}
                           </ul>
                         </li> */}
-                        <li className="-mx-6 mt-auto">
+                        {/* <li className="-mx-6 mt-auto">
                           <a
                             href="#"
                             className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
@@ -149,7 +149,7 @@ export default function StudentAuthLayout({ user, header, breadcrumb, children }
                             <span className="sr-only">Your profile</span>
                             <span aria-hidden="true">Tom Cook</span>
                           </a>
-                        </li>
+                        </li> */}
                       </ul>
                     </nav>
                   </div>
@@ -215,10 +215,10 @@ export default function StudentAuthLayout({ user, header, breadcrumb, children }
                     ))}
                   </ul>
                 </li> */}
-                <li className="-mx-6 mt-auto">
+                {/* <li className="-mx-6 mt-auto">
                   <a
-                    href="#"
-                    className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
+                    href={route('profile.edit')}
+                    className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-black"
                   >
                     <img
                       className="h-8 w-8 rounded-full bg-gray-800"
@@ -226,9 +226,9 @@ export default function StudentAuthLayout({ user, header, breadcrumb, children }
                       alt=""
                     />
                     <span className="sr-only">Your profile</span>
-                    <span aria-hidden="true">Tom Cook</span>
+                    <span aria-hidden="true">{user.name}</span>
                   </a>
-                </li>
+                </li> */}
               </ul>
             </nav>
           </div>
