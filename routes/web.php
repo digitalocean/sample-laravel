@@ -83,7 +83,7 @@ Route::middleware(['auth', 'verified', 'role:admin|partner'])->group(function ()
     });
 
     Route::controller(NoteController::class)->group(function (){
-        Route::get('notes/create{id}', 'createNotes')->name('create.notes');
+        Route::get('notes/create{id}', 'createNotes')->name('create.notes');   
         Route::post('note/student/create', 'storeNote')->name('notes.student.create');
     });
 
