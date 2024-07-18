@@ -36,11 +36,15 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
          
         $request->session()->regenerate();
+
         $user = Auth::user();
         $role = $user->roles; 
         session(['role' => $role[0]['name']]);
+        
         $a = $user->partner_id;
+        
         $partnerId = Partner::where('id', $a)->get();
+        
         if ($partnerId->isNotEmpty()) {
             return to_route('partner.show',$partnerId[0]['id']);
         }

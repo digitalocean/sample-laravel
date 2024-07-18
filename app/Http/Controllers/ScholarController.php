@@ -27,16 +27,18 @@ class ScholarController extends Controller {
         $a = DB::table('scholars')->where('user_id', $user['id'])
             ->join('applications', 'scholars.application_id', 'applications.id')
             ->select('scholars.email', 'scholars.parent_name2', 'scholars.parent_email2', 'applications.*' )->get();
-        //$scholar = ScholarResource::collection($a);
+     
         $b = $a[0]->id; 
-        // $scholarship = Application::find($b); //dd($scholarship);
+  
         $scholarship = DB::table('scholarship_applications')
             ->where('application_id', $b)
             ->join('scholarships','scholarship_applications.scholarship_id', 'scholarships.id')->get(); //dd($scholarship);
-            return Inertia::render('Scholars/Dashboard',[
-                'scholar' => $a,
-                'scholarships' => $scholarship,
-            ]);
+        
+       
+        return Inertia::render('Scholars/Dashboard',[
+            'scholar' => $a,
+            'scholarships' => $scholarship,
+        ]);
         
         
         
@@ -113,16 +115,21 @@ class ScholarController extends Controller {
         $criteria = Selectioncriteria::where('id', '1')->get(); 
         $requirements = Requirementcriteria::where('id', '1')->get(); 
         $scholarshipuses = Scholarshipuse::where('id', '1')->get();
+        
+        $message = session('message');
         return Inertia::render('Scholars/Scholarshiplist', [
             'scholarship' => $scholarship,
             'scholarshipInfo' => $scholarshipSingle,
             'requirements' => $requirements,
             'scholarshipuses' => $scholarshipuses,
             'criteria' => $criteria,
+            'message' => $message
         ]);
+
     }
 
     public function scholarshipView(Scholarship $scholarship){
+        session()->forget('message');
         $scholarshipAll = Scholarship::get();
         $scholarshipSingle = Scholarship::where('id', $scholarship->id)->get(); //dd($scholarshipSingle);
         $criteria = Selectioncriteria::where('id', $scholarship->id)->get(); 
@@ -135,6 +142,7 @@ class ScholarController extends Controller {
             'requirements' => $requirements,
             'scholarshipuses' => $scholarshipuses,
             'criteria' => $criteria,
+            'message' => 'false'
         ]);
     }
 
@@ -144,10 +152,11 @@ class ScholarController extends Controller {
         $scholar = Scholar::where('user_id', $user->id)->get();
 
         DB::table('scholarship_applications')
-              ->updateOrInsert([
+            ->updateOrInsert([
                 'scholarship_id' => $scholarship['id'],
                 'application_id' => $scholar[0]['application_id'],
               ]);
+        session(['message' => 'true']);
         return to_route('scholar.list');
     }
 }

@@ -1,9 +1,9 @@
 import StudentAuthLayout from "@/Layouts/StudentAuthLayout";
 import { Head, Link} from "@inertiajs/react";
-import { UserCircleIcon, PhotoIcon, CheckBadgeIcon } from "@heroicons/react/24/solid";
+import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import ViewScholarship from "./viewscholarship";
 
-export default function({auth, scholarship, scholarshipInfo,requirements, scholarshipuses, criteria}) {
+export default function({auth, scholarship, scholarshipInfo,requirements, scholarshipuses, criteria, message}) {
 
     return (
         <StudentAuthLayout
@@ -15,7 +15,30 @@ export default function({auth, scholarship, scholarshipInfo,requirements, schola
                 <div className="sm:pl-32 md:pl-96">
                     <div className="xl:pl-32 px-6 py-6">
                         <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
-
+                            {message === 'true'
+                            ? <div className="rounded-md bg-green-50 py-4 px-auto">
+                                    <div className="flex">
+                                        <div className="flex-shrink-0">
+                                        <CheckCircleIcon aria-hidden="true" className="h-5 w-5 text-green-400" />
+                                        </div>
+                                        <div className="ml-3">
+                                        <p className="text-lg font-medium text-green-800">Your information has been sent to the scholarship partner.</p>
+                                        </div>
+                                        <div className="ml-auto pl-3">
+                                        {/* <div className="-mx-1.5 -my-1.5">
+                                            <button
+                                                type="button"
+                                                className="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50"
+                                                >
+                                                <span className="sr-only">Dismiss</span> 
+                                                <XMarkIcon aria-hidden="true" className="h-5 w-5" />
+                                            </button>
+                                        </div> */}
+                                        </div>
+                                    </div>
+                                </div>
+                            : <div></div>
+                            }
                             <ViewScholarship scholarshipInfo={scholarshipInfo} requirements={requirements} scholarshipuses={scholarshipuses} criteria={criteria}/>
                 
                         </div>

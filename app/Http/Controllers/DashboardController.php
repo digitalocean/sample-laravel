@@ -38,6 +38,10 @@ class DashboardController extends Controller
             $partnerId = $user->partner_id;
             return redirect()->route('partner.show', ['id' => $partnerId]);
         } 
+
+        if($role === 'scholar') {
+            return redirect()->route('scholar.dashboard');
+        }
         
         
     }
