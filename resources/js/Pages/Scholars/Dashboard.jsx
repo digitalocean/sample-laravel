@@ -64,7 +64,7 @@ export default function Dashboard({ auth }) {
             
             <div className="">
             <Tab.Panels>
-            {scholar.map(({id, name, parent_name, parent_email, email, phone, school, gpa, graduation_year, submitted_on, college_major, college_choice, college_choice2}) => (
+            {scholar.map(({id, name, parent_name, parent_email, email, phone, school, gpa, graduation_year, submitted_on, college_major, college_choice, college_choice2, application_essay, community_service, reference, reference_email}) => (
                  <>
                 <Tab.Panel>
                     <div className="grid max-w-ful grid-cols-1 gap-x-12 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8 border-b-2 border-b-slate-200">
@@ -158,28 +158,21 @@ export default function Dashboard({ auth }) {
                             </div>
                     </div>
 
-                    <div className="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
+                    <div className="grid max-w-full grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
                             <div>
-                            <h2 className="text-base font-semibold leading-7 text-gray-700">Application Summary</h2>
-                            <p className="mt-1 text-sm leading-6 text-gray-600">
-                                This is where we summarize your common application with links you have uploaded to complete application
-                            </p>
+                                <h2 className="text-base font-semibold leading-7 text-gray-700">Application Summary</h2>
+                                <p className="mt-1 text-sm leading-6 text-gray-600">
+                                    This is where we summarize your common application with links you have uploaded to complete application
+                                </p>
                             </div>
                             
-                            <div className="md:col-span-2 h-sidenav">
-                                {scholarships === 'null' 
-                                    ? <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+                            <div className="md:col-span-2 h-sidenav pl-4">
+                                {submitted_on != 'null' 
+                                    ?   <div className="grid grid-cols-1 gap-x-6 gap-y-4 sm:max-w-xl sm:grid-cols-6">
                                             <div className="col-span-3">
                                                 <h2 className="text-base font-semibold leading-1 text-gray-700">Application Submitted on</h2>
                                                 <p className="mt-1 text-sm leading-6 text-gray-600">
                                                     {submitted_on}
-                                                </p>
-                                            </div>
-
-                                            <div className="col-span-3">
-                                                <h2 className="text-base font-semibold leading-1 text-gray-700">College Major</h2>
-                                                <p className="mt-1 text-sm leading-6 text-gray-600">
-                                                    {college_major}
                                                 </p>
                                             </div>
 
@@ -194,6 +187,12 @@ export default function Dashboard({ auth }) {
                                                 <h2 className="text-base font-semibold leading-1 text-gray-700">Second college choice</h2>
                                                 <p className="mt-1 text-sm leading-6 text-gray-600">
                                                     {college_choice2}
+                                                </p>
+                                            </div>
+                                            <div className="col-span-3">
+                                                <h2 className="text-base font-semibold leading-1 text-gray-700">College Major</h2>
+                                                <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                    {college_major}
                                                 </p>
                                             </div>
                                         </div> 
@@ -244,8 +243,8 @@ export default function Dashboard({ auth }) {
                         </div>
                         
                         <div className="md:col-span-2 h-sidenav">
-                            {submitted_on === 'null' 
-                                ? <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+                            {submitted_on != 'null' 
+                                ? <div className="grid grid-cols-1 gap-x-6 gap-y-3 sm:max-w-xl sm:grid-cols-6">
                                         <div className="col-span-3">
                                             <h2 className="text-base font-semibold leading-1 text-gray-700">Application Submitted on</h2>
                                             <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -271,6 +270,31 @@ export default function Dashboard({ auth }) {
                                             <h2 className="text-base font-semibold leading-1 text-gray-700">Second college choice</h2>
                                             <p className="mt-1 text-sm leading-6 text-gray-600">
                                                 {college_choice2}
+                                            </p>
+                                        </div>
+                                        <div className="col-span-6">
+                                            <h2 className="text-base font-semibold leading-1 text-gray-700">Application Essay</h2>
+                                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                {application_essay}
+                                            </p>
+                                        </div>
+                                        <div className="col-span-6">
+                                            <h2 className="text-base font-semibold leading-1 text-gray-700">Community Service</h2>
+                                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                {community_service}
+                                            </p>
+                                        </div>
+                                        <div className="col-span-3">
+                                            <h2 className="text-base font-semibold leading-1 text-gray-700">Reference</h2>
+                                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                {reference}
+                                            </p>
+                                        </div>
+
+                                        <div className="col-span-3">
+                                            <h2 className="text-base font-semibold leading-1 text-gray-700">Reference email</h2>
+                                            <p className="mt-1 text-sm leading-6 text-gray-600">
+                                                {reference_email}
                                             </p>
                                         </div>
                                     </div> 
