@@ -24,7 +24,7 @@ class DashboardController extends Controller
             $totalApplications = DB::table('scholarship_applications')->get()->count();
             $partners = Partner::get();
             $yearUpdate = Year::get();
-            $winners = Winner::latest()->limit(4)->get(); //dd($winners);
+            $winners = Winner::latest()->limit(3)->get(); //dd($winners);
 
             return Inertia::render('Dashboard', [
                 'scholarships' => $scholarships,
