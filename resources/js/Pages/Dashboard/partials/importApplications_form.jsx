@@ -16,12 +16,11 @@ export function ImportApplications() {
 
 
     return (
-        <div className="mt-4 border-black/12.5 shadow-soft-xl relative flex h-1/2 min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border p-2">
+        <div className="mt-4 border-black/12.5 shadow-soft-xl relative flex h-1/3 min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border p-2">
             <div className="relative h-full overflow-hidden bg-cover rounded-xl">
                 <span className="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-gray-900 to-slate-800 opacity-80"></span>
                 <div className="relative z-10 flex flex-col flex-auto h-full p-4">
-                <h5 className="pt-2 mb-6 font-bold text-white">Import bulk Applications</h5>
-                <p className="text-white">Here you can bulk import applications from application form. Please make sure file is .csv format</p>
+                <h5 className="pt-2 font-bold text-white">Import bulk Applications</h5>
                 <div className='mt-auto'>
                 <form onSubmit={submit}>
                         {/* <input type="text" value={data.name} onChange={e => setData('name', e.target.value)} /> */}

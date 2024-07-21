@@ -181,7 +181,7 @@ export default function Dashboard({ auth }) {
                         </div>
                     </div>
                     <div className="w-full max-w-full px-3 lg:w-5/12 lg:flex-none">
-                        <div className="border-black/12.5 shadow-soft-xl relative flex h-1/2 min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border p-2">
+                        <div className="border-black/12.5 shadow-soft-xl relative flex h-2/3 min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border p-2">
                         
                         <ul role="list" className="divide-y divide-gray-100">
                             <div className='mx-auto py-1 flex justify-between'>
@@ -199,8 +199,8 @@ export default function Dashboard({ auth }) {
                             
                             <li key={id} className="mt-1 relative py-2 hover:bg-gray-50">
                                 <div className="px-4 sm:px-6 lg:px-8">
-                                    <div className="mx-auto flex max-w-4xl justify-between gap-x-6">
-                                    <div className="flex min-w-0 gap-x-4">
+                                    <div className="mx-auto flex max-w-4xl justify-between gap-x-2">
+                                    <div className="flex min-w-0 gap-x-2">
                                         {/* <img alt="" src={i.imageUrl} className="h-12 w-12 flex-none rounded-full bg-gray-50" /> */}
                                         <div className="min-w-0 flex-auto">
                                             <p className="text-lg font-semibold text-gray-900">
@@ -211,11 +211,11 @@ export default function Dashboard({ auth }) {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="flex shrink-0 items-center gap-x-4">
+                                    <div className="flex shrink-0 items-center gap-x-2">
                                         <div className="hidden sm:flex sm:flex-col sm:items-end">
-                                            <p className="text-lg leading-2 text-gray-900">Award - ${award_payments}</p>
+                                            <p className="text-lg text-gray-900">Award - ${award_payments}</p>
                                         
-                                            <p className="mt-1 text-base leading-5 text-gray-700">
+                                            <p className="text-base leading-5 text-gray-700">
                                                 Distribution date - {distributionDate}
                                             </p>
                                        
