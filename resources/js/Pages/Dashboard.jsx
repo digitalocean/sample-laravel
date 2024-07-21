@@ -1,14 +1,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/react';
-import { BriefcaseIcon, BanknotesIcon, ClipboardDocumentListIcon, AcademicCapIcon, ArrowSmallRightIcon } from '@heroicons/react/24/solid';
+import { Head, usePage, Link } from '@inertiajs/react';
+import { BriefcaseIcon, BanknotesIcon, ClipboardDocumentListIcon, AcademicCapIcon, ChevronRightIcon, ArrowSmallRightIcon} from '@heroicons/react/24/solid';
 import CreatePartner from './Dashboard/partials/create_Partner';
 import Yearlychart from './Dashboard/partials/yearly-chart';
 import { ImportApplications } from './Dashboard/partials/importApplications_form';
 
 export default function Dashboard({ auth }) {
-    const {scholarships, totalApplications, yearUpdate} = usePage().props;
+    const {scholarships, totalApplications, yearUpdate, winners} = usePage().props;
     const {applications} = usePage().props;
     const {partners} = usePage().props;
+    console.log(winners);
 
     const totalScholarshipamount = scholarships.reduce((a, c) => a + c.fund_amount, 0);
 
@@ -181,31 +182,51 @@ export default function Dashboard({ auth }) {
                     </div>
                     <div className="w-full max-w-full px-3 lg:w-5/12 lg:flex-none">
                         <div className="border-black/12.5 shadow-soft-xl relative flex h-1/2 min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border p-2">
-                            <div className="relative h-full overflow-hidden bg-cover rounded-xl">
-                                <span className="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-gray-900 to-slate-800 opacity-80"></span>
-                                <div className="relative z-10 flex flex-col flex-auto h-full p-4">
-                                <h5 className="pt-2 mb-6 font-bold text-white">Import bulk Scholarships</h5>
-                                <p className="text-white">Here you can bulk import scholarship for partners</p>
-                                <div className='mt-auto'>
-                                <form action={ route('csv.import.application') } method="POST" enctype="multipart/form-data">
-                                
-                                    <input
-                                        type="file"
-                                        name="file"
-                                        id="file"
-                                        accept=".csv"
-                                        className="block w-full rounded-md border-0 py-1.5 px-4 mr-4 bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        placeholder=""
-                                        />
-                                    <button type="submit" className='mt-3 py-1.5 px-3 rounded-lg bg-gradient-to-tl from-red-900 to-red-500 text-white'>Import CSV</button>
-                                </form>
-                                </div>
-                                {/* <a className="mt-auto mb-0 font-semibold leading-normal text-white group text-base" href="javascript:;">
-                                    Import
-                                    <ArrowSmallRightIcon className='fas fa-arrow-right ease-bounce w-4 h-4 group-hover:translate-x-1.25 ml-1 leading-normal transition-all duration-200'/>
-                                </a> */}
-                                </div>
+                        
+                        <ul role="list" className="divide-y divide-gray-100">
+                            <div className='mx-auto py-1 flex justify-between'>
+                                <h3 className='p-2 px-4 text-lg text-gray-800'>Latest Winners</h3>
+                                <Link
+                                    href={route('winners.list',('2024'))}
+                                    type='button'
+                                    className="w-2/5 rounded-md bg-red-800 px-4 py-3 text-base font-semibold text-center text-white shadow-sm hover:bg-red-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700"
+                                >
+                                    View All
+                                </Link>
                             </div>
+                            
+                        {winners.map(({id, studentName, scholarshipName, distributionDate, award_payments}) => (
+                            
+                            <li key={id} className="mt-1 relative py-2 hover:bg-gray-50">
+                                <div className="px-4 sm:px-6 lg:px-8">
+                                    <div className="mx-auto flex max-w-4xl justify-between gap-x-6">
+                                    <div className="flex min-w-0 gap-x-4">
+                                        {/* <img alt="" src={i.imageUrl} className="h-12 w-12 flex-none rounded-full bg-gray-50" /> */}
+                                        <div className="min-w-0 flex-auto">
+                                            <p className="text-lg font-semibold text-gray-900">
+                                                {scholarshipName}
+                                            </p>
+                                            <p className="flex text-base text-gray-700">
+                                                {studentName}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="flex shrink-0 items-center gap-x-4">
+                                        <div className="hidden sm:flex sm:flex-col sm:items-end">
+                                            <p className="text-lg leading-2 text-gray-900">Award - ${award_payments}</p>
+                                        
+                                            <p className="mt-1 text-base leading-5 text-gray-700">
+                                                Distribution date - {distributionDate}
+                                            </p>
+                                       
+                                        </div>
+                                        {/* <ChevronRightIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" /> */}
+                                    </div>
+                                    </div>
+                                </div>
+                            </li>
+                         ))}
+                        </ul>
                         </div>
                         
                         {/* Applications import form */}

@@ -21,6 +21,8 @@ class Winner extends Model
         'award_payments',
         'frequnecy',
         'distributionDate',
+        'scholarshipName',
+        'activeYear'
     ];
 
     public function scholarships() : BelongsTo {

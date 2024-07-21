@@ -6,6 +6,7 @@ use App\Models\Application;
 use App\Models\Partner;
 use App\Models\Scholarship;
 use App\Models\Year;
+use App\Models\Winner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +24,7 @@ class DashboardController extends Controller
             $totalApplications = DB::table('scholarship_applications')->get()->count();
             $partners = Partner::get();
             $yearUpdate = Year::get();
+            $winners = Winner::latest()->limit(6)->get(); //dd($winners);
 
             return Inertia::render('Dashboard', [
                 'scholarships' => $scholarships,
@@ -30,6 +32,7 @@ class DashboardController extends Controller
                 'partners' => $partners,
                 'totalApplications' => $totalApplications,
                 'yearUpdate' => $yearUpdate,
+                'winners' => $winners,
             ]);
             
         } 

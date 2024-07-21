@@ -80,7 +80,7 @@ Route::middleware(['auth', 'verified', 'role:admin|partner'])->group(function ()
     });
 
     Route::controller(WinnerController::class)->group(function () {
-        Route::get('winners/list', 'index')->name('winners.list');
+        Route::get('winners/list{winner}', 'index')->name('winners.list');
         Route::post('create/winner', 'createWinner')->name('create.winner');
         Route::post('update/winner{winner}', 'updateWinner')->name('update.winner');
         Route::get('delete/winner{winner}', 'destroy')->name('delete.winner');
