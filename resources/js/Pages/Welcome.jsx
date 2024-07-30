@@ -19,9 +19,9 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <>
                             <Link
                                 href={route('login')}
-                                className="font-semibold text-gray-800 hover:text-gray-900 dark:text-gray-900 dark:hover:text-red-800 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                className="text-base font-semibold text-gray-800 hover:text-gray-900 dark:text-gray-900 dark:hover:text-red-800 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                             >
-                                Log in
+                                Admin Log in
                             </Link>
                             
                         </>
@@ -36,74 +36,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
 
                     <div className="mt-16">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                            <a
-                                href={route('login')}
-                                className="scale-100 p-6 bg-white dark:bg-red-800/80 dark:bg-gradient-to-bl from-red-500/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-2xl shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
-                            >
-                                <div>
-                                    <div className="h-16 w-16 bg-red-50 dark:bg-white flex items-center justify-center rounded-full">
-                                        <UserIcon className='w-7 h-7 stroke-red-500' />
-                                    </div>
-
-                                    <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                                        Partner Users
-                                    </h2>
-
-                                    <p className="mt-4 text-gray-800 dark:text-white text-lg leading-relaxed">
-                                       The Black Scholars thanks you Partners for your continued support of our students. By loginning into this application you will be able to view your scholarships and applicats that have applied for your scholarship.
-                                    </p>
-                                </div>
-
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    className="self-center shrink-0 stroke-red-500 dark:stroke-white w-6 h-6 mx-6"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                                    />
-                                </svg>
-                            </a>
-
-                            <a
-                                href={route('login')}
-                                className="scale-100 p-6 bg-white dark:bg-red-800/80 dark:bg-gradient-to-bl from-red-500/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-2xl shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
-                            >
-                                <div>
-                                    <div className="h-16 w-16 bg-red-50 dark:bg-white flex items-center justify-center rounded-full">
-                                     <UsersIcon className='w-7 h-7 stroke-red-500' />
-                                    </div>
-
-                                    <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                                        Black Scholars Team
-                                    </h2>
-
-                                    <p className="mt-4 text-gray-800 dark:text-white text-lg leading-relaxed">
-                                        The Black Scholars Program is an ambitious, rigorous, and competitive academic program, 
-                                        that seeks to educate the whole undergraduate student and develop their potential to fashion a more humane and just world.
-                                        We the admins of this program must promote and adhere to our valus set forth.
-                                    </p>
-                                </div>
-
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="1.5"
-                                    className="self-center shrink-0 stroke-red-500 dark:stroke-white w-6 h-6 mx-6"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                                    />
-                                </svg>
-                            </a>
-
                             <a
                                 href={route('register.blackscholar')}
                                 className="scale-100 p-6 bg-white dark:bg-red-800/80 dark:bg-gradient-to-bl from-red-500/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-2xl shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
@@ -121,6 +53,38 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         The Black Scholars Program is an ambitious, rigorous, and competitive academic program, 
                                         that seeks to educate the whole undergraduate student and develop their potential to fashion a more humane and just world.
                                         We the admins of this program must promote and adhere to our valus set forth.
+                                    </p>
+                                </div>
+
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth="1.5"
+                                    className="self-center shrink-0 stroke-red-500 dark:stroke-white w-6 h-6 mx-6"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+                                    />
+                                </svg>
+                            </a>
+                            <a
+                                href={route('login')}
+                                className="scale-100 p-6 bg-white dark:bg-red-800/80 dark:bg-gradient-to-bl from-red-500/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-2xl shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                            >
+                                <div>
+                                    <div className="h-16 w-16 bg-red-50 dark:bg-white flex items-center justify-center rounded-full">
+                                        <UserIcon className='w-7 h-7 stroke-red-500' />
+                                    </div>
+
+                                    <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
+                                        Partner Users
+                                    </h2>
+
+                                    <p className="mt-4 text-gray-800 dark:text-white text-lg leading-relaxed">
+                                       The Black Scholars thanks you Partners for your continued support of our students. By loginning into this application you will be able to view your scholarships and applicats that have applied for your scholarship.
                                     </p>
                                 </div>
 
@@ -240,19 +204,19 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         </div>
                     </div>
 
-                    <div className="flex justify-center mt-16 px-6 sm:items-center sm:justify-between">
-                        <div className="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-left">
+                    <div className="flex justify-center mt-6 px-2 sm:items-center sm:justify-between">
+                        <div className="text-center text-sm text-gray-800 dark:text-gray-800 sm:text-left">
                             <div className="flex items-center gap-4">
                                 <a
                                     href="https://www.urbanleagueroc.org/donate"
-                                    className="group inline-flex items-center hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                    className="group inline-flex text-base items-center hover:text-gray-700 dark:hover:text-gray-700 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-900"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         strokeWidth="1.5"
-                                        className="-mt-px mr-1 w-5 h-5 stroke-gray-400 dark:stroke-gray-600 group-hover:stroke-gray-600 dark:group-hover:stroke-gray-400"
+                                        className="-mt-2 mr-1 w-6 h-6 stroke-red-800 dark:stroke-red-900 group-hover:stroke-red-900 dark:group-hover:stroke-red-900"
                                     >
                                         <path
                                             strokeLinecap="round"
@@ -260,12 +224,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                             d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
                                         />
                                     </svg>
-                                    Sponsor
+                                    Donate to the Black Scholars technology program
                                 </a>
                             </div>
                         </div>
 
-                        <div className="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
+                        <div className="ml-4 text-center text-base text-gray-800 dark:text-gray-800 sm:text-right sm:ml-0">
                             {/* Laravel v{laravelVersion} (PHP v{phpVersion}) */}
                         </div>
                     </div>

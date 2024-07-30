@@ -12,7 +12,7 @@ function classNames(...classes) {
 }
 
 export default function Dashboard({ auth }) {
-    // const {scholarships, totalApplications} = usePage().props;
+
     const {scholar} = usePage().props;
     const {scholarships} = usePage().props;
 

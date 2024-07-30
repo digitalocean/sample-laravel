@@ -37,5 +37,6 @@ class ApplicationController extends Controller {
             'applications' => new ApplicationCollection($selected),
         ]);
     }
+    
 }
 

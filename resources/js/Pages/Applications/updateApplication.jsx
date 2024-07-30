@@ -1,25 +1,26 @@
 import StudentAuthLayout from '@/Layouts/StudentAuthLayout';
+import { useState } from 'react'
 import { Head, useForm, Link, usePage } from "@inertiajs/react";
-import { UserCircleIcon, PhotoIcon } from "@heroicons/react/24/solid";
 import { Disclosure } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
+import { router } from '@inertiajs/react'
 
 export default function({auth, application}){
-
-    const { data, setData, post, processing, errors, reset } = useForm({
+    
+    const [ data, setData ] = useState({
         name: '',
         email: '',
         streetAddress: '',
         city: '',
         state: '',
-        zipCode: '',
+        zip: '',
         siblings: '',
         siblings_attending_college: '',
         college_choice: '',
         college_major: '',
         college_status: '',
-        college_choice2: '',
-        college_major2: '',
+        college_choice2:'',
+        college_major2: ' ',
         college_status2: '',
         college_choice3: '',
         college_major3: '',
@@ -30,17 +31,26 @@ export default function({auth, application}){
         act_scheduled: '',
         reference: '',
         reference_email: '',
-        reference_relationsship: '',
+        reference_relationship: '',
         reference2: '',
         reference_email2: '',
-        reference_relationsship2: '',
+        reference_relationship2: '',
         application_essay: '',
         community_service: '',
-    });
+    })
 
-    const submit = (e) => {
+    function handleChange(e) {
+        const key = e.target.id;
+        const value = e.target.value
+        setData(data => ({
+            ...data,
+            [key]: value,
+        }))
+      }
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('scholar.application.create'));
+        router.post(route('update.application.store'), [data]);
     };
 
     return (
@@ -53,22 +63,44 @@ export default function({auth, application}){
             <Head title="Application" />
             <div className="w-full px-6 py-6 mx-auto">
                 <div className="flex flex-wrap -mx-1">
-    <form onSubmit={submit}>
-      <div className="space-y-12">
-      {application?.map(({id, name, 
+    <form onSubmit={handleSubmit}>
+    {application?.map(({id, name, 
                             email, 
                             streetAddress, 
-                            zipCode, 
+                            zip, 
                             city,
-                            state
+                            state,
+                            act_scheduled,
+                            act_score,
+                            sat_scheduled,
+                            sat_score,
+                            siblings,
+                            siblings_attending_college,
+                            college_choice,
+                            college_major,
+                            college_status,
+                            college_choice2,
+                            college_major2,
+                            college_status2,
+                            college_choice3,
+                            college_major3,
+                            college_status3,
+                            reference,
+                            reference_email,
+                            reference_relationship,
+                            application_essay,
+                            community_service
                         }) => (
-            <>
-            <div key={id} className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+        <>
+
+      <div className="space-y-12">
+     
+            <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
                 <div>
                     <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
                     <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail. <br/>This information will only be shared with Blacks Scholars personnel and Selection Committee</p>
                 </div>
-
+            
                 <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
                     <div className="sm:col-span-3">
                     <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
@@ -76,14 +108,14 @@ export default function({auth, application}){
                     </label>
                     <div className="mt-2">
                         <input
-                        type="text"
-                        name="name"
-                        id="name"
-                        value={data.name}
-                        autoComplete="name"
-                        onChange={(e) => setData('name', e.target.value)}
-                        placeholder={name}
-                        className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            type="text"
+                            name="name"
+                            id="name"
+                            value={data.name}
+                            onChange={handleChange}
+                            autoComplete="name"
+                            placeholder={name}
+                            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 defaultValue:text-gray-600 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
                     </div>
@@ -99,6 +131,7 @@ export default function({auth, application}){
                         type="text"
                         value={data.email}
                         autoComplete="email"
+                        onChange={handleChange}
                         placeholder={email}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -116,7 +149,7 @@ export default function({auth, application}){
                         value={data.streetAddress}
                         id="streetAddress"
                         autoComplete="streetAddress"
-                        onChange={(e) => setData('streetAddress', e.target.value)}
+                        onChange={handleChange}
                         placeholder={streetAddress}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -133,8 +166,7 @@ export default function({auth, application}){
                         name="city"
                         value={data.city}
                         id="city"
-                        autoComplete="address-level2"
-                        onChange={(e) => setData('city', e.target.value)}
+                        onChange={handleChange}
                         placeholder={city}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -151,8 +183,7 @@ export default function({auth, application}){
                         name="state"
                         value={data.state}
                         id="state"
-                        autoComplete="address-level1"
-                        onChange={(e) => setData('state', e.target.value)}
+                        onChange={handleChange}
                         placeholder={state}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -160,18 +191,17 @@ export default function({auth, application}){
                     </div>
 
                     <div className="sm:col-span-2">
-                    <label htmlFor="zipCode" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="zip" className="block text-sm font-medium leading-6 text-gray-900">
                         ZIP / Postal code
                     </label>
                     <div className="mt-2">
                         <input
                         type="text"
-                        name="zipCode"
-                        value={data.zipCode}
-                        id="zipCode"
-                        autoComplete="zipCode"
-                        onChange={(e) => setData('zipCode', e.target.value)}
-                        placeholder={zipCode}
+                        name="zip"
+                        value={data.zip}
+                        id="zip"
+                        onChange={handleChange}
+                        placeholder={zip}
                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                     </div>
@@ -188,7 +218,8 @@ export default function({auth, application}){
                             value={data.siblings}
                             id="siblings"
                             autoComplete="siblings"
-                            onChange={(e) => setData('siblings', e.target.value)}
+                            onChange={handleChange}
+                            placeholder={siblings}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -204,7 +235,8 @@ export default function({auth, application}){
                             name="siblings_attending_college"
                             value={data.siblings_attending_college}
                             id="siblings_attending_college"
-                            onChange={(e) => setData('siblings_attending_college', e.target.value)}
+                            onChange={handleChange}
+                            placeholder={siblings_attending_college}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -245,9 +277,9 @@ export default function({auth, application}){
                                         type="text"
                                         name="college_choice"
                                         id="college_choice"
-                                        value={data.college_choice}
-                                        autoComplete="given-name"
-                                        onChange={(e) => setData('college_choice', e.target.value)}
+                                        value={data.college_choice }
+                                        onChange={handleChange}
+                                        placeholder={college_choice}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -263,7 +295,8 @@ export default function({auth, application}){
                                         name="college_major"
                                         value={data.college_major}
                                         id="college_major"
-                                        onChange={(e) => setData('college_major', e.target.value)}
+                                        onChange={handleChange}
+                                        placeholder={college_major}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -276,9 +309,10 @@ export default function({auth, application}){
                                         id="college_status"
                                         name="college_status"
                                         value={data.college_status}
-                                        onChange={(e) => setData('college_status', e.target.value)}
-                                        className="mt-2 block w-full h-10 rounded-md border-0 py-4 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        defaultValue="pending"
+                                        onChange={handleChange}
+                                        placeholder={college_status}
+                                        className="h-10 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                       
                                     >
                                         <option value='Not Started'>Not Started</option>
                                         <option value='Pending'>Pending</option>
@@ -314,8 +348,8 @@ export default function({auth, application}){
                                         name="college_choice2"
                                         id="colege_choice2"
                                         value={data.college_choice2}
-                                        onChange={(e) => setData('college_choice2', e.target.value)}
-                                        autoComplete="given-name"
+                                        onChange={handleChange}
+                                        placeholder={college_choice2}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -331,8 +365,8 @@ export default function({auth, application}){
                                         name="college_major2"
                                         id="college_major2"
                                         value={data.college_major2}
-                                        onChange={(e) => setData('college_major2', e.target.value)}
-                                        autoComplete="given-name"
+                                        onChange={handleChange}
+                                        placeholder={college_major2}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -345,9 +379,10 @@ export default function({auth, application}){
                                         id="college_status2"
                                         name="college_status2"
                                         value={data.college_status2}
-                                        onChange={(e) => setData('college_status2', e.target.value)}
+                                        onChange={handleChange}
+                                        placeholder={college_status2}
                                         className="h-10 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        defaultValue="Canada"
+                                       
                                     >
                                         <option value='Not Started'>Not Started</option>
                                         <option value='Pending'>Pending</option>
@@ -384,8 +419,8 @@ export default function({auth, application}){
                                         name="college_choice3"
                                         id="college_choice3"
                                         value={data.college_choice3}
-                                        autoComplete="college_choice3"
-                                        onChange={(e) => setData('college_choice3', e.target.value)}
+                                        onChange={handleChange}
+                                        placeholder={college_choice3}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -401,8 +436,8 @@ export default function({auth, application}){
                                         name="college_major3"
                                         id="college_major3"
                                         value={data.college_major3}
-                                        autoComplete="given-name"
-                                        onChange={(e) => setData('college_major3', e.target.value)}
+                                        onChange={handleChange}
+                                        placeholder={college_major3}
                                         className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                         />
                                     </div>
@@ -415,9 +450,10 @@ export default function({auth, application}){
                                         id="college_status3"
                                         name="college_status3"
                                         value={data.college_status3}
-                                        onChange={(e) => setData('college_status3', e.target.value)}
+                                        onChange={handleChange}
+                                        placeholder={college_status3}
                                         className="h-10 mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        defaultValue="Canada"
+                                        
                                     >
                                         <option value='Not Started'>Not Started</option>
                                         <option value='Pending'>Pending</option>
@@ -443,7 +479,8 @@ export default function({auth, application}){
                             name="sat_score"
                             value={data.sat_score}
                             id="sat_score"
-                            onChange={(e) => setData('sat_score', e.target.value)}
+                            onChange={handleChange}
+                            placeholder={sat_score}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -459,7 +496,8 @@ export default function({auth, application}){
                             name="sat_scheduled"
                             id="sat_scheduled"
                             value={data.sat_scheduled}
-                            onChange={(e) => setData('sat_scheduled', e.target.value)}
+                            onChange={handleChange}
+                            placeholder={sat_scheduled}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -475,7 +513,8 @@ export default function({auth, application}){
                             name="act_score"
                             id="act_score"
                             value={data.act_score}
-                            onChange={(e) => setData('act_score', e.target.value)}
+                            onChange={handleChange}
+                            placeholder={act_score}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -491,7 +530,8 @@ export default function({auth, application}){
                             name="act_scheduled"
                             id="act_scheduled"
                             value={data.act_scheduled}
-                            onChange={(e) => setData('act_scheduled', e.target.value)}
+                            onChange={handleChange}
+                            placeholder={act_scheduled}
                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
@@ -533,6 +573,9 @@ export default function({auth, application}){
                                             type="text"
                                             name="reference"
                                             id="reference"
+                                            value={data.reference}
+                                            onChange={handleChange}
+                                            placeholder={reference}
                                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                             />
                                         </div>
@@ -547,25 +590,32 @@ export default function({auth, application}){
                                             type="text"
                                             name="reference_email"
                                             id="reference_email"
+                                            value={data.reference_email}
+                                            onChange={handleChange}
+                                            placeholder={reference_email}
                                             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            
                                             />
                                         </div>
                                     </div>
                                     <div className="col-span-6">
-                                    <label htmlFor="reference_relationsship" className="block text-sm font-medium leading-6 text-gray-900">
+                                    <label htmlFor="reference_relationship" className="block text-sm font-medium leading-6 text-gray-900">
                                         How do you know the reference?
                                     </label>
                                     <select
-                                        id="reference_relationsship"
-                                        name="reference_relationsship"
+                                        id="reference_relationship"
+                                        name="reference_relationship"
+                                        onChange={handleChange}
+                                        value={reference_relationship}
+                                        placeholder={reference_relationship}
                                         className="mt-2 block w-full h-10 rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                        defaultValue="Employer"
+                                       
                                     >
-                                        <option>Teacher\Counsoler</option>
-                                        <option>Pastor</option>
-                                        <option>Employer</option>
-                                        <option>Family Friend</option>
-                                        <option>Other</option>
+                                        
+                                        <option value='Pastor'>Pastor</option>
+                                        <option value='Employer'>Employer</option>
+                                        <option value='Family Friend'>Family Friend</option>
+                                        <option value='other'>Other</option>
                                     </select>
                                     </div>
                             </div>
@@ -597,10 +647,11 @@ export default function({auth, application}){
                             id="application_essay"
                             name="application_essay"
                             value={data.application_essay}
-                            onChange={(e) => setData('application_essay', e.target.value)}
+                            onChange={handleChange}
                             rows={10}
-                            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            defaultValue={''}
+                            placeholder={application_essay}
+                            className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        
                             />
                         </div>
                         <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
@@ -615,10 +666,11 @@ export default function({auth, application}){
                             id="community_service"
                             name="community_service"
                             value={data.community_service}
-                            onChange={(e) => setData('community_service', e.target.value)}
+                            onChange={handleChange}
                             rows={10}
-                            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                            defaultValue={''}
+                            placeholder={community_service}
+                            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        
                             />
                         </div>
                             <p className="mt-3 text-sm leading-6 text-gray-600">List your communinity Service ex:Company name, Jobtile, date,</p>
@@ -629,7 +681,6 @@ export default function({auth, application}){
                             Cancel
                             </button> */}
                             <button
-                            href={submit}
                             type="submit"
                             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
@@ -639,9 +690,10 @@ export default function({auth, application}){
                     </div>
                     
             </div>
-            </>
-        ))}
+       
       </div>
+        </>
+    ))}
     </form>
                 </div>
             </div>

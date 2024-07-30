@@ -53,8 +53,10 @@ Route::middleware(['auth', 'verified', 'role:scholar'])->group(function (){
     Route::controller(ScholarController::class)->group(function () {
         Route::get('scholars/dashboard', 'index')->name('scholar.dashboard');
         Route::get('scholars/application', 'scholarsApplication')->name('scholar.application');
-        Route::get('scholars/list', 'scholarshipList')->name('scholar.list');
         Route::post('scholars/application/create', 'storeScholarship')->name('scholar.application.create');
+        Route::get('scholars/update', 'updateApplication')->name('update.application');
+        Route::post('scholars/update/store', 'updateStore')->name('update.application.store');
+        Route::get('scholars/list', 'scholarshipList')->name('scholar.list');
         Route::get('scholars/view{scholarship}', 'scholarshipView')->name('scholar.application.view');
         Route::get('scholars/apply{scholarship}', 'applyScholarship')->name('scholar.apply');
     });

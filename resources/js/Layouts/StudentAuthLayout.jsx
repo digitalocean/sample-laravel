@@ -14,7 +14,7 @@ import { Bars3Icon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 
 const navigation = [
     { name: 'Home', href:'dashboard', icon: FolderIcon, current: false },
-    { name: 'Application', href:'application', icon: ClipboardDocumentIcon, current: false },
+    { name: 'Application', href:'update', icon: ClipboardDocumentIcon, current: false },
     { name: 'Available Scholarships', href:'list', icon: ClipboardDocumentIcon, current: false },
   ]
   const teams = [

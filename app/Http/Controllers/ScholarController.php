@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ApplicationCollection;
 use App\Http\Resources\ScholarCollection;
 use App\Http\Resources\ScholarResource;
+use App\Http\Resources\ApplicationResource;
 use App\Models\Application;
 use App\Models\Requirementcriteria;
 use App\Models\Scholar;
@@ -56,12 +58,12 @@ class ScholarController extends Controller {
 
     public function storeScholarship(Request $request) {
         $user = Auth::user();
-        //$a = $request->all(); dd($a);
+        $a = $request->all(); 
         // Get Scholars data buy user_id
         $scholar = Scholar::where('user_id', $user->id)->get();
 
         // create or update application froms scholars id
-        $application = DB::table('applications')
+        DB::table('applications')
               ->where('id', $scholar[0]['application_id'])
               ->updateOrInsert([ 'name' => $request->name ],
                     [
@@ -108,6 +110,58 @@ class ScholarController extends Controller {
            
             return to_route('scholar.list');
     }
+
+    public function updateApplication() {
+        $user = Auth::user();
+        $preScholar = Scholar::where('user_id', $user->id)->get();
+        $application = Application::where('id', $preScholar[0]['application_id'])->get(); //dd($application[0]->name);
+
+        return Inertia::render('Applications/updateApplication', [
+            'application' => $application,
+        ]);
+    }
+
+    public function updateStore(Request $request){
+        $user = Auth::user();
+        $a = $request->all(); //dd($a);
+        $scholar = Scholar::where('user_id', $user->id)->get(); //dd($scholar[0]['application_id']);
+        $app = Application::find($scholar[0]['application_id']);
+        if( $a[0]['name'] != Null  ){ $app->name = $a[0]['name']; }
+        if( $a[0]['email'] != Null  ){ $app->email = $a[0]['email']; }
+        if( $a[0]['streetAddress'] != Null  ){ $app->streetAddress = $a[0]['streetAddress']; }
+        if( $a[0]['city'] != Null  ){ $app->city = $a[0]['city']; }
+        if( $a[0]['state'] != Null  ){ $app->state = $a[0]['state']; }
+        if( $a[0]['zip'] != Null  ){ $app->zip = $a[0]['zip']; }
+        if( $a[0]['act_scheduled'] != Null  ){ $app->act_scheduled = $a[0]['act_scheduled']; }
+        if( $a[0]['act_score'] != Null  ){ $app->act_score = $a[0]['act_score']; }
+        if( $a[0]['sat_scheduled'] != Null  ){ $app->sat_scheduled = $a[0]['sat_scheduled']; }
+        if( $a[0]['sat_score'] != Null  ){ $app->sat_score = $a[0]['sat_score']; }
+        if( $a[0]['siblings'] != Null  ){ $app->siblings = $a[0]['siblings']; }
+        if( $a[0]['siblings_attending_college'] != Null  ){ $app->siblings_attending_college = $a[0]['siblings_attending_college']; }
+        if( $a[0]['college_choice'] != Null  ){ $app->college_choice = $a[0]['college_choice']; }
+        if( $a[0]['college_major'] != Null  ){ $app->college_major = $a[0]['college_major']; }
+        if( $a[0]['college_status'] != Null  ){ $app->college_status = $a[0]['college_status']; }
+        if( $a[0]['college_choice2'] != Null  ){ $app->college_choice2 = $a[0]['college_choice2']; }
+        if( $a[0]['college_major2'] != Null  ){ $app->college_major2 = $a[0]['college_major2']; }
+        if( $a[0]['college_status2'] != Null  ){ $app->college_status2 = $a[0]['college_status2']; }
+        if( $a[0]['college_choice3'] != Null  ){ $app->college_choice3 = $a[0]['college_choice3']; }
+        if( $a[0]['college_major3'] != Null  ){ $app->college_major3 = $a[0]['college_major3']; }
+        if( $a[0]['college_status3'] != Null  ){ $app->college_status3 = $a[0]['college_status3']; }
+        if( $a[0]['reference'] != Null  ){ $app->reference = $a[0]['reference']; }
+        if( $a[0]['reference_email'] != Null  ){ $app->reference_email = $a[0]['reference_email']; }
+        if( $a[0]['reference_relationship'] != Null  ){ $app->reference_relationship = $a[0]['reference_relationship']; }
+        // if( $a[0]['reference2'] != Null  ){ $app->reference2 = $a[0]['reference2']; }
+        // if( $a[0]['reference_email2'] != Null  ){ $app->reference_email2 = $a[0]['reference_email2']; }
+        // if( $a[0]['reference_relationship2'] != Null  ){ $app->reference_relationship2 = $a[0]['reference_relationship2']; }
+        if( $a[0]['application_essay'] != Null  ){ $app->application_essay = $a[0]['application_essay']; }
+        if( $a[0]['community_service'] != Null  ){ $app->community_service = $a[0]['community_service']; }
+
+        $app->save();
+
+        dd('We saved check db');
+
+    }
+
 
     public function scholarshipList() {
         $scholarship = Scholarship::get();
