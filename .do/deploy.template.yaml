@@ -1,5 +1,5 @@
 spec:
-  name: sample-laravel
+  name: urban-league-admin-panel
   services:
   - environment_slug: php
     git:
