@@ -53,9 +53,48 @@ class MealsController extends BaseController {
             'MealType' => $request->MealType,
         ]);
 
+        // Add new meal to Mongodb meals table.
+
         $success['token'] =  $meal->Cuisine;
         return $this->sendResponse($success, 'User registered successfully.');
     }
+
+    /**
+     * Update Meals.
+     *
+     * Returns meals
+     */
+    #[OpenApi\Operation(tags: ['Meals'])]
+    public function editMeals(Meal $meal){
+
+        $ml = Meal::find($meal);
+
+        $output = [
+            'meals' => $ml,
+        ];
+        return $this->sendResponse($output, 'Meal retrieved succesfully');
+    }
+
+    /**
+     * Update Meals.
+     *
+     * Returns meals
+     */
+    #[OpenApi\Operation(tags: ['Meals'])]
+    // #[OpenApi\Parameters(factory: CreateMealsParameters::class)]
+    public function updateMeals(Request $request) {
+dd('hello homie');
+        $ml = Meal::find($request->id); dd('helo');
+        dd($request->all());
+        if($request['Cuisine'])
+
+        $output = [
+            'meals' => $ml,
+        ];
+        return $this->sendResponse($output, 'Meal retrieved succesfully');
+    }
+
+    
 
 
 }

@@ -12,6 +12,7 @@ use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\OrdersController;
 use App\Http\Controllers\API\DiscountController;
 use App\Http\Controllers\API\RestockController;
+use App\Http\Controllers\API\ChargesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,15 @@ Route::post('/mobile-payment-intent', [PaymentController::class, 'makePaymentInt
 // Customer Service application
 Route::post('application', [CustomerController::class, 'franchiseeApplication']);
 
+//Stripe additional data
+Route::get('charges/stripe', [ChargesController::class, 'updateCustomer']);
+
+// test apis
+Route::get('edit/meals/{meal}', [MealsController::class, 'editMeals']);
+Route::post('update/meals', [MealsController::class, 'updateMeals']);
+
+
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/refresh-token', [UserAuthController::class, 'refreshToken']);
 });
@@ -90,3 +100,7 @@ Route::middleware('auth:sanctum')->group(function() {
     // wallet process
     Route::post('/wallet/addfunds', [PaymentController::class, 'userAddFunds']);
 });
+
+
+
+

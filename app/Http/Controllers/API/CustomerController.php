@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Account;
 use App\Models\Application;
+use App\Models\Customer;
 use GuzzleHttp\Promise\Create;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
