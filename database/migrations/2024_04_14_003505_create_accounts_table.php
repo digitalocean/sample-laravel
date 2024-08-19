@@ -36,20 +36,21 @@ return new class extends Migration
             $table->String('KioskType');
             $table->String('KioskNumber');
             $table->String('KioskAddress');
-            $table->String('City', 150);
-            $table->String('State', 20);
-            $table->String('Zip', 10);
-            $table->String('Longitude');
-            $table->String('Latitude');
-            $table->String('Status', 10);
-            $table->String('TotalMeals', 5);
-            $table->String('TotalSold', 5);
+            $table->String('City', 150)->nullable();
+            $table->String('State', 20)->nullable();
+            $table->String('Zip', 10)->nullable();
+            $table->String('Longitude')->nullable();
+            $table->String('Latitude')->nullable();
+            $table->String('Status', 10)->default('offline');
+            $table->String('TotalMeals', 5)->nullable();
+            $table->String('TotalSold', 5)->nullable();
             $table->timestamps();
         });
 
         Schema::create('orders', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('kiosk_id');
+            $table->String('kiosk_name');
             $table->String('OrderNumber');
             $table->String('MealName');
             $table->String('Category');

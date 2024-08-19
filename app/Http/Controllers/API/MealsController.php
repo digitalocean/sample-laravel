@@ -82,11 +82,17 @@ class MealsController extends BaseController {
      */
     #[OpenApi\Operation(tags: ['Meals'])]
     // #[OpenApi\Parameters(factory: CreateMealsParameters::class)]
-    public function updateMeals(Request $request) {
-dd('hello homie');
-        $ml = Meal::find($request->id); dd('helo');
-        dd($request->all());
-        if($request['Cuisine'])
+    public function updateMeals(Request $request, $id) {
+        $a = $request->all();
+        $ml = Meal::find($id);
+        if($a['Cuisine'] != Null){$ml->Cuisine = $a['Cuisine'];}
+        if($a['Category'] != Null){$ml->Cuisine = $a['Category'];}
+        if($a['Calories'] != Null){$ml->Cuisine = $a['Calories'];}
+        if($a['Description'] != Null){$ml->Cuisine = $a['Description'];}
+        if($a['Price'] != Null){$ml->Cuisine = $a['Price'];}
+        if($a['NutritionalValue'] != Null){$ml->Cuisine = $a['NutritionalValue'];}
+        if($a['MealType'] != Null){$ml->Cuisine = $a['MealType'];}
+        $ml->save();
 
         $output = [
             'meals' => $ml,
@@ -94,6 +100,20 @@ dd('hello homie');
         return $this->sendResponse($output, 'Meal retrieved succesfully');
     }
 
+    /**
+     * Destroy Meal.
+     *
+     * Deleted meal response
+     */
+    #[OpenApi\Operation(tags: ['Meals'])]
+    public function delete($id) {
+        $meal = Meal::destroy($id);
+
+        $output = [
+            'meals' => 'Success',
+        ];
+        return $this->sendResponse($output, 'Meal has been deleted');
+    }
     
 
 

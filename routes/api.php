@@ -57,10 +57,6 @@ Route::post('application', [CustomerController::class, 'franchiseeApplication'])
 //Stripe additional data
 Route::get('charges/stripe', [ChargesController::class, 'updateCustomer']);
 
-// test apis
-Route::get('edit/meals/{meal}', [MealsController::class, 'editMeals']);
-Route::post('update/meals', [MealsController::class, 'updateMeals']);
-
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -80,17 +76,27 @@ Route::middleware('auth:sanctum')->group(function() {
     // Kiosk Calls
     Route::post('create/kiosk', [KioskController::class, 'createKiosk']);
     Route::get('kiosks', [KioskController::class, 'index']);
+    Route::get('edit/kiosks/{kiosk}', [KioskController::class, 'editKiosk']);
+    Route::post('update/kiosks/{id}', [KioskController::class, 'updateKiosk']);
+    Route::get('delete/kiosks/{id}', [KioskController::class, 'delete']);
 
     // Order calls
     Route::get('orders', [OrdersController::class, 'orders']);
     Route::get('order/{order}', [OrdersController::class, 'orderNumber']);
 
+    // Reports
+    Route::get('reports/orders/{account}', [OrdersController::class, 'orderReports']);
+
     // meal calls
     Route::get('meals', [MealsController::class, 'meals']);
     Route::post('create/meals', [MealsController::class, 'createMeals']);
+    Route::get('edit/meals/{meal}', [MealsController::class, 'editMeals']);
+    Route::post('update/meals/{id}', [MealsController::class, 'updateMeals']);
+    Route::get('delete/meals/{id}', [KioskController::class, 'delete']);
 
     // Restock tranactions
     Route::get('restock/tranactions/{kiosk}', [RestockController::class, 'restock']);
+    Route::post('create/restock/{kiosk}', [RestockController::class, 'createRestock']);
 
     // Discount Franchisee request
     Route::post('create/discount', [DiscountController::class, 'createDiscount']);

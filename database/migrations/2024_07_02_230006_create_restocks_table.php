@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('restocks', function (Blueprint $table) {
             $table->id();
             $table->foreignUlid('kiosk_id');
+            $table->String('machineID', 150);
             $table->String('restockId', 150);
             $table->String('kioskName', 150);
             $table->String('mealName', 150);
-            $table->String('category', 150);
+            $table->String('category', 150)->nullable();
             $table->String('qty', 10);
             $table->String('deliverName', 50);
             $table->String('status');
