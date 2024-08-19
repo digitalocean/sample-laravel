@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Account;
 use App\Models\User;
+use App\Models\Customer;
 use Error;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 use App\OpenApi\Parameters\Stripe\PaymentsParameters;
@@ -36,10 +37,36 @@ class PaymentController extends BaseController {
 
         header('Content-Type: application/json');
 
-        try {
+          // check customers table by email return customerID
+            // else null Create Customer with fullname, email, 
+            $customer = Customer::where('email', $request->get('email'))->get();
             
+            if ($customer->isEmpty()) {
+                $cust = $stripe->customers->create();
+                $customer = $cust->id;
+                Customer::create([
+                    'fullname' => $request->get('fullname'),
+                    'email' => $request->get('email'),
+                    'balance' => 0,
+                    'customerId' => $customer,
+                ]);
+
+            } else {
+                $customerID = $customer[0]['customerId'];
+            }
+            // Save customer to customers table with fullname, email, customerId
+            
+
+        try {
+            $ephemeralKey = $stripe->ephemeralKeys->create([
+                'customer' => $customerID,
+                ], [
+                'stripe_version' => '2022-08-01',
+            ]);
+
             $paymentIntent = $stripe->paymentIntents->create([
                 // 'amount' => calculateOrderAmount($jsonObj->items),
+                'customer' => $customerID,
                 'amount' => $request->get('amount'),
                 'currency' => 'usd',
                 // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
@@ -50,6 +77,8 @@ class PaymentController extends BaseController {
         
             $output = [
                 'clientSecret' => $paymentIntent->client_secret,
+                'ephemeralKey' => $ephemeralKey->secret,
+                'customer' => $customerID,
             ];
         
             echo json_encode($output);

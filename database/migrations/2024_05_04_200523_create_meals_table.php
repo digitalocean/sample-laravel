@@ -20,6 +20,7 @@ return new class extends Migration
             $table->String('Price', 6);
             $table->String('NutritionalValue', 5);
             $table->String('MealType', 10);
+            $table->String('productID', 10);
             $table->timestamps();
         });
 

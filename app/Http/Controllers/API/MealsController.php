@@ -53,9 +53,68 @@ class MealsController extends BaseController {
             'MealType' => $request->MealType,
         ]);
 
+        // Add new meal to Mongodb meals table.
+
         $success['token'] =  $meal->Cuisine;
         return $this->sendResponse($success, 'User registered successfully.');
     }
+
+    /**
+     * Update Meals.
+     *
+     * Returns meals
+     */
+    #[OpenApi\Operation(tags: ['Meals'])]
+    public function editMeals(Meal $meal){
+
+        $ml = Meal::find($meal);
+
+        $output = [
+            'meals' => $ml,
+        ];
+        return $this->sendResponse($output, 'Meal retrieved succesfully');
+    }
+
+    /**
+     * Update Meals.
+     *
+     * Returns meals
+     */
+    #[OpenApi\Operation(tags: ['Meals'])]
+    // #[OpenApi\Parameters(factory: CreateMealsParameters::class)]
+    public function updateMeals(Request $request, $id) {
+        $a = $request->all();
+        $ml = Meal::find($id);
+        if($a['Cuisine'] != Null){$ml->Cuisine = $a['Cuisine'];}
+        if($a['Category'] != Null){$ml->Cuisine = $a['Category'];}
+        if($a['Calories'] != Null){$ml->Cuisine = $a['Calories'];}
+        if($a['Description'] != Null){$ml->Cuisine = $a['Description'];}
+        if($a['Price'] != Null){$ml->Cuisine = $a['Price'];}
+        if($a['NutritionalValue'] != Null){$ml->Cuisine = $a['NutritionalValue'];}
+        if($a['MealType'] != Null){$ml->Cuisine = $a['MealType'];}
+        $ml->save();
+
+        $output = [
+            'meals' => $ml,
+        ];
+        return $this->sendResponse($output, 'Meal retrieved succesfully');
+    }
+
+    /**
+     * Destroy Meal.
+     *
+     * Deleted meal response
+     */
+    #[OpenApi\Operation(tags: ['Meals'])]
+    public function delete($id) {
+        $meal = Meal::destroy($id);
+
+        $output = [
+            'meals' => 'Success',
+        ];
+        return $this->sendResponse($output, 'Meal has been deleted');
+    }
+    
 
 
 }
