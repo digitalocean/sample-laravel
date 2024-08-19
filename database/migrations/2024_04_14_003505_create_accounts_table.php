@@ -50,7 +50,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('kiosk_id');
-            $table->String('kiosk_name');
+            $table->String('kioskName', 25)->nullable();
             $table->String('OrderNumber');
             $table->String('MealName');
             $table->String('Category');
