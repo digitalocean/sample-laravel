@@ -156,7 +156,7 @@ class AccountController extends BaseController {
     public function kioskSales(Account $account) {
         $acct = $account;
         // all kiosk associated
-        $all = DB::table('kiosks')
+        $all = DB::table('kiosks')->where("Account_id", $acct)
             ->join('orders', 'kiosks.id', '=', 'orders.kiosk_id')
             ->select('kiosks.KioskNumber', 'kiosks.Account_id', 'orders.Account_id', 'orders.id', 'orders.OrderNumber', 'orders.MealName', 'orders.Category','orders.Amount', 'orders.ProductID', 'orders.Quantity', 'orders.created_at')
             ->get();
