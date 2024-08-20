@@ -70,19 +70,29 @@ class UserAuthController extends BaseController {
         // check if token is valid
         
         $authUser = auth()->user();
-        $j = $authUser->tokens->last()->whereBetween('expires_at', [$minus, $expire]);
-        if( $j = Null ){
-            $token = $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
-        } else {
-            $token = 'Null';
+        $j = $authUser->tokens->whereNotNull()->last();
+        //$N = $authUser->tokens->last()->whereNotNull('expires_at')->get();
+        //$b = $authUser->tokens->last()->whereBetween('expires_at', [$minus, $expire]);
+        if( !empty($j) && $authUser->tokens->last()->whereBetween('expires_at', [$minus, $expire]) ) {
+            
+                $answer = 'hello';
+        
+        }  else {
+
+            $answer = $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
         }
+
+            
+    
+        
+       
         
         //$refreshToken = $user->createToken('refresh_token', ['token-refresh'], Carbon::now()->addMinutes(config('sanctum.rt_expiration')))->plainTextToken;
         $output = [
             'id' => $account->id,
             'Name' => $account->name,
             'WalletAmount' => $account->WalletAmout,
-            'token' => $token,
+            'token' => $answer,
             // 'user' => $user,
             //'refreshToken' => $refreshToken,            
         ];
