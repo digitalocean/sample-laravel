@@ -68,40 +68,59 @@ class OrdersController extends BaseController
         foreach( $kioskGroup as $y ) {
             $a = $y[0]['kioskName'];
             $b = $y->where('Time', $today)->sum('Quantity');
-            $meal = $y->where('Time', $today)->select('MealName', 'Category');
-            $MealsRanking = $y->where('Time', $today)->countBy('Category');
+            $report = DB::table('orders')->where('kioskName', $a)->where('Time', $today)
+            ->selectRaw('count(Category) as number_of_orders, MealName , Category')
+            ->groupBy('MealName', 'Category')
+            ->havingBetween('number_of_orders', [1, 100])
+            ->get();
+            
             $TotalSales = $y->where('Time', $today)->sum('Amount');
-            $todaySales[] = Arr::add(['kioskname' => $a, 'TotalSales' => $b, 'Dollars' => $TotalSales, 'Meals' => $meal], 'topcategories', $MealsRanking);
+            $todaySales[] = Arr::add(['kioskname' => $a, 'TotalSales' => $b, 'Dollars' => $TotalSales], 'Topcategories', $report );
         }
 
         $yesterdaySales = [];
         foreach( $kioskGroup as $y ) {
             $a = $y[0]['kioskName'];
             $b = $y->whereBetween('Time', [$yesterday, $today])->sum('Quantity');
-            $meal = $y->whereBetween('Time', [$yesterday, $today])->select('MealName', 'Category');
-            $MealsRanking = $y->whereBetween('Time', [$yesterday, $today])->countBy('Category');
+           
+            $report = DB::table('orders')->where('kioskName', $a)->whereBetween('Time', [$yesterday, $today])
+            ->selectRaw('count(Category) as number_of_orders, MealName , Category')
+            ->groupBy('MealName', 'Category')
+            ->havingBetween('number_of_orders', [1, 100])
+            ->get();
+                 
             $TotalSales = $y->whereBetween('Time', [$yesterday, $today])->sum('Amount');
-            $yesterdaySales[] = Arr::add(['kioskname' => $a, 'TotalSales' => $b, 'Dollars' => $TotalSales, 'Meals' => $meal], 'topcategories', $MealsRanking);
+            $yesterdaySales[] = Arr::add(['kioskname' => $a, 'TotalSales' => $b, 'Dollars' => $TotalSales], 'Topcategories', $report );
         }
         
         $weekSales = [];
         foreach( $kioskGroup as $w ) {
             $a = $w[0]['kioskName'];
             $b = $w->whereBetween('Time', [$week, $today])->sum('Quantity');
-            $meal = $w->whereBetween('Time', [$week, $today])->select('MealName', 'Category');
-            $MealsRanking = $w->whereBetween('Time', [$week, $today])->countBy('Category');
+            
+            $report = DB::table('orders')->where('kioskName', $a)->whereBetween('Time', [$week, $today])
+            ->selectRaw('count(Category) as number_of_orders, MealName , Category')
+            ->groupBy('MealName', 'Category')
+            ->havingBetween('number_of_orders', [1, 100])
+            ->get();
+            
             $TotalSales = $w->whereBetween('Time', [$week, $today])->sum('Amount');
-            $weekSales[] = Arr::add(['kioskname' => $a, 'TotalSales' => $b, 'Dollars' => $TotalSales, 'Meals' => $meal], 'topcategories', $MealsRanking);
+            $weekSales[] = Arr::add(['kioskname' => $a, 'TotalSales' => $b, 'Dollars' => $TotalSales],  'Topcategories', $report );
         }
 
         $MonthSales = [];
         foreach( $kioskGroup as $i ){
             $a = $i[0]['kioskName'];
             $b = $i->whereBetween('Time', [$from, $to])->sum('Quantity');
-            $meal = $i->whereBetween('Time', [$from, $to])->select('MealName', 'Category');
-            $MealsRanking = $i->whereBetween('Time', [$from, $to])->countBy('Category');
+            
+            $report = DB::table('orders')->where('kioskName', $a)->whereBetween('Time', [$from, $to])
+            ->selectRaw('count(Category) as number_of_orders, MealName , Category')
+            ->groupBy('MealName', 'Category')
+            ->havingBetween('number_of_orders', [1, 100])
+            ->get();
+
             $TotalSales = $i->whereBetween('Time', [$from, $to])->sum('Amount');
-            $MonthSales[] = Arr::add(['kioskname' => $a, 'TotalSales' => $b, 'Dollars' => $TotalSales, 'Meals' => $meal], 'topcategories', $MealsRanking);
+            $MonthSales[] = Arr::add(['kioskname' => $a, 'TotalSales' => $b, 'Dollars' => $TotalSales], 'Topcategories', $report );
         }
         
 
