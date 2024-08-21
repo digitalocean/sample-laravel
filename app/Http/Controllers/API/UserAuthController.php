@@ -83,7 +83,7 @@ class UserAuthController extends BaseController {
         // }
 
             
-        $answer = $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
+        $token= $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
         
        
         
@@ -92,7 +92,7 @@ class UserAuthController extends BaseController {
             'id' => $account->id,
             'Name' => $account->name,
             'WalletAmount' => $account->WalletAmout,
-            'token' => $answer,
+            'token' => $token,
             // 'user' => $user,
             //'refreshToken' => $refreshToken,            
         ];
