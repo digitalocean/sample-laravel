@@ -65,25 +65,25 @@ class UserAuthController extends BaseController {
         $user = User::where('email', $request['email'])->firstOrFail();
         $account = Account::where('user_id', $user->id)->firstOrFail();
 
-        $minus = Carbon::now()->subDays(13); 
-        $expire = Carbon::now()->subDays(1); 
-        // check if token is valid
+        // $minus = Carbon::now()->subDays(13); 
+        // $expire = Carbon::now()->subDays(1); 
+        // // check if token is valid
         
-        $authUser = auth()->user();
-        $j = $authUser->tokens->whereNotNull()->last();
-        //$N = $authUser->tokens->last()->whereNotNull('expires_at')->get();
-        //$b = $authUser->tokens->last()->whereBetween('expires_at', [$minus, $expire]);
-        if( !empty($j) && $authUser->tokens->last()->whereBetween('expires_at', [$minus, $expire]) ) {
+        // $authUser = auth()->user();
+        // $j = $authUser->tokens->whereNotNull()->last();
+        // //$N = $authUser->tokens->last()->whereNotNull('expires_at')->get();
+        // //$b = $authUser->tokens->last()->whereBetween('expires_at', [$minus, $expire]);
+        // if( !empty($j) && $authUser->tokens->last()->whereBetween('expires_at', [$minus, $expire]) ) {
             
-                $answer = 'hello';
+        //         $answer = 'hello';
         
-        }  else {
+        // }  else {
 
-            $answer = $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
-        }
+        //     $answer = $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
+        // }
 
             
-    
+        $answer = $user->createToken('api_token', ['api-access'], Carbon::now()->addMinutes(config('sanctum.ac_expiration')))->plainTextToken;
         
        
         
