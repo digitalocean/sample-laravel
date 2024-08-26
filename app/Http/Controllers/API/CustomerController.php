@@ -57,4 +57,5 @@ class CustomerController extends BaseController
 
         return $this->sendResponse($output, 'Application submitted succesfully.'); 
     }
+
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\API\OrdersController;
 use App\Http\Controllers\API\DiscountController;
 use App\Http\Controllers\API\RestockController;
 use App\Http\Controllers\API\ChargesController;
+use App\Http\Controllers\API\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('update/franchisee', [AccountController::class, 'updateFranchisee']);
     Route::get('accounts/{account}', [AccountController::class, 'franchiseAccount']); 
     Route::get('accounts/products/{account}', [AccountController::class, 'franchiseeProducts']);
-    Route::get('accounts/profile/{account}', [AccountController::class, 'franchiseeProfile']);  
+    Route::get('accounts/profile/{account}', [AccountController::class, 'franchiseeProfile']);
 
     //Kisok and meals driect Reports
     Route::get('accounts/sales/{account}', [AccountController::class, 'kioskSales']);
@@ -86,6 +87,11 @@ Route::middleware('auth:sanctum')->group(function() {
 
     // Reports
     Route::get('reports/orders/{account}', [OrdersController::class, 'orderReports']);
+
+    // Franchisee Feedback
+    Route::get('feedback', [FeedbackController::class, 'allFeedback']);
+    Route::post('submit/feedback/{account}', [FeedbackController::class, 'feedbackFranchisee']);
+    Route::get('feedback/{account}', [FeedbackController::class, 'accountUserFeedback']);
 
     // meal calls
     Route::get('meals', [MealsController::class, 'meals']);
