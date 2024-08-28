@@ -14,6 +14,7 @@ use App\Http\Controllers\API\DiscountController;
 use App\Http\Controllers\API\RestockController;
 use App\Http\Controllers\API\ChargesController;
 use App\Http\Controllers\API\FeedbackController;
+use App\Http\Controllers\API\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('accounts/{account}', [AccountController::class, 'franchiseAccount']); 
     Route::get('accounts/products/{account}', [AccountController::class, 'franchiseeProducts']);
     Route::get('accounts/profile/{account}', [AccountController::class, 'franchiseeProfile']);
+    Route::post('create/pin/{account}', [AccountController::class, 'createAccountPin']);
+    Route::post('confirmation/pin/{account}', [AccountController::class, 'verifyPin']);
 
     //Kisok and meals driect Reports
     Route::get('accounts/sales/{account}', [AccountController::class, 'kioskSales']);
@@ -85,6 +88,9 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('orders', [OrdersController::class, 'orders']);
     Route::get('order/{order}', [OrdersController::class, 'orderNumber']);
 
+    // Category
+    Route::get('categories/list', [CategoryController::class, 'index']);
+
     // Reports
     Route::get('reports/orders/{account}', [OrdersController::class, 'orderReports']);
 
@@ -92,8 +98,9 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('feedback', [FeedbackController::class, 'allFeedback']);
     Route::post('submit/feedback/{account}', [FeedbackController::class, 'feedbackFranchisee']);
     Route::get('feedback/{account}', [FeedbackController::class, 'accountUserFeedback']);
+    Route::get('feedback/delete/{account}', [FeedbackController::class, 'deleteFeedback']);
 
-    // meal calls
+    //meal calls
     Route::get('meals', [MealsController::class, 'meals']);
     Route::post('create/meals', [MealsController::class, 'createMeals']);
     Route::get('edit/meals/{meal}', [MealsController::class, 'editMeals']);
@@ -109,6 +116,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
     // member payment 
     Route::post('/member-payment', [PaymentController::class, 'memberPayment']);
+    
     // wallet process
     Route::post('/wallet/addfunds', [PaymentController::class, 'userAddFunds']);
 });

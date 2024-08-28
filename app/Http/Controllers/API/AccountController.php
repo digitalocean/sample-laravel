@@ -212,4 +212,64 @@ class AccountController extends BaseController {
         return $this->sendResponse($output, 'Franchisee Account retrieved successfully.');
     }
 
+    public function createAccountPin(Request $request, Account $account) {
+        $acct  = $account;
+        $request->validate([
+            'pin' => 'required|string|max:6',
+            'pinConfirmation' => 'required|string|max:6'
+        ]);
+        $newpin =  $request->pin;
+        $pinConfirmation = $request->pinConfirmation;
+
+        if( $newpin === $pinConfirmation) {
+            
+            $pinInsert = Account::find($acct->id); 
+            $pinInsert->pin = $request->pin;
+            $pinInsert->save();
+
+            $output = [
+                'pin' => $pinInsert->pin,
+            ];
+    
+            return $this->sendResponse($output, 'Pin created retrieved successfully.');
+       
+        } else {
+
+            $output = [
+                'pin' => 'Error',
+            ];
+    
+            return $this->sendResponse($output, 'Confirmation does not match');
+        }
+    }
+
+    public function verifyPin(Request $request, Account $account) {
+        $acct  = $account;
+        $request->validate([
+            'pin' => 'required|string|max:6',
+        ]);
+        $newpin =  $request->pin;
+        $pinaccount = Account::where('id', $acct->id)->get();
+
+        if( $newpin === $pinaccount[0]['pin']) {
+            $output = [
+                'pin' => 'Confirmend',
+            ];
+            return $this->sendResponse($output, 'Pin Confirmned successfully.');       
+        } else {
+
+            $output = [
+                'pin' => 'Error',
+            ];
+
+            return $this->sendResponse($output, 'Confirmation does not match');
+        }
+
+        $output = [
+            'pin' => $pinaccount,
+        ];
+
+        return $this->sendResponse($output, 'Pin created retrieved successfully.');
+    }
+
 }

@@ -69,4 +69,24 @@ class FeedbackController extends BaseController
         return $this->sendResponse($output, 'Feedback submitted succesfully.'); 
 
     }
+
+    /**
+     * delete Feedback.
+     *
+     * Returns application submitted
+     */
+    #[OpenApi\Operation(tags: ['feedback'])]
+    public function deleteFeedback(Feedback $feedback) {
+        
+        $feedback = Feedback::find($feedback);
+        $feedback->delete();
+        $output = [
+            'feedback' => 'destroyed',
+        ];
+
+        return $this->sendResponse($output, 'Current Feeadbak entry destroyed succesfully.'); 
+
+    }
+
+    
 }
