@@ -231,7 +231,7 @@ class AccountController extends BaseController {
                 'pin' => $pinInsert->pin,
             ];
     
-            return $this->sendResponse($output, 'Pin created retrieved successfully.');
+            return $this->sendResponse($output, 'Pin created successfully.');
        
         } else {
 

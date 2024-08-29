@@ -58,6 +58,11 @@ return [
                     'name' => 'Restock Transactions',
                     'description' => 'Application restocking of kiosk transactions',
                 ],
+
+                [
+                    'name' => 'Faq',
+                    'description' => 'Faq for kiosk and consumers',
+                ],
                 
 
             ],

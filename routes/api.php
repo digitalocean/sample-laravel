@@ -15,6 +15,7 @@ use App\Http\Controllers\API\RestockController;
 use App\Http\Controllers\API\ChargesController;
 use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\FaqController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,11 @@ Route::middleware('auth:sanctum')->group(function() {
     // Category
     Route::get('categories/list', [CategoryController::class, 'index']);
 
+    // faq
+    Route::get('faq/list', [FaqController::class, 'index']);
+    Route::post('faq/create', [FaqController::class, 'createFaq']);
+    Route::post('faq/update', [FaqController::class, 'updateFaq']);
+    Route::get('faq/delete', [FaqController::class, 'deleteFaq']);
     // Reports
     Route::get('reports/orders/{account}', [OrdersController::class, 'orderReports']);
 
