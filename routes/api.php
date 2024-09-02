@@ -68,7 +68,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('accounts', [AccountController::class, 'index']);
     Route::post('create/franchisee', [AccountController::class, 'createFranchisee']);
-    Route::post('update/franchisee', [AccountController::class, 'updateFranchisee']);
+    Route::post('update/franchisee/{account}', [AccountController::class, 'updateFranchisee']);
     Route::get('accounts/{account}', [AccountController::class, 'franchiseAccount']); 
     Route::get('accounts/products/{account}', [AccountController::class, 'franchiseeProducts']);
     Route::get('accounts/profile/{account}', [AccountController::class, 'franchiseeProfile']);

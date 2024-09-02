@@ -70,17 +70,26 @@ class AccountController extends BaseController {
      */
     #[OpenApi\Operation(tags: ['accounts'])]
     #[OpenApi\Parameters(factory: FranchiseeAccountParameters::class)]
-    public function updateFranchisee(Request $request) {
+    public function updateFranchisee(Request $request, Account $account) {
         
         $request->validate([
-            'email' => 'required|string|lowercase|email|max:255',
-            'account' => 'required|string|max:255',
+            'email' => 'string|lowercase|email|max:255',
+            'name' => 'string|max:150',
+            'phone' => 'string|max:150',
         ]);
-        $id = $request->account;
+        $id = $account->id;
         $account = Account::find($id);
-        $account->Name = $request->name;
-        $account->pin = $request->pin;
+        if($request->name != ''){$account->Name = $request->name;}
+        if($request->phone != ''){$account->Phone = $request->phone;}
         $account->save();
+
+        if($request->email != '') {
+            $user = User::where('id', $account->user_id)->get();
+            $u = $user[0]->id;
+            $changeEmail = User::find($u);
+            $changeEmail->email = $request->email;
+            $changeEmail->save();
+        }
 
         $acctId = $account;
         $output = [
