@@ -76,11 +76,14 @@ class AccountController extends BaseController {
             'email' => 'string|lowercase|email|max:255',
             'name' => 'string|max:150',
             'phone' => 'string|max:150',
+            'image' => 'string|max:250',
         ]);
         $id = $account->id;
         $account = Account::find($id);
         if($request->name != ''){$account->Name = $request->name;}
         if($request->phone != ''){$account->Phone = $request->phone;}
+        if($request->email != ''){$account->email = $request->email;}
+        if($request->image != ''){$account->image = $request->image;}
         $account->save();
 
         if($request->email != '') {
