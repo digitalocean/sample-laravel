@@ -34,13 +34,11 @@ class PaymentController extends BaseController {
     public function makePaymentIntent(Request $request) {
         /* Instantiate a Stripe Gateway either like this */
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        $customer = Customer::where('email', $request->get('email'))->get();
 
-        header('Content-Type: application/json');
-
+        header('Content-Type: application/x-www-form-urlencoded');
           // check customers table by email return customerID
-            // else null Create Customer with fullname, email, 
-            $customer = Customer::where('email', $request->get('email'))->get();
-            
+            // else null Create Customer with fullname, email,     
             if ($customer->isEmpty()) {
                 $cust = $stripe->customers->create();
                 $customer = $cust->id;
@@ -50,42 +48,73 @@ class PaymentController extends BaseController {
                     'balance' => 0,
                     'customerId' => $customer,
                 ]);
+                
+                $customerID = $customer;
+
+                try {
+                    $ephemeralKey = $stripe->ephemeralKeys->create([
+                        'customer' => $customerID,
+                        ], [
+                        'stripe_version' => '2022-08-01',
+                    ]);
+        
+                    $paymentIntent = $stripe->paymentIntents->create([
+                        // 'amount' => calculateOrderAmount($jsonObj->items),
+                        'customer' => $customerID,
+                        'amount' => $request->get('amount'),
+                        'currency' => 'usd',
+                        // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+                        'automatic_payment_methods' => [
+                            'enabled' => true,
+                        ],
+                    ]);
+                
+                    $output = [
+                        'clientSecret' => $paymentIntent->client_secret,
+                        'ephemeralKey' => $ephemeralKey->secret,
+                        'customer' => $customerID,
+                    ];
+                
+                    echo json_encode($output);
+                } catch (Error $e) {
+                    http_response_code(500);
+                    echo json_encode(['error' => $e->getMessage()]);
+                }
 
             } else {
                 $customerID = $customer[0]['customerId'];
+
+                try {
+                    $ephemeralKey = $stripe->ephemeralKeys->create([
+                        'customer' => $customerID,
+                        ], [
+                        'stripe_version' => '2022-08-01',
+                    ]);
+        
+                    $paymentIntent = $stripe->paymentIntents->create([
+                        // 'amount' => calculateOrderAmount($jsonObj->items),
+                        'customer' => $customerID,
+                        'amount' => $request->get('amount'),
+                        'currency' => 'usd',
+                        // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+                        'automatic_payment_methods' => [
+                            'enabled' => true,
+                        ],
+                    ]);
+                
+                    $output = [
+                        'clientSecret' => $paymentIntent->client_secret,
+                        'ephemeralKey' => $ephemeralKey->secret,
+                        'customer' => $customerID,
+                    ];
+                
+                    echo json_encode($output);
+                } catch (Error $e) {
+                    http_response_code(500);
+                    echo json_encode(['error' => $e->getMessage()]);
+                }
             }
-            // Save customer to customers table with fullname, email, customerId
-            
-
-        try {
-            $ephemeralKey = $stripe->ephemeralKeys->create([
-                'customer' => $customerID,
-                ], [
-                'stripe_version' => '2022-08-01',
-            ]);
-
-            $paymentIntent = $stripe->paymentIntents->create([
-                // 'amount' => calculateOrderAmount($jsonObj->items),
-                'customer' => $customerID,
-                'amount' => $request->get('amount'),
-                'currency' => 'usd',
-                // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-                'automatic_payment_methods' => [
-                    'enabled' => true,
-                ],
-            ]);
         
-            $output = [
-                'clientSecret' => $paymentIntent->client_secret,
-                'ephemeralKey' => $ephemeralKey->secret,
-                'customer' => $customerID,
-            ];
-        
-            echo json_encode($output);
-        } catch (Error $e) {
-            http_response_code(500);
-            echo json_encode(['error' => $e->getMessage()]);
-        }
     }
 
     /**
