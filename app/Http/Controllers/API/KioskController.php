@@ -118,6 +118,20 @@ class KioskController extends BaseController {
         return $this->sendResponse($output, 'Kiosk has been deleted');
     }
 
+    public function kioskMachine(Request $request, ?string $funCode = null) {
+        if($funCode = '50011011') {
+            $j = 'hello';
+        }
+        $k = $request->all();
+
+        $output = [
+            'body' => [$k, $j],
+            'message' => 'Success',
+        ];
+
+        return $this->sendResponse($output, 'data recieved');
+    }
+
 
 
 }

@@ -90,8 +90,8 @@ class UserAuthController extends BaseController {
         //$refreshToken = $user->createToken('refresh_token', ['token-refresh'], Carbon::now()->addMinutes(config('sanctum.rt_expiration')))->plainTextToken;
         $output = [
             'id' => $account->id,
-            'Name' => $account->name,
-            'WalletAmount' => $account->WalletAmout,
+            'Name' => $account['Name'],
+            'WalletAmount' => $account['WalletAmout'],
             'token' => $token,
             // 'user' => $user,
             //'refreshToken' => $refreshToken,            

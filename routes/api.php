@@ -60,6 +60,13 @@ Route::post('application', [CustomerController::class, 'franchiseeApplication'])
 //Stripe additional data
 Route::get('charges/stripe', [ChargesController::class, 'updateCustomer']);
 
+// Funccodes Routes
+Route::post('/machine/{funCode?}', [KioskController::class, 'kioskMachine']);
+// Route::post('/machine/{funCode}', function(string $funCode) {
+//     return $funCode;
+// });
+ 
+
 
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -125,6 +132,7 @@ Route::middleware('auth:sanctum')->group(function() {
     
     // wallet process
     Route::post('/wallet/addfunds', [PaymentController::class, 'userAddFunds']);
+
 });
 
 
