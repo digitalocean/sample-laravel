@@ -15,7 +15,7 @@ use App\Http\Controllers\API\RestockController;
 use App\Http\Controllers\API\ChargesController;
 use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\CategoryController;
-use App\Http\Controllers\FaqController;
+use App\Http\Controllers\API\FaqController;
 
 /*
 |--------------------------------------------------------------------------
