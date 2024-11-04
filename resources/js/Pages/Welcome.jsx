@@ -29,6 +29,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
             
                 </div>
 
+
                 <div className="max-w-7xl mx-auto p-6 lg:p-8">
                     <div className="flex justify-center">
                         <img src="/assets/logos/blackscholarslogo.png" className="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-24" alt="main_logo" />
@@ -204,12 +205,30 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         </div>
                     </div>
 
+                    <div className='mt-8'>
+                        <div className='grid grid-cols-1 sm:grid-cols-12 gap-4'>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div> <img src="/assets/logos/esl_logo_250x250.png" className="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-24" alt="esl_logo" /> </div>
+                            <div> <img src="/assets/logos/urbanleagueRochester.png" className="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-24" alt="Urbanleague of Rochester_logo" /> </div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+
+
                     <div className="flex justify-center mt-6 px-2 sm:items-center sm:justify-between">
                         <div className="text-center text-sm text-gray-800 dark:text-gray-800 sm:text-left">
                             <div className="flex items-center gap-4">
                                 <a
                                     href="https://www.urbanleagueroc.org/donate"
-                                    className="group inline-flex text-base items-center hover:text-gray-700 dark:hover:text-gray-700 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-900"
+                                    className="group inline-flex text-large items-center hover:text-gray-700 dark:hover:text-gray-700 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-900"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
