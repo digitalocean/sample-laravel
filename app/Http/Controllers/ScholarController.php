@@ -169,7 +169,9 @@ class ScholarController extends Controller {
         $criteria = Selectioncriteria::where('id', '1')->get(); 
         $requirements = Requirementcriteria::where('id', '1')->get(); 
         $scholarshipuses = Scholarshipuse::where('id', '1')->get();
+        $scholarshipQuestion = DB::table('scholarshipQuestion_scholarships')->where('scholarship_id', '1')->get();
         
+        // dd($scholarshipQuestion);
         $message = session('message');
         return Inertia::render('Scholars/Scholarshiplist', [
             'scholarship' => $scholarship,
@@ -177,6 +179,7 @@ class ScholarController extends Controller {
             'requirements' => $requirements,
             'scholarshipuses' => $scholarshipuses,
             'criteria' => $criteria,
+            'scholarshipQuestion' => $scholarshipQuestion,
             'message' => $message
         ]);
 
@@ -189,14 +192,17 @@ class ScholarController extends Controller {
         $criteria = Selectioncriteria::where('id', $scholarship->id)->get(); 
         $requirements = Requirementcriteria::where('id', $scholarship->id)->get(); 
         $scholarshipuses = Scholarshipuse::where('id', $scholarship->id)->get();
+        $scholarshipQuestion = DB::table('scholarshipQuestion_scholarships')->where('scholarship_id', $scholarship->id)->get();
 
+        // dd($requirements);
         return Inertia::render('Scholars/Scholarshiplist', [
             'scholarship' => $scholarshipAll,
             'scholarshipInfo' => $scholarshipSingle,
             'requirements' => $requirements,
             'scholarshipuses' => $scholarshipuses,
             'criteria' => $criteria,
-            'message' => 'false'
+            'scholarshipQuestion' => $scholarshipQuestion,
+            'message' => 'Success'
         ]);
     }
 
@@ -212,5 +218,9 @@ class ScholarController extends Controller {
               ]);
         session(['message' => 'true']);
         return to_route('scholar.list');
+    }
+
+    public function answerAdditionalQuestions(Scholarship $scholarship) {
+        $user = Auth::user();
     }
 }

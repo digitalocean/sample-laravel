@@ -56,6 +56,10 @@ class Scholarship extends Model
         return $this->belongsToMany(Scholarshipuse::class, 'scholarshipuse_scholarships', 'scholarshipuse_id', 'scholarship_id');
     }
 
+    public function scholarshipQuestions(): BelongsToMany {
+        return $this->belongsToMany(ScholarshipQuestion::class, 'scholarshipQuestion_scholarships', 'question_id', 'scholarship_id');
+    }
+
     public function winners(): HasMany {
         return $this->hasMany(Winner::class);
     }

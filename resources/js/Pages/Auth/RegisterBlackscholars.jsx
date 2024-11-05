@@ -52,6 +52,9 @@ export default function Register() {
                             Login here
                             </a>
                         </p>
+                        <p className="mt-2 text-base leading-1 text-red-700">
+                            Complete all steps to start the procoess
+                        </p>    
                     </div>
 
                     <div className="mt-6">
@@ -72,7 +75,7 @@ export default function Register() {
                                                 selected ? 'border-spacing-1 border-2 rounded border-red-800 text-red-800 py-1 w-1/3' : ' text-black py-2 w-1/3'
                                             }
                                             >
-                                            Register
+                                            1. Register
                                             </button>
                                         )}
                                         
@@ -87,7 +90,7 @@ export default function Register() {
                                                 selected ? 'border-spacing-1 border-2 rounded border-red-800 text-red-800 py-1 w-1/3': ' text-black py-2 w-1/3'
                                             }
                                             >
-                                            Parent Info 
+                                            2. Parent Info 
                                             </button>
                                         )}
                                 
@@ -101,7 +104,7 @@ export default function Register() {
                                                 selected ? 'border-spacing-1 border-2 rounded border-red-800 text-red-800 py-1 w-1/3' : ' text-black py-2 w-1/3'
                                             }
                                             >
-                                            School Info
+                                            3. School Info
                                             </button>
                                         )}
                                     

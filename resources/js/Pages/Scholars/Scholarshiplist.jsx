@@ -3,7 +3,7 @@ import { Head, Link} from "@inertiajs/react";
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import ViewScholarship from "./viewscholarship";
 
-export default function({auth, scholarship, scholarshipInfo,requirements, scholarshipuses, criteria, message}) {
+export default function({auth, scholarship, scholarshipInfo,requirements, scholarshipuses, criteria, scholarshipQuestion, message}) {
 
     return (
         <StudentAuthLayout
@@ -39,14 +39,14 @@ export default function({auth, scholarship, scholarshipInfo,requirements, schola
                                 </div>
                             : <div></div>
                             }
-                            <ViewScholarship scholarshipInfo={scholarshipInfo} requirements={requirements} scholarshipuses={scholarshipuses} criteria={criteria}/>
+                            <ViewScholarship scholarshipInfo={scholarshipInfo} requirements={requirements} scholarshipuses={scholarshipuses} criteria={criteria} scholarshipQuestion={scholarshipQuestion}/>
                 
                         </div>
                     </div>
                 </div>
                 
           
-            <aside className="fixed inset-y-0 left-72 hidden w-1/4 overflow-y-auto border-r border-gray-200 px-4 pt-25 pb-6 sm:px-6 lg:px-8 xl:block bg-white">
+            <aside className="fixed inset-y-0 left-72 sm:hidden w-1/4 overflow-y-auto border-r border-gray-200 px-4 pt-25 pb-6 sm:px-6 lg:px-8 xl:block bg-white">
                 <h3 className="mt-4">Available Scholarships</h3>
                  <ul role="list" className="divide-y divide-gray-100">
                  {scholarship.map(({id, name, award_payments, deadline}) => ( 
