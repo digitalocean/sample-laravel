@@ -25,10 +25,8 @@ class ImportController extends Controller {
         $csv_json = str_replace("\xEF\xBB\xBF",'',$csv_json); 
         $file_Contents = json_decode($csv_json, true);
 
-        // dd($file_Contents);
-
         foreach ($file_Contents as $data) {
-            //dd($data);
+
             $app = Application::create([
                 'submitted_on' => $data[0],
                 'name' => $data[1],
@@ -59,13 +57,6 @@ class ImportController extends Controller {
                 'college_status' => $data[27],
                 'college_choice2' => $data[28],
                 'college_status2' => $data[30],
-                // 'scholarship_choice' => $data[31],
-                // 'scholarship_choice2' => $data[32],
-                // 'scholarship_choice3' => $data[33],
-                // 'scholarship_choice4' => $data[34],
-                // 'scholarship_choice5' => $data[35],
-                // 'scholarship_choice6' => $data[36],
-                // 'scholarship_choice7' => $data[37],
                 'reference' => $data[38],
                 'reference_email' => $data[39],
                 'reference_relationship' => $data[40],
@@ -141,7 +132,6 @@ class ImportController extends Controller {
 
             }
         }
-
 
 
         return redirect()->back()->with('success', 'CSV file imported successfully.');

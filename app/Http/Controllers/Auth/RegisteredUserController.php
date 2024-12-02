@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Scholar;
 use App\Models\User;
+use App\Models\School;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -26,9 +27,12 @@ class RegisteredUserController extends Controller
         return Inertia::render('Auth/Register');
     }
 
-    public function createBlackScholar(): Response
-    {
-        return Inertia::render('Auth/RegisterBlackscholars');
+    public function createBlackScholar(): Response {
+
+        $school =School::get();
+        return Inertia::render('Auth/RegisterBlackscholars', [
+            'school' => $school,
+        ]);
     }
 
     /**

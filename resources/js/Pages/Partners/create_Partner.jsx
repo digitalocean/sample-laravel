@@ -49,16 +49,19 @@ export default function CreatePartner() {
     <>
 
         <button className="items-center w-full" onClick={openModal}>
-          <div class="relative flex flex-col min-w-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border items-center h-52">
+          <div class="relative flex flex-col min-w-0 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border items-center pv-[10%] h-52">
           
-            <div class="p-4 mx-[25%] mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
-              <div class="text-center bg-center icon bg-gradient-to-tl from-red-700 to-pink-500 shadow-soft-2xl rounded-xl">
-                <PlusIcon className="text-white h-12 w-12 p-4" />
-              </div>
+            
+            <div class="flex-auto p-10 text-center">
+            <div class="p-4 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent justify-items-center">
+                <div class="w-14 ext-center bg-center icon bg-gradient-to-tl from-red-700 to-pink-500 shadow-soft-2xl rounded-xl">
+                  <PlusIcon className="text-white h-12 w-12 p-4" />
+                </div>
             </div>
-            <div class="flex-auto p-4 pt-0 text-center">
               <p class="mb-0 text-center md:text-base lg:text-lg text-gray-700">Create New Partner</p>
             </div>
+  
+            
           
           </div>
         </button>
@@ -277,7 +280,7 @@ export default function CreatePartner() {
                           </button>
                           <button
                             type="button"
-                            className="mt-3 inline-flex w-full justify-center rounded-md bg-white py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
+                            className="inline-flex w-full my-4 px-2 py-3 justify-center rounded-md bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1"
                             onClick={() => setIsOpen(false)}
                             ref={cancelButtonRef}
                           >

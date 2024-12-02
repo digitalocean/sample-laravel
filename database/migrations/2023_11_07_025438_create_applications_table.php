@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name', 50);
             $table->string('email', 50)->nullable();
+            $table->boolean('verified')->nullable();
             $table->string('submitted_on', 50)->nullable();
             $table->string('phone', 14)->nullable();
             $table->string('parent_name', 250)->nullable();

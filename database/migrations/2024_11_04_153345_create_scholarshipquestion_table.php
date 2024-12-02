@@ -14,16 +14,22 @@ return new class extends Migration
         Schema::create('scholarshipQuestion_scholarships', function (Blueprint $table) {
             $table->id();
             $table->foreignId('scholarship_id');
-            $table->string('question');
+            $table->string('question1')->nullable();
+            $table->string('question2')->nullable();
+            $table->string('question3')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('scholarshipQuestion_application', function (Blueprint $table) {
+        Schema::create('application_scholarshipQuestions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('scholarship_id');
             $table->foreignId('application_id');
-            $table->string('question');
-            $table->string('answer');
+            $table->string('question1')->nullable();
+            $table->string('answer1')->nullable();
+            $table->string('question2')->nullable();
+            $table->string('answer2')->nullable();
+            $table->string('question3')->nullable();
+            $table->string('answer3')->nullable();
             $table->timestamps();
         });
     }

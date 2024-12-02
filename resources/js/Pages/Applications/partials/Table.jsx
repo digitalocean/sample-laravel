@@ -30,6 +30,10 @@ export default function ApplicationTable() {
     //   header: 'ID',
     //   size: 40,
     // }),
+    columnHelper.accessor('verified', {
+      header: 'Verified',
+      size: 50,
+    }),
     columnHelper.accessor('name', {
       header: 'Student Name',
       size: 300,

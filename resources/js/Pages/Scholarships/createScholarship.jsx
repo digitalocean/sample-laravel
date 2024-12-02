@@ -19,6 +19,9 @@ export default function CreateScholarship() {
     // award_dispersal: '',
     description: '',
     additional_information: '',
+    question1: '',
+    question2: '',
+    question3: '',
   })
 
   let [isOpen, setIsOpen] = useState(false)
@@ -251,7 +254,66 @@ export default function CreateScholarship() {
                             </div>
                           </div>
 
-                          <div className="border-b border-gray-900/10 pb-8">
+                          <div className="border-b border-gray-900/10 pb-4">
+                          <div className="mt-4 space-y-10">
+                              <div className="col-span-full">
+                                <label htmlFor="about" className="block text-base text-left font-medium leading-6 text-gray-900">
+                                  Additional question 1
+                                </label>
+                                <div className="mt-2">
+                                  <textarea
+                                    id="question1"
+                                    name='question1'
+                                    type="text"
+                                    value={data.question1}
+                                    rows={1}
+                                    onChange={handleChange}
+                                    className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                    defaultValue={''}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="mt-6 space-y-10">
+                              <div className="col-span-full">
+                                <label htmlFor="about" className="block text-base text-left font-medium leading-6 text-gray-900">
+                                Additional question 2
+                                </label>
+                                <div className="mt-2">
+                                  <textarea
+                                    id="question2"
+                                    name='question2'
+                                    type="text"
+                                    value={data.question2}
+                                    rows={1}
+                                    onChange={handleChange}
+                                    className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                    defaultValue={''}
+                                  />
+                                </div>
+                             </div>
+                            </div>
+
+                            <div className="mt-6 space-y-6">
+                              <div className="col-span-full">
+                                <label htmlFor="about" className="block text-base text-left font-medium leading-6 text-gray-900">
+                                Additional question 3
+                                </label>
+                                <div className="mt-2">
+                                  <textarea
+                                    id="question3"
+                                    name='question3'
+                                    type="text"
+                                    value={data.question3}
+                                    rows={1}
+                                    onChange={handleChange}
+                                    className="block w-full rounded-md border-0 py-1.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                    defaultValue={''}
+                                  />
+                                </div>
+                              </div>
+                            </div>
                             {/* <h2 className="text-base text-left font-semibold leading-7 text-gray-900">Scholarship Rules</h2> */}
                             <div className="mt-4 space-y-10">
                               <div className="col-span-full">

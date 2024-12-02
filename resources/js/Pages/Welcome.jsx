@@ -47,11 +47,11 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                     </div>
 
                                     <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                                        Early Recognition Process
+                                        Student Engagement Center
                                     </h2>
 
                                     <p className="mt-4 text-gray-800 dark:text-white text-lg leading-relaxed">
-                                        The Black Scholars Program is an ambitious, rigorous, and competitive academic program, 
+                                        The <b>Black Scholars</b> is an ambitious, rigorous, and competitive academic program, 
                                         that seeks to educate the whole undergraduate student and develop their potential to fashion a more humane and just world.
                                         We the admins of this program must promote and adhere to our valus set forth.
                                     </p>
@@ -85,7 +85,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                     </h2>
 
                                     <p className="mt-4 text-gray-800 dark:text-white text-lg leading-relaxed">
-                                       The Black Scholars thanks you Partners for your continued support of our students. By loginning into this application you will be able to view your scholarships and applicats that have applied for your scholarship.
+                                       The <b>Black Scholars</b> thanks you Partners for your continued support of our students. By loginning into this application you will be able to view your scholarships and applicats that have applied for your scholarship.
                                     </p>
                                 </div>
 

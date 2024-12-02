@@ -96,7 +96,8 @@ class ScholarshipController extends Controller {
 
     #[OpenApi\Operation(tags: ['scholarship'], method: 'PATCH')]
     public function store(Request $request): RedirectResponse {
-        $a = $request->all();  //dd($a[2]);
+        $a = $request->all();  //dd($a);
+
         $partner_id = session('partner_id');
         $date = new Carbon();
         $b = Scholarship::create([
@@ -111,6 +112,13 @@ class ScholarshipController extends Controller {
             'activeYear' => $date->format('Y'),
         ]);
         $scholarshipInfo = Scholarship::find($b);
+        DB::table('scholarshipQuestion_scholarships')->insert([
+            'scholarship_id' => $scholarshipInfo[0]['id'],
+            'question1' => $a[0]['question1'],
+            'question2' => $a[0]['question2'],
+            'question3' => $a[0]['question3'],
+        ]);
+        
         if ($a[1] != null) { 
             foreach ( $a[1] as $a ){
                 $c = Selectioncriteria::find($a["id"]);
@@ -173,7 +181,7 @@ class ScholarshipController extends Controller {
         if (Arr::exists($b, 'award_payments')) {  $scholarshipInfo->award_payments = $a[0]['award_payments']; }
         if (Arr::exists($b, 'additional_information')) {  $scholarshipInfo->additional_information = $a[0]['additional_information']; }
         if (Arr::exists($b, 'fund_amount')) {  $scholarshipInfo->fund_amount = $a[0]['fund_amount']; }
-    
+        
         if ($a[1] != null) { 
             foreach ( $a[1] as $a ){
                 $c = Selectioncriteria::find($a["id"]);
