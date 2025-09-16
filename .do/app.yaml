@@ -3,14 +3,14 @@ services:
 - environment_slug: php
   name: web
   build_command: composer install --no-interaction --prefer-dist --optimize-autoloader && npm install && npm run build
-  run_command: php artisan serve --host=0.0.0.0 --port=8080
+  run_command: heroku-php-apache2 public/
   envs:
   - key: APP_NAME
     value: "Laravel"
   - key: APP_ENV
     value: "local"
   - key: APP_KEY
-    value: ${APP_KEY}
+    value: "${APP_KEY}"
   - key: APP_DEBUG
     value: "true"
   - key: APP_URL
@@ -46,9 +46,9 @@ services:
   - key: REDIS_PORT
     value: "6379"
   - key: MAIL_MAILER
-    value: "smtp"
+    value: "log"
   - key: MAIL_HOST
-    value: "smtp.mailtrap.io"
+    value: "127.0.0.1"
   - key: MAIL_PORT
     value: "2525"
   - key: MAIL_USERNAME
@@ -70,53 +70,21 @@ services:
   - key: AWS_BUCKET
     value: ""
   - key: PUSHER_APP_ID
-    value: ""
-  - key: PUSHER_APP_KEY
-    value: ""
-  - key: PUSHER_APP_SECRET
-    value: ""
-  - key: PUSHER_APP_CLUSTER
-    value: "mt1"
-  - key: MIX_PUSHER_APP_KEY
-    value: ${PUSHER_APP_KEY}
-  - key: MIX_PUSHER_APP_CLUSTER
-    value: ${PUSHER_APP_CLUSTER}
-  - key: QUEUE_CONNECTION
-    value: "sync"
-  - key: SESSION_DRIVER
-    value: "file"
-  - key: SESSION_LIFETIME
-    value: "120"
-  - key: MEMCACHED_HOST
-    value: "127.0.0.1"
-  - key: REDIS_HOST
-    value: "127.0.0.1"
-  - key: REDIS_PORT
-    value: "6379"
-  - key: MAIL_MAILER
-    value: "log"
-  - key: MAIL_HOST
-    value: "127.0.0.1"
-  - key: MAIL_PORT
-    value: "2525"
-  - key: MAIL_USERNAME
-    value: "null"
-  - key: MAIL_PASSWORD
-    value: "null"
-  - key: PUSHER_APP_ID
     value: ${PUSHER_APP_ID}
   - key: PUSHER_APP_KEY
     value: ${PUSHER_APP_KEY}
   - key: PUSHER_APP_SECRET
     value: ${PUSHER_APP_SECRET}
+  - key: PUSHER_APP_CLUSTER
+    value: ${PUSHER_APP_CLUSTER}
   - key: PUSHER_HOST
     value: ${PUSHER_HOST}
   - key: PUSHER_PORT
     value: ${PUSHER_PORT}
   - key: PUSHER_SCHEME
     value: ${PUSHER_SCHEME}
-  - key: PUSHER_APP_CLUSTER
-    value: ${PUSHER_APP_CLUSTER}
+  - key: MEMCACHED_HOST
+    value: "127.0.0.1"
   - key: VITE_PUSHER_APP_KEY
     value: ${PUSHER_APP_KEY}
   - key: VITE_PUSHER_HOST
@@ -131,12 +99,11 @@ services:
     value: ${PUSHER_APP_KEY}
   - key: MIX_PUSHER_APP_CLUSTER
     value: ${PUSHER_APP_CLUSTER}
-    value: "null"
   - key: MAIL_ENCRYPTION
     value: "null"
   - key: MAIL_FROM_ADDRESS
     value: "hello@example.com"
   - key: MAIL_FROM_NAME
-    value: "${APP_NAME}"
+    value: ${APP_NAME}
   http_port: 8080
   source_dir: /
